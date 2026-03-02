@@ -1,0 +1,35 @@
+# Simple Step-by-Step: Push Code to GitHub
+# Repository: https://github.com/Nuntploydanai/CostingIntelligent
+
+# STEP 1: Go to your project folder
+cd C:\Users\dploy\.openclaw\workspace\basicshirts_web
+
+# STEP 2: Check if git is initialized
+git status
+
+# If you see "fatal: not a git repository", run:
+# git init
+
+# STEP 3: Configure Git (if not done already)
+git config --global user.name "Nuntploydanai"
+git config --global user.email "your-email@example.com"
+
+# STEP 4: Add all files
+git add .
+
+# STEP 5: Create commit
+git commit -m "Initial commit: Basic Shirts Costing Webapp"
+
+# STEP 6: Set branch to main
+git branch -M main
+
+# STEP 7: Add remote (skip if already added)
+git remote add origin https://github.com/Nuntploydanai/CostingIntelligent.git
+
+# STEP 8: Push to GitHub (this will upload your code)
+git push -u origin main
+
+# If push fails with "rejected" error, use:
+# git push -f origin main
+
+# DONE! Visit: https://github.com/Nuntploydanai/CostingIntelligent
