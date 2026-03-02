@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "root": "master_clean",
+  "datasets": [
+    {
+      "id": "conversion_constants",
+      "path": "master_clean/conversion_constants.csv",
+      "description": "Unit conversion constants used across calculations.",
+      "primary_key": ["key"],
+      "columns": {
+        "key": "string",
+        "value": "number"
+      }
+    },
+    {
+      "id": "cost_rate",
+      "path": "master_clean/cost_rate.csv",
+      "description": "Cost rate per SAM by country (USD). Built from Cost Rate sheet extract.",
+      "primary_key": ["country"],
+      "columns": {
+        "country": "string",
+        "local_area": "string",
+        "exchange_rate_to_usd": "number",
+        "cost_rate_sam_usd": "number"
+      }
+    },
+    {
+      "id": "fabric_price",
+      "path": "master_clean/fabric_price.csv",
+      "description": "Fabric price lookup table (USD per yard). Built from Fabric Price sheet extract (table block).",
+      "primary_key": ["item"],
+      "columns": {
+        "item": "string",
+        "fabric": "string",
+        "type": "string",
+        "weight_gsm": "number",
+        "cut_width_in": "number",
+        "price_per_yd_usd": "number"
+      }
+    },
+    {
+      "id": "packing_trims",
+      "path": "master_clean/packing_trims.csv",
+      "description": "Packing & trims usage/cost table; emits one row per (trims, using_part, size).",
+      "primary_key": ["trims", "using_part", "size"],
+      "columns": {
+        "trims": "string",
+        "using_part": "string",
+        "size": "string",
+        "cost": "number"
+      }
+    },
+    {
+      "id": "sam_product_eff",
+      "path": "master_clean/sam_product_eff.csv",
+      "description": "SAM and product efficiency table by (gender, product shape, side seam, size).",
+      "primary_key": ["gender", "product_shape", "side_seam", "size"],
+      "columns": {
+        "gender": "string",
+        "product_shape": "string",
+        "side_seam": "string",
+        "size": "string",
+        "sam": "number",
+        "eff_pct": "number"
+      }
+    }
+  ]
+}

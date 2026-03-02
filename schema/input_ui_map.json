@@ -1,0 +1,776 @@
+{
+  "note": "DRAFT. Will be refined to friendly labels + dropdown sources.",
+  "source": "schema/input_schema.json",
+  "inputs": [
+    {
+      "id": "price_kilo_u6",
+      "label": "(PRICE/KILO)",
+      "type": "text",
+      "default": "Price / Lbs",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "U6"
+      },
+      "options": null
+    },
+    {
+      "id": "fabric_type_g7",
+      "label": "FABRIC TYPE",
+      "type": "text",
+      "default": "Jersey",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "G7"
+      },
+      "options": null
+    },
+    {
+      "id": "jersey_h7",
+      "label": "Jersey",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "H7"
+      },
+      "options": null
+    },
+    {
+      "id": "jersey_i7",
+      "label": "Jersey",
+      "type": "text",
+      "default": "Cotton/Spandex 95/5",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "I7"
+      },
+      "options": null
+    },
+    {
+      "id": "cotton_spandex_95_5_j7",
+      "label": "Cotton/Spandex 95/5",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "J7"
+      },
+      "options": null
+    },
+    {
+      "id": "cotton_spandex_95_5_k7",
+      "label": "Cotton/Spandex 95/5",
+      "type": "text",
+      "default": "Whole Garment",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "K7"
+      },
+      "options": null
+    },
+    {
+      "id": "whole_garment_m7",
+      "label": "Whole Garment",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "M7"
+      },
+      "options": null
+    },
+    {
+      "id": "iferror_conversion_k20_0_u7",
+      "label": "=IFERROR(Conversion!K20,0)",
+      "type": "number",
+      "default": "2.63",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "U7"
+      },
+      "options": null
+    },
+    {
+      "id": "iferror_conversion_k20_0_w7",
+      "label": "=IFERROR(Conversion!K20,0)",
+      "type": "text",
+      "default": "Import",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "W7"
+      },
+      "options": null
+    },
+    {
+      "id": "jersey_g8",
+      "label": "Jersey",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "G8"
+      },
+      "options": null
+    },
+    {
+      "id": "input_h8",
+      "label": "Input H8",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "H8"
+      },
+      "options": null
+    },
+    {
+      "id": "cotton_spandex_95_5_i8",
+      "label": "Cotton/Spandex 95/5",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "I8"
+      },
+      "options": null
+    },
+    {
+      "id": "input_j8",
+      "label": "Input J8",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "J8"
+      },
+      "options": null
+    },
+    {
+      "id": "whole_garment_k8",
+      "label": "Whole Garment",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "K8"
+      },
+      "options": null
+    },
+    {
+      "id": "weight_m8",
+      "label": "* WEIGHT",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "M8"
+      },
+      "options": null
+    },
+    {
+      "id": "iferror_conversion_k45_0_u8",
+      "label": "=IFERROR(Conversion!K45,0)",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "U8"
+      },
+      "options": null
+    },
+    {
+      "id": "iferror_conversion_k45_0_w8",
+      "label": "=IFERROR(Conversion!K45,0)",
+      "type": "text",
+      "default": "Import",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "W8"
+      },
+      "options": null
+    },
+    {
+      "id": "jersey_g9",
+      "label": "Jersey",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "G9"
+      },
+      "options": null
+    },
+    {
+      "id": "input_h9",
+      "label": "Input H9",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "H9"
+      },
+      "options": null
+    },
+    {
+      "id": "cotton_spandex_95_5_i9",
+      "label": "Cotton/Spandex 95/5",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "I9"
+      },
+      "options": null
+    },
+    {
+      "id": "input_j9",
+      "label": "Input J9",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "J9"
+      },
+      "options": null
+    },
+    {
+      "id": "whole_garment_k9",
+      "label": "Whole Garment",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "K9"
+      },
+      "options": null
+    },
+    {
+      "id": "weight_m9",
+      "label": "* WEIGHT",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "M9"
+      },
+      "options": null
+    },
+    {
+      "id": "iferror_conversion_k70_0_u9",
+      "label": "=IFERROR(Conversion!K70,0)",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "U9"
+      },
+      "options": null
+    },
+    {
+      "id": "iferror_conversion_k70_0_w9",
+      "label": "=IFERROR(Conversion!K70,0)",
+      "type": "text",
+      "default": "Domestic",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "W9"
+      },
+      "options": null
+    },
+    {
+      "id": "trims_type_g13",
+      "label": "TRIMS  TYPE",
+      "type": "text",
+      "default": "Pip_label",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "G13"
+      },
+      "options": null
+    },
+    {
+      "id": "pip_label_i13",
+      "label": "Pip_label",
+      "type": "text",
+      "default": "Left Buttom hem",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "I13"
+      },
+      "options": null
+    },
+    {
+      "id": "if_isna_g13_xlfn_xlookup_g13_packing_trims_b_b_packing_trims_d_d_m13",
+      "label": "=IF(ISNA(G13),\"-\",_xlfn.XLOOKUP(G13,'Packing&Trims'!B:B,'Packing&Trims'!D:D))",
+      "type": "number",
+      "default": "1",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "M13"
+      },
+      "options": null
+    },
+    {
+      "id": "if_isblank_u13_if_isblank_g13_data_link_s17_0_u13",
+      "label": "=IF(ISBLANK(U13),IF(ISBLANK(G13),\"-\",'Data link'!S17),\"0\")",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "U13"
+      },
+      "options": null
+    },
+    {
+      "id": "material_coo_w13",
+      "label": "MATERIAL COO",
+      "type": "text",
+      "default": "Import",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "W13"
+      },
+      "options": null
+    },
+    {
+      "id": "iferror_concatenate_data_link_e26_data_link_e28_g14",
+      "label": "=IFERROR(CONCATENATE('Data link'!E26, \"  \", 'Data link'!E28), \"-\")",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "G14"
+      },
+      "options": null
+    },
+    {
+      "id": "left_buttom_hem_i14",
+      "label": "Left Buttom hem",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "I14"
+      },
+      "options": null
+    },
+    {
+      "id": "if_isna_g14_xlfn_xlookup_g14_packing_trims_b_b_packing_trims_d_d_m14",
+      "label": "=IF(ISNA(G14),\"-\",_xlfn.XLOOKUP(G14,'Packing&Trims'!B:B,'Packing&Trims'!D:D))",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "M14"
+      },
+      "options": null
+    },
+    {
+      "id": "if_isblank_u14_if_isblank_g14_data_link_s18_0_u14",
+      "label": "=IF(ISBLANK(U14),IF(ISBLANK(G14),\"-\",'Data link'!S18),\"0\")",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "U14"
+      },
+      "options": null
+    },
+    {
+      "id": "import_w14",
+      "label": "Import",
+      "type": "text",
+      "default": "Domestic",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "W14"
+      },
+      "options": null
+    },
+    {
+      "id": "development_information_d15",
+      "label": "DEVELOPMENT INFORMATION",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "D15"
+      },
+      "options": null
+    },
+    {
+      "id": "development_information_g15",
+      "label": "DEVELOPMENT INFORMATION",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "G15"
+      },
+      "options": null
+    },
+    {
+      "id": "left_buttom_hem_i15",
+      "label": "Left Buttom hem",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "I15"
+      },
+      "options": null
+    },
+    {
+      "id": "if_isna_g15_xlfn_xlookup_g15_packing_trims_b_b_packing_trims_d_d_m15",
+      "label": "=IF(ISNA(G15),\"-\",_xlfn.XLOOKUP(G15,'Packing&Trims'!B:B,'Packing&Trims'!D:D))",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "M15"
+      },
+      "options": null
+    },
+    {
+      "id": "if_isblank_u15_if_isblank_g15_data_link_s19_0_u15",
+      "label": "=IF(ISBLANK(U15),IF(ISBLANK(G15),\"-\",'Data link'!S19),\"0\")",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "U15"
+      },
+      "options": null
+    },
+    {
+      "id": "domestic_w15",
+      "label": "Domestic",
+      "type": "text",
+      "default": "Domestic",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "W15"
+      },
+      "options": null
+    },
+    {
+      "id": "gender_d16",
+      "label": "Gender",
+      "type": "text",
+      "default": "Men",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "D16"
+      },
+      "options": null
+    },
+    {
+      "id": "for_supplier_margin_ab16",
+      "label": "% FOR SUPPLIER MARGIN",
+      "type": "number",
+      "default": "0.1",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "AB16"
+      },
+      "options": null
+    },
+    {
+      "id": "silhouette_d17",
+      "label": "Silhouette",
+      "type": "text",
+      "default": "Long Sleeve Shirt (Crew Neck)",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "D17"
+      },
+      "options": null
+    },
+    {
+      "id": "body_side_panel_d18",
+      "label": "Body Side Panel",
+      "type": "text",
+      "default": "Side Seam",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "D18"
+      },
+      "options": null
+    },
+    {
+      "id": "color_design_d19",
+      "label": "Color / Design",
+      "type": "text",
+      "default": "Solid",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "D19"
+      },
+      "options": null
+    },
+    {
+      "id": "solid_g19",
+      "label": "Solid",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "G19"
+      },
+      "options": null
+    },
+    {
+      "id": "solid_i19",
+      "label": "Solid",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "I19"
+      },
+      "options": null
+    },
+    {
+      "id": "usage_unit_k19",
+      "label": "USAGE / UNIT",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "K19"
+      },
+      "options": null
+    },
+    {
+      "id": "size_d20",
+      "label": "Size",
+      "type": "text",
+      "default": "S-XL",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "D20"
+      },
+      "options": null
+    },
+    {
+      "id": "s_xl_g20",
+      "label": "S-XL",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "G20"
+      },
+      "options": null
+    },
+    {
+      "id": "s_xl_i20",
+      "label": "S-XL",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "I20"
+      },
+      "options": null
+    },
+    {
+      "id": "usage_unit_k20",
+      "label": "USAGE / UNIT",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "K20"
+      },
+      "options": null
+    },
+    {
+      "id": "pack_count_pack_d21",
+      "label": "Pack count / Pack",
+      "type": "number",
+      "default": "2",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "D21"
+      },
+      "options": null
+    },
+    {
+      "id": "ideal_quantity_pcs_d22",
+      "label": "Ideal quantity (Pcs)",
+      "type": "text",
+      "default": "More than 100,000",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "D22"
+      },
+      "options": null
+    },
+    {
+      "id": "this_tool_you_can_add_the_cost_on_this_column_ac22",
+      "label": "this tool,you can add the cost on this column ==>",
+      "type": "number",
+      "default": "0",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "AC22"
+      },
+      "options": null
+    },
+    {
+      "id": "coo_d23",
+      "label": "COO",
+      "type": "text",
+      "default": "INDIA",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "D23"
+      },
+      "options": null
+    },
+    {
+      "id": "fabric_finishing_d24",
+      "label": "Fabric Finishing",
+      "type": "text",
+      "default": "Wicking",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "D24"
+      },
+      "options": null
+    },
+    {
+      "id": "display_packaging_i24",
+      "label": "DISPLAY PACKAGING",
+      "type": "text",
+      "default": "Basic STD  HNA",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "I24"
+      },
+      "options": null
+    },
+    {
+      "id": "wicking_d25",
+      "label": "Wicking",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "D25"
+      },
+      "options": null
+    },
+    {
+      "id": "transit_package_i25",
+      "label": "TRANSIT PACKAGE",
+      "type": "number",
+      "default": "36",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "I25"
+      },
+      "options": null
+    },
+    {
+      "id": "label_i26",
+      "label": "LABEL",
+      "type": "text",
+      "default": "Woven Label",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "I26"
+      },
+      "options": null
+    },
+    {
+      "id": "coo_d29",
+      "label": "COO",
+      "type": "text",
+      "default": "COUNTRY",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "D29"
+      },
+      "options": null
+    },
+    {
+      "id": "made_in_d30",
+      "label": "MADE IN",
+      "type": "text",
+      "default": "INDIA",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "D30"
+      },
+      "options": null
+    },
+    {
+      "id": "made_in_d31",
+      "label": "MADE IN",
+      "type": "text",
+      "default": "BANGLADESH",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "D31"
+      },
+      "options": null
+    },
+    {
+      "id": "made_in_d32",
+      "label": "MADE IN",
+      "type": "text",
+      "default": "INDONESIA",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "D32"
+      },
+      "options": null
+    },
+    {
+      "id": "made_in_d33",
+      "label": "MADE IN",
+      "type": "text",
+      "default": "THAILAND",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "D33"
+      },
+      "options": null
+    },
+    {
+      "id": "made_in_d34",
+      "label": "MADE IN",
+      "type": "text",
+      "default": "CAMBODIA",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "D34"
+      },
+      "options": null
+    },
+    {
+      "id": "made_in_d35",
+      "label": "MADE IN",
+      "type": "text",
+      "default": "VIETNAM",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "D35"
+      },
+      "options": null
+    },
+    {
+      "id": "vietnam_d36",
+      "label": "VIETNAM",
+      "type": "text",
+      "default": "",
+      "source": {
+        "sheet": "Basic Shirts Costing Tool",
+        "cell": "D36"
+      },
+      "options": null
+    }
+  ]
+}

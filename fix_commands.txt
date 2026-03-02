@@ -1,0 +1,51 @@
+# Fix Git Push Error - Run These Commands in PowerShell
+
+# Go to project directory
+cd C:\Users\dploy\.openclaw\workspace\basicshirts_web
+
+# Check if there are any commits
+git log --oneline
+
+# If it says "fatal: your current branch 'master' does not have any commits yet"
+# Then run these commands:
+
+# 1. Check what files will be added
+git status
+
+# 2. Add all files
+git add .
+
+# 3. Check again (should show files in green)
+git status
+
+# 4. Create the first commit
+git commit -m "Initial commit: Basic Shirts Costing Webapp"
+
+# 5. Check that commit was created
+git log --oneline
+
+# 6. Check current branch name
+git branch
+
+# 7. Rename branch to main (if it's named master)
+git branch -M main
+
+# 8. Check if remote exists
+git remote -v
+
+# 9. Remove old remote if it exists
+git remote remove origin
+
+# 10. Add your GitHub repository
+git remote add origin https://github.com/Nuntploydanai/CostingIntelligent.git
+
+# 11. Verify remote was added
+git remote -v
+
+# 12. Push to GitHub
+git push -u origin main
+
+# If push asks for credentials:
+# Username: Nuntploydanai
+# Password: Use Personal Access Token (NOT your GitHub password)
+# Get token at: https://github.com/settings/tokens

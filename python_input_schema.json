@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "notes": "Runtime Python-engine input contract. This is a simplified, stable schema (not a 1:1 mirror of Excel cells).",
+  "inputs": [
+    {"id": "base_country", "type": "string", "required": true, "description": "Base manufacturing country (COO). Must match cost_rate.country"},
+
+    {"id": "gender", "type": "string", "required": true},
+    {"id": "product_shape", "type": "string", "required": true},
+    {"id": "side_seam", "type": "string", "required": true},
+    {"id": "size", "type": "string", "required": true},
+
+    {"id": "fabric_cost", "type": "number", "required": true, "default": 0},
+    {"id": "trim_cost", "type": "number", "required": true, "default": 0},
+    {"id": "display_packaging_cost", "type": "number", "required": true, "default": 0},
+    {"id": "transit_packaging_cost", "type": "number", "required": true, "default": 0},
+    {"id": "label_cost", "type": "number", "required": true, "default": 0},
+    {"id": "thread_cost", "type": "number", "required": true, "default": 0},
+    {"id": "testing_cost", "type": "number", "required": true, "default": 0},
+    {"id": "print_embroidery_cost", "type": "number", "required": true, "default": 0},
+    {"id": "other_cost", "type": "number", "required": true, "default": 0},
+
+    {"id": "supplier_margin_pct", "type": "number", "required": true, "default": 0.1, "description": "e.g., 0.10 for 10%"},
+
+    {"id": "freight_cost", "type": "number", "required": false, "default": 0},
+    {"id": "gmo", "type": "number", "required": false, "default": 0}
+  ]
+}

@@ -1,0 +1,127 @@
+gender,product_shape,side_seam,size,sam,eff_pct
+Men,Tank top/A Shirt,No seam,S-XL,2.05,1.0
+Men,Tank top/A Shirt,No seam,S-3XL,2.15,1.0
+Men,Tank top/A Shirt,No seam,2.0,3.15,1.0
+Men,Tank top/A Shirt,Side Seam,S-XL,2.3,1.0
+Men,Tank top/A Shirt,Side Seam,S-3XL,2.461,1.0
+Men,Tank top/A Shirt,Side Seam,2.0,2.63327,1.0
+Women,Tank top/A Shirt,No seam,S-XL,1.95,1.0
+Women,Tank top/A Shirt,No seam,S-3XL,2.0,1.0
+Women,Tank top/A Shirt,No seam,2.0,2.06082,1.0
+Women,Tank top/A Shirt,Side Seam,S-XL,2.4,1.0
+Women,Tank top/A Shirt,Side Seam,S-3XL,2.568,1.0
+Women,Tank top/A Shirt,Side Seam,2.0,2.7477600000000004,1.0
+Kids,Tank top/A Shirt,No seam,S-XL,1.9,1.0
+Kids,Tank top/A Shirt,No seam,S-3XL,2.0,1.0
+Kids,Tank top/A Shirt,No seam,2.0,2.06082,1.0
+Kids,Tank top/A Shirt,Side Seam,S-XL,2.3,1.0
+Kids,Tank top/A Shirt,Side Seam,S-3XL,2.461,1.0
+Kids,Tank top/A Shirt,Side Seam,2.0,2.63327,1.0
+Men,T-Shirt (Crew Neck),No seam,S-XL,2.9,0.95
+Men,T-Shirt (Crew Neck),No seam,S-3XL,3.103,0.95
+Men,T-Shirt (Crew Neck),No seam,2.0,3.3202100000000003,0.95
+Men,T-Shirt (Crew Neck),Side Seam,S-XL,3.7,0.95
+Men,T-Shirt (Crew Neck),Side Seam,S-3XL,3.9590000000000005,0.95
+Men,T-Shirt (Crew Neck),Side Seam,2.0,4.236130000000001,0.95
+Women,T-Shirt (Crew Neck),No seam,S-XL,2.8,0.95
+Women,T-Shirt (Crew Neck),No seam,S-3XL,2.996,0.95
+Women,T-Shirt (Crew Neck),No seam,2.0,3.2057200000000003,0.95
+Women,T-Shirt (Crew Neck),Side Seam,S-XL,3.5,0.95
+Women,T-Shirt (Crew Neck),Side Seam,S-3XL,3.745,0.95
+Women,T-Shirt (Crew Neck),Side Seam,2.0,4.00715,0.95
+Kids,T-Shirt (Crew Neck),No seam,S-XL,2.6,0.95
+Kids,T-Shirt (Crew Neck),No seam,S-3XL,2.7820000000000005,0.95
+Kids,T-Shirt (Crew Neck),No seam,2.0,2.976740000000001,0.95
+Kids,T-Shirt (Crew Neck),Side Seam,S-XL,3.3,0.95
+Kids,T-Shirt (Crew Neck),Side Seam,S-3XL,3.531,0.95
+Kids,T-Shirt (Crew Neck),Side Seam,2.0,3.7781700000000003,0.95
+Men,T-Shirt (V Neck),No seam,S-XL,3.4,0.95
+Men,T-Shirt (V Neck),No seam,S-3XL,3.603,0.95
+Men,T-Shirt (V Neck),No seam,2.0,3.8202100000000003,0.95
+Men,T-Shirt (V Neck),Side Seam,S-XL,4.2,0.95
+Men,T-Shirt (V Neck),Side Seam,S-3XL,4.4590000000000005,0.95
+Men,T-Shirt (V Neck),Side Seam,2.0,4.736130000000001,0.95
+Women,T-Shirt (V Neck),No seam,S-XL,3.3,0.95
+Women,T-Shirt (V Neck),No seam,S-3XL,3.496,0.95
+Women,T-Shirt (V Neck),No seam,2.0,3.7057200000000003,0.95
+Women,T-Shirt (V Neck),Side Seam,S-XL,4.0,0.95
+Women,T-Shirt (V Neck),Side Seam,S-3XL,4.245,0.95
+Women,T-Shirt (V Neck),Side Seam,2.0,4.50715,0.95
+Kids,T-Shirt (V Neck),No seam,S-XL,3.1,0.95
+Kids,T-Shirt (V Neck),No seam,S-3XL,3.2820000000000005,0.95
+Kids,T-Shirt (V Neck),No seam,2.0,3.476740000000001,0.95
+Kids,T-Shirt (V Neck),Side Seam,S-XL,3.9,0.95
+Kids,T-Shirt (V Neck),Side Seam,S-3XL,4.1,0.95
+Kids,T-Shirt (V Neck),Side Seam,2.0,4.1,0.95
+Men,Long Sleeve Shirt (Crew Neck),No seam,S-XL,3.9,0.9
+Men,Long Sleeve Shirt (Crew Neck),No seam,S-3XL,4.173,0.9
+Men,Long Sleeve Shirt (Crew Neck),No seam,2.0,4.46511,0.9
+Men,Long Sleeve Shirt (Crew Neck),Side Seam,S-XL,4.3,0.9
+Men,Long Sleeve Shirt (Crew Neck),Side Seam,S-3XL,4.601,0.9
+Men,Long Sleeve Shirt (Crew Neck),Side Seam,2.0,4.92307,0.9
+Women,Long Sleeve Shirt (Crew Neck),No seam,S-XL,3.7,0.9
+Women,Long Sleeve Shirt (Crew Neck),No seam,S-3XL,3.9590000000000005,0.9
+Women,Long Sleeve Shirt (Crew Neck),No seam,2.0,4.236130000000001,0.9
+Women,Long Sleeve Shirt (Crew Neck),Side Seam,S-XL,4.1,0.9
+Women,Long Sleeve Shirt (Crew Neck),Side Seam,S-3XL,4.387,0.9
+Women,Long Sleeve Shirt (Crew Neck),Side Seam,2.0,4.69409,0.9
+Kids,Long Sleeve Shirt (Crew Neck),No seam,S-XL,3.3,0.9
+Kids,Long Sleeve Shirt (Crew Neck),No seam,S-3XL,3.531,0.9
+Kids,Long Sleeve Shirt (Crew Neck),No seam,2.0,3.7781700000000003,0.9
+Kids,Long Sleeve Shirt (Crew Neck),Side Seam,S-XL,3.9,0.9
+Kids,Long Sleeve Shirt (Crew Neck),Side Seam,S-3XL,4.173,0.9
+Kids,Long Sleeve Shirt (Crew Neck),Side Seam,2.0,4.46511,0.9
+Men,Long Sleeve Shirt (V Neck),No seam,S-XL,4.29,0.9
+Men,Long Sleeve Shirt (V Neck),No seam,S-3XL,,0.9
+Men,Long Sleeve Shirt (V Neck),No seam,2.0,,0.9
+Men,Long Sleeve Shirt (V Neck),Side Seam,S-XL,4.73,0.9
+Men,Long Sleeve Shirt (V Neck),Side Seam,S-3XL,,0.9
+Men,Long Sleeve Shirt (V Neck),Side Seam,2.0,,0.9
+Women,Long Sleeve Shirt (V Neck),No seam,S-XL,4.07,0.9
+Women,Long Sleeve Shirt (V Neck),No seam,S-3XL,,0.9
+Women,Long Sleeve Shirt (V Neck),No seam,2.0,,0.9
+Women,Long Sleeve Shirt (V Neck),Side Seam,S-XL,4.51,0.9
+Women,Long Sleeve Shirt (V Neck),Side Seam,S-3XL,,0.9
+Women,Long Sleeve Shirt (V Neck),Side Seam,2.0,,0.9
+Kids,Long Sleeve Shirt (V Neck),No seam,S-XL,3.63,0.9
+Kids,Long Sleeve Shirt (V Neck),No seam,S-3XL,,0.9
+Kids,Long Sleeve Shirt (V Neck),No seam,2.0,,0.9
+Kids,Long Sleeve Shirt (V Neck),Side Seam,S-XL,4.29,0.9
+Kids,Long Sleeve Shirt (V Neck),Side Seam,S-3XL,,0.9
+Kids,Long Sleeve Shirt (V Neck),Side Seam,2.0,,0.9
+Men,Sleeveless Shirt (Crew Neck),No seam,S-XL,2.2,0.95
+Men,Sleeveless Shirt (Crew Neck),No seam,S-3XL,2.3540000000000005,0.95
+Men,Sleeveless Shirt (Crew Neck),No seam,2.0,2.518780000000001,0.95
+Men,Sleeveless Shirt (Crew Neck),Side Seam,S-XL,2.5999999999999996,0.95
+Men,Sleeveless Shirt (Crew Neck),Side Seam,S-3XL,2.7819999999999996,0.95
+Men,Sleeveless Shirt (Crew Neck),Side Seam,2.0,2.97674,0.95
+Women,Sleeveless Shirt (Crew Neck),No seam,S-XL,2.0999999999999996,0.95
+Women,Sleeveless Shirt (Crew Neck),No seam,S-3XL,2.247,0.95
+Women,Sleeveless Shirt (Crew Neck),No seam,2.0,2.40429,0.95
+Women,Sleeveless Shirt (Crew Neck),Side Seam,S-XL,2.5,0.95
+Women,Sleeveless Shirt (Crew Neck),Side Seam,S-3XL,2.6750000000000003,0.95
+Women,Sleeveless Shirt (Crew Neck),Side Seam,2.0,2.8622500000000004,0.95
+Kids,Sleeveless Shirt (Crew Neck),No seam,S-XL,1.9000000000000001,0.95
+Kids,Sleeveless Shirt (Crew Neck),No seam,S-3XL,2.0330000000000004,0.95
+Kids,Sleeveless Shirt (Crew Neck),No seam,2.0,2.1753100000000005,0.95
+Kids,Sleeveless Shirt (Crew Neck),Side Seam,S-XL,2.4000000000000004,0.95
+Kids,Sleeveless Shirt (Crew Neck),Side Seam,S-3XL,2.5680000000000005,0.95
+Kids,Sleeveless Shirt (Crew Neck),Side Seam,2.0,2.747760000000001,0.95
+Men,Sleeveless Shirt (V Neck),No seam,S-XL,2.64,0.95
+Men,Sleeveless Shirt (V Neck),No seam,S-3XL,,0.95
+Men,Sleeveless Shirt (V Neck),No seam,2.0,,0.95
+Men,Sleeveless Shirt (V Neck),Side Seam,S-XL,3.1199999999999997,0.95
+Men,Sleeveless Shirt (V Neck),Side Seam,S-3XL,,0.95
+Men,Sleeveless Shirt (V Neck),Side Seam,2.0,,0.95
+Women,Sleeveless Shirt (V Neck),No seam,S-XL,2.5199999999999996,0.95
+Women,Sleeveless Shirt (V Neck),No seam,S-3XL,,0.95
+Women,Sleeveless Shirt (V Neck),No seam,2.0,,0.95
+Women,Sleeveless Shirt (V Neck),Side Seam,S-XL,3.0,0.95
+Women,Sleeveless Shirt (V Neck),Side Seam,S-3XL,,0.95
+Women,Sleeveless Shirt (V Neck),Side Seam,2.0,,0.95
+Kids,Sleeveless Shirt (V Neck),No seam,S-XL,2.2800000000000002,0.95
+Kids,Sleeveless Shirt (V Neck),No seam,S-3XL,,0.95
+Kids,Sleeveless Shirt (V Neck),No seam,2.0,,0.95
+Kids,Sleeveless Shirt (V Neck),Side Seam,S-XL,2.8800000000000003,0.95
+Kids,Sleeveless Shirt (V Neck),Side Seam,S-3XL,,0.95
+Kids,Sleeveless Shirt (V Neck),Side Seam,2.0,,0.95

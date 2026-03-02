@@ -1,0 +1,591 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Basic Shirts Costing Demo</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 24px; }
+    h1 { margin: 0 0 12px; }
+    .grid { display: grid; grid-template-columns: 260px 1fr; gap: 10px 16px; max-width: 900px; }
+    label { font-weight: 600; }
+    select, input {
+      width: 100%;
+      padding: 8px;
+      background-color: #f5f5f5;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    select:focus, input:focus {
+      background-color: #fff;
+      border-color: #4a90e2;
+      outline: none;
+    }
+    .row { padding: 14px; border: 1px solid #ddd; border-radius: 10px; margin-top: 14px; }
+    button { padding: 10px 14px; }
+    pre { background: #0b1020; color: #d7e3ff; padding: 12px; border-radius: 10px; overflow: auto; }
+    .small { color: #666; font-size: 13px; }
+    #out { position: relative; }
+    #out.calculating { opacity: 0.6; }
+    .calc-indicator {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #4a90e2;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      display: none;
+    }
+    .calc-indicator.show { display: block; }
+    .summary-section {
+      background: #f9f9f9;
+      padding: 16px;
+      border-radius: 10px;
+      margin-top: 14px;
+      border: 2px solid #4a90e2;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .summary-row:last-child {
+      border-bottom: none;
+      font-weight: bold;
+      font-size: 1.1em;
+      padding-top: 12px;
+    }
+    .summary-label { font-weight: 600; }
+    .summary-value { text-align: right; min-width: 100px; }
+  </style>
+</head>
+<body>
+  <h1>Basic Shirts Costing Demo (Step 1–6)</h1>
+  <div class="small">Dropdown options load from <code>master_clean/dropdown_*.csv</code>. Step 2 Fabrication now follows Excel formulas for Default Weight, Default Price/YD, Default Price/KILO, and Total Cost.</div>
+
+  <div class="row">
+    <h2>1) Development Information</h2>
+    <div class="grid" id="devGrid"></div>
+  </div>
+
+  <div class="row">
+    <h2>2) Fabrication</h2>
+    <div class="small">Row 1 only for demo (we'll expand to 3 rows). Defaults (Price/Yd, Price/Kilo, Total Cost) will appear after Calculate.</div>
+    <div class="grid" id="fabGrid"></div>
+    <div class="grid" style="margin-top:10px;" id="fabOutGrid"></div>
+  </div>
+
+  <div class="row">
+    <h2>3) Trims &amp; Sewn in Label</h2>
+    <div class="small">Row 1 only for demo. Trims Type + Garment Part are dropdowns; Usage and Price/Unit are optional inputs.</div>
+    <div class="grid" id="trimGrid"></div>
+    <div class="grid" style="margin-top:10px;" id="trimOutGrid"></div>
+  </div>
+
+  <div class="row">
+    <h2>4) Embellishments</h2>
+    <div class="small">Row 1 only for demo. Printing/Embroidery + Dimension are dropdowns; Usage/Unit is an input. Default price is auto (Excel Data link N22) and total = price * usage.</div>
+    <div class="grid" id="embGrid"></div>
+    <div class="grid" style="margin-top:10px;" id="embOutGrid"></div>
+  </div>
+
+  <div class="row">
+    <h2>5) Packing and Label</h2>
+    <div class="small">Implements Display Packaging / Transit Package / Label (defaults + totals) per Excel formulas.</div>
+    <div class="grid" id="packGrid"></div>
+    <div class="grid" style="margin-top:10px;" id="packOutGrid"></div>
+  </div>
+
+  <div class="row">
+    <h2>6) Manufacturing Cost</h2>
+    <div class="small">Manufacturing cost based on COO (Country of Origin) selected in Step 1.</div>
+    <div class="grid" id="mfgGrid"></div>
+  </div>
+
+  <div style="margin-top: 16px; display:flex; gap:10px;">
+    <button id="btnCalc">Calculate</button>
+    <button id="btnReload">Reload dropdowns</button>
+    <label style="display:flex; align-items:center; gap:8px; margin-left:auto;">
+      <input type="checkbox" id="autoCalc" checked />
+      <span style="font-weight:normal; font-size:13px;">Auto-calculate (like Excel)</span>
+    </label>
+  </div>
+
+  <div class="row summary-section">
+    <h2>Total Cost Summary</h2>
+    <div class="summary-row">
+      <span class="summary-label">Step 2: Fabrication</span>
+      <span class="summary-value" id="totalFabricCost">$0.00</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">Step 3: Trims & Sewn in Label</span>
+      <span class="summary-value" id="totalTrimCost">$0.00</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">Step 4: Embellishments</span>
+      <span class="summary-value" id="totalEmbellishmentCost">$0.00</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">Step 5: Packing & Label</span>
+      <span class="summary-value" id="totalPackingCost">$0.00</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">Step 6: Manufacturing (Selected Country)</span>
+      <span class="summary-value" id="totalManufacturingCost">$0.00</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">TOTAL COST</span>
+      <span class="summary-value" id="grandTotalCost">$0.00</span>
+    </div>
+  </div>
+
+  <h3>Response</h3>
+  <pre id="out">(auto-calculates on input change, or click Calculate)<div class="calc-indicator" id="calcIndicator">Calculating...</div></pre>
+
+<script>
+const apiBase = '';
+
+async function getJSON(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+
+async function postJSON(url, body) {
+  const r = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  const txt = await r.text();
+  if (!r.ok) throw new Error(txt);
+  return JSON.parse(txt);
+}
+
+let dropdowns = {};
+
+async function loadDropdown(name) {
+  const data = await getJSON(`${apiBase}/api/dropdown/${name}`);
+  dropdowns[name] = data.values;
+}
+
+function mkSelect(id, options) {
+  const sel = document.createElement('select');
+  sel.id = id;
+  const empty = document.createElement('option');
+  empty.value = '';
+  empty.textContent = '— select —';
+  sel.appendChild(empty);
+  for (const v of options) {
+    const opt = document.createElement('option');
+    opt.value = v;
+    opt.textContent = v;
+    sel.appendChild(opt);
+  }
+  // Auto-select first option if available
+  if (options && options.length > 0) {
+    sel.value = options[0];
+  }
+  return sel;
+}
+
+function mkInput(id, type='text', placeholder='') {
+  const inp = document.createElement('input');
+  inp.id = id;
+  inp.type = type;
+  inp.placeholder = placeholder;
+  return inp;
+}
+
+function addField(grid, label, element) {
+  const l = document.createElement('label');
+  l.textContent = label;
+  grid.appendChild(l);
+  grid.appendChild(element);
+}
+
+async function buildUI() {
+  // load dropdowns needed for Step 1 & Fabrication
+  const needs = [
+    'gender','silhouette_pattern','seam','size','color','quantity','packing_no','coo','fabric_finishing',
+    'fabric_type','fabric_contents','using_part','material_coo','price_unit',
+    'trims_type','garment_part_trim',
+    'printing_embroidery','usage_unit',
+    'display_packaging','transit_package','label'
+  ];
+  await Promise.all(needs.map(loadDropdown));
+
+  const devGrid = document.getElementById('devGrid');
+  devGrid.innerHTML = '';
+  addField(devGrid, 'Gender', mkSelect('dev_gender', dropdowns.gender));
+  addField(devGrid, 'Silhouette', mkSelect('dev_silhouette', dropdowns.silhouette_pattern));
+  addField(devGrid, 'Seam', mkSelect('dev_seam', dropdowns.seam));
+  addField(devGrid, 'Color / Design', mkSelect('dev_color', dropdowns.color));
+  addField(devGrid, 'Size', mkSelect('dev_size', dropdowns.size));
+  addField(devGrid, 'Pack count / Pack', mkSelect('dev_pack', dropdowns.packing_no));
+  addField(devGrid, 'Ideal quantity (Pcs)', mkSelect('dev_qty', dropdowns.quantity));
+  addField(devGrid, 'COO', mkSelect('dev_coo', dropdowns.coo));
+  addField(devGrid, 'Fabric Finishing', mkSelect('dev_finish', dropdowns.fabric_finishing));
+
+  const fabGrid = document.getElementById('fabGrid');
+  fabGrid.innerHTML = '';
+  const selFabricType = mkSelect('fab_type', dropdowns.fabric_type);
+  const selFabricContents = mkSelect('fab_contents', dropdowns.fabric_contents);
+  selFabricType.addEventListener('change', () => refreshFabricDefaults());
+  selFabricContents.addEventListener('change', () => refreshFabricDefaults());
+
+  addField(fabGrid, 'Fabric Type', selFabricType);
+  addField(fabGrid, 'Fabric Contents', selFabricContents);
+  addField(fabGrid, 'Using Part', mkSelect('fab_part', dropdowns.using_part));
+  // Inputs (selectable/fillable)
+  addField(fabGrid, 'Weight (GSM)', mkInput('fab_weight', 'number', 'fill if needed'));
+  // Price unit + value (Excel U6 + U7)
+  addField(fabGrid, 'Price Unit', mkSelect('fab_price_unit', dropdowns.price_unit));
+  addField(fabGrid, 'Price Value', mkInput('fab_price', 'number', 'leave blank to use default'));
+  addField(fabGrid, 'Material COO', mkSelect('fab_mcoo', dropdowns.material_coo));
+
+  // Read-only defaults display (ordered to match Excel columns)
+  const outGrid = document.getElementById('fabOutGrid');
+  outGrid.innerHTML = '';
+  const makeRO = (id) => { const i = mkInput(id, 'text', ''); i.readOnly = true; return i; };
+  addField(outGrid, 'Fixed Fabric Width', makeRO('fab_width_ro'));
+  addField(outGrid, 'Default Weight (GSM)', makeRO('fab_gsm_ro'));
+  addField(outGrid, 'DEFAULT (PRICE/YD)', makeRO('fab_price_yd_ro'));
+  addField(outGrid, 'DEFAULT (PRICE/KILO)', makeRO('fab_price_kilo_ro'));
+  addField(outGrid, 'PRICE / Lbs (default)', makeRO('fab_price_lb_ro'));
+  addField(outGrid, 'TOTAL COST', makeRO('fab_total_ro'));
+
+  // Step 3 UI
+  const trimGrid = document.getElementById('trimGrid');
+  trimGrid.innerHTML = '';
+  addField(trimGrid, 'Trims Type', mkSelect('trim_type', dropdowns.trims_type));
+  addField(trimGrid, 'Garment Part', mkSelect('trim_part', dropdowns.garment_part_trim));
+  addField(trimGrid, 'Usage (Yard/Piece) (optional input)', mkInput('trim_usage', 'number', 'leave blank to use default'));
+  addField(trimGrid, 'Price / Unit (optional input)', mkInput('trim_price', 'number', 'leave blank to use default'));
+  addField(trimGrid, 'Material COO', mkSelect('trim_mcoo', dropdowns.material_coo));
+
+  const trimOut = document.getElementById('trimOutGrid');
+  trimOut.innerHTML = '';
+  addField(trimOut, 'UNIT', makeRO('trim_unit_ro'));
+  addField(trimOut, 'DEFAULT USAGE (YD/PIECE)', makeRO('trim_def_usage_ro'));
+  addField(trimOut, 'DEFAULT PRICE/EACH', makeRO('trim_def_price_ro'));
+  addField(trimOut, 'TOTAL COST', makeRO('trim_total_ro'));
+
+  // Step 4 UI
+  const embGrid = document.getElementById('embGrid');
+  embGrid.innerHTML = '';
+  const embTypeSel = mkSelect('emb_type', dropdowns.printing_embroidery);
+  const embDimSel = mkSelect('emb_dim', []);
+
+  const setSelectOptions = (sel, options) => {
+    console.log('setSelectOptions called with:', options);
+    const current = sel.value;
+    sel.innerHTML = '';
+    const empty = document.createElement('option');
+    empty.value = '';
+    empty.textContent = '— select —';
+    sel.appendChild(empty);
+    console.log('Adding', options.length, 'options');
+    for (const v of options) {
+      const opt = document.createElement('option');
+      opt.value = v;
+      opt.textContent = v;
+      sel.appendChild(opt);
+    }
+    console.log('Select now has', sel.options.length, 'options');
+    if (options.includes(current)) sel.value = current;
+    // Auto-select first real option
+    if (options && options.length > 0 && !sel.value) {
+      sel.value = options[0];
+      console.log('Auto-selected first option:', options[0]);
+    }
+  };
+
+  const reloadDims = async () => {
+    const t = embTypeSel.value;
+    console.log('Loading dimensions for:', t);
+    if (!t) {
+      console.log('No type selected, skipping');
+      return;
+    }
+    try {
+      const d = await getJSON(`${apiBase}/api/embellishment/dimensions?printing_embroidery=${encodeURIComponent(t)}`);
+      console.log('Got dimensions:', d.values);
+      setSelectOptions(embDimSel, d.values || []);
+    } catch (e) {
+      console.error('Failed to load dimensions:', e);
+    }
+  };
+  embTypeSel.addEventListener('change', () => reloadDims());
+
+  addField(embGrid, 'PRINTING/EMBROIDERY', embTypeSel);
+  addField(embGrid, 'DIMENSION', embDimSel);
+  addField(embGrid, 'USAGE / UNIT', mkSelect('emb_usage', dropdowns.usage_unit));
+
+  // Initial load - reload dimensions for the auto-selected type
+  console.log('Initial dimension load, embTypeSel.value=', embTypeSel.value);
+  reloadDims();
+
+  const embOut = document.getElementById('embOutGrid');
+  embOut.innerHTML = '';
+  addField(embOut, 'DEFAULT PRICE / EACH', makeRO('emb_price_ro'));
+  addField(embOut, 'TOTAL', makeRO('emb_total_ro'));
+
+  // Step 5 UI
+  const packGrid = document.getElementById('packGrid');
+  packGrid.innerHTML = '';
+  addField(packGrid, 'Display Packaging (Details)', mkSelect('pack_display', dropdowns.display_packaging));
+  addField(packGrid, 'Transit Package (Details)', mkSelect('pack_transit', dropdowns.transit_package));
+  addField(packGrid, 'Label (Details)', mkSelect('pack_label', dropdowns.label));
+
+  const packOut = document.getElementById('packOutGrid');
+  packOut.innerHTML = '';
+  addField(packOut, 'Display Packaging - DEFAULT USAGE', makeRO('pack_disp_usage_ro'));
+  addField(packOut, 'Display Packaging - TOTAL', makeRO('pack_disp_total_ro'));
+  addField(packOut, 'Transit Package - DEFAULT USAGE', makeRO('pack_tr_usage_ro'));
+  addField(packOut, 'Transit Package - TOTAL', makeRO('pack_tr_total_ro'));
+  addField(packOut, 'Label - DEFAULT USAGE', makeRO('pack_lb_usage_ro'));
+  addField(packOut, 'Label - TOTAL', makeRO('pack_lb_total_ro'));
+
+  // Step 6: Manufacturing Cost UI
+  const mfgGrid = document.getElementById('mfgGrid');
+  mfgGrid.innerHTML = '';
+  addField(mfgGrid, 'Minutes (W18)', makeRO('mfg_minutes_ro'));
+  addField(mfgGrid, 'Cost Rate (W19)', makeRO('mfg_cost_rate_ro'));
+  addField(mfgGrid, 'Efficiency (W20)', makeRO('mfg_efficiency_ro'));
+  addField(mfgGrid, 'TOTAL COST (W21)', makeRO('mfg_total_ro'));
+
+  // Setup auto-calculation after UI is built
+  setupAutoCalc();
+}
+
+function collectPayload() {
+  return {
+    development: {
+      gender: document.getElementById('dev_gender').value,
+      silhouette: document.getElementById('dev_silhouette').value,
+      seam: document.getElementById('dev_seam').value,
+      color_design: document.getElementById('dev_color').value,
+      size: document.getElementById('dev_size').value,
+      pack_count: document.getElementById('dev_pack').value,
+      ideal_quantity: document.getElementById('dev_qty').value,
+      coo: document.getElementById('dev_coo').value,
+      fabric_finishing: document.getElementById('dev_finish').value,
+    },
+    fabrication: [
+      {
+        fabric_type: document.getElementById('fab_type').value,
+        fabric_contents: document.getElementById('fab_contents').value,
+        using_part: document.getElementById('fab_part').value,
+        weight_gsm_override: document.getElementById('fab_weight').value,
+        price_unit: document.getElementById('fab_price_unit').value,
+        price_value: document.getElementById('fab_price').value,
+        material_coo: document.getElementById('fab_mcoo').value,
+      }
+    ],
+    trims: [
+      {
+        trims_type: document.getElementById('trim_type').value,
+        garment_part: document.getElementById('trim_part').value,
+        usage_override: document.getElementById('trim_usage').value,
+        price_override: document.getElementById('trim_price').value,
+        material_coo: document.getElementById('trim_mcoo').value,
+      }
+    ],
+    embellishments: [
+      {
+        printing_embroidery: document.getElementById('emb_type').value,
+        dimension: document.getElementById('emb_dim').value,
+        usage_unit: document.getElementById('emb_usage').value,
+      }
+    ],
+    packing_label: {
+      display_packaging: document.getElementById('pack_display').value,
+      transit_package: document.getElementById('pack_transit').value,
+      label_type: document.getElementById('pack_label').value,
+    }
+  };
+}
+
+async function refreshFabricDefaults() {
+  const ft = document.getElementById('fab_type')?.value || '';
+  const fc = document.getElementById('fab_contents')?.value || '';
+  if (!ft && !fc) return;
+  try {
+    const d = await getJSON(`${apiBase}/api/fabric/defaults?fabric_type=${encodeURIComponent(ft)}&fabric_contents=${encodeURIComponent(fc)}`);
+    const setRO = (id, val) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.value = (val === null || val === undefined || val === '') ? '' : String(val);
+    };
+    // Only default price/lb is safe to show pre-calc. Other fields are formula-driven.
+    setRO('fab_price_lb_ro', d.default_price_lb);
+  } catch (e) {
+    // ignore
+  }
+}
+
+function renderFabricationOutputs(res) {
+  const row = res?.outputs?.fabrication?.rows?.[0];
+  if (!row) return;
+
+  const setRO = (id, val) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.value = (val === null || val === undefined || val === '') ? '' : String(val);
+  };
+
+  setRO('fab_width_ro', row.fixed_fabric_width);
+  setRO('fab_gsm_ro', row.default_weight_gsm);
+  setRO('fab_price_yd_ro', row.default_price_yd);
+  setRO('fab_price_kilo_ro', row.default_price_kilo);
+  setRO('fab_price_lb_ro', row.default_price_lb);
+  setRO('fab_total_ro', row.total_cost);
+
+  const trow = res?.outputs?.trims?.rows?.[0];
+  if (trow) {
+    setRO('trim_unit_ro', trow.unit);
+    setRO('trim_def_usage_ro', trow.default_usage);
+    setRO('trim_def_price_ro', trow.default_price_each);
+    setRO('trim_total_ro', trow.total_cost);
+  }
+
+  const erow = res?.outputs?.embellishments?.rows?.[0];
+  if (erow) {
+    setRO('emb_price_ro', erow.default_price_each);
+    setRO('emb_total_ro', erow.total_cost);
+  }
+
+  const p = res?.outputs?.packing_label;
+  if (p) {
+    setRO('pack_disp_usage_ro', p.display_packaging?.default_usage);
+    setRO('pack_disp_total_ro', p.display_packaging?.total);
+    setRO('pack_tr_usage_ro', p.transit_package?.default_usage);
+    setRO('pack_tr_total_ro', p.transit_package?.total);
+    setRO('pack_lb_usage_ro', p.label?.default_usage);
+    setRO('pack_lb_total_ro', p.label?.total);
+  }
+
+  // Step 6: Manufacturing (single row based on COO)
+  const coo = res?.inputs?.development?.coo || 'INDIA';
+  const mfgRow = res?.outputs?.manufacturing?.rows?.find(r => r.country === coo) || res?.outputs?.manufacturing?.rows?.[0];
+  if (mfgRow) {
+    setRO('mfg_minutes_ro', mfgRow.minutes);
+    setRO('mfg_cost_rate_ro', mfgRow.cost_rate);
+    setRO('mfg_efficiency_ro', mfgRow.efficiency);
+    setRO('mfg_total_ro', mfgRow.total_cost);
+  }
+
+  // Update summary section
+  updateSummary(res);
+}
+
+function updateSummary(res) {
+  const formatCost = (cost) => {
+    if (cost === null || cost === undefined || cost === '') return '$0.00';
+    const num = parseFloat(cost);
+    if (isNaN(num)) return '$0.00';
+    return '$' + num.toFixed(2);
+  };
+
+  // Step 2: Fabrication
+  const fabricCost = res?.outputs?.fabrication?.total_fabric_cost || 0;
+  document.getElementById('totalFabricCost').textContent = formatCost(fabricCost);
+
+  // Step 3: Trims
+  const trimCost = res?.outputs?.trims?.rows?.reduce((sum, row) => sum + (row.total_cost || 0), 0) || 0;
+  document.getElementById('totalTrimCost').textContent = formatCost(trimCost);
+
+  // Step 4: Embellishments
+  const embCost = res?.outputs?.embellishments?.rows?.reduce((sum, row) => sum + (row.total_cost || 0), 0) || 0;
+  document.getElementById('totalEmbellishmentCost').textContent = formatCost(embCost);
+
+  // Step 5: Packing & Label
+  const packingCost = res?.outputs?.packing_label?.total_cost || 0;
+  document.getElementById('totalPackingCost').textContent = formatCost(packingCost);
+
+  // Step 6: Manufacturing (use first country as default, or COO if available)
+  const coo = res?.inputs?.development?.coo || 'INDIA';
+  const mfgRow = res?.outputs?.manufacturing?.rows?.find(r => r.country === coo) || res?.outputs?.manufacturing?.rows?.[0];
+  const mfgCost = mfgRow?.total_cost || 0;
+  document.getElementById('totalManufacturingCost').textContent = formatCost(mfgCost);
+
+  // Grand Total
+  const grandTotal = fabricCost + trimCost + embCost + packingCost + mfgCost;
+  document.getElementById('grandTotalCost').textContent = formatCost(grandTotal);
+}
+
+async function onCalc() {
+  const payload = collectPayload();
+  const out = document.getElementById('out');
+  const indicator = document.getElementById('calcIndicator');
+
+  out.classList.add('calculating');
+  if (indicator) indicator.classList.add('show');
+
+  try {
+    const res = await postJSON(`${apiBase}/api/calculate`, payload);
+    out.textContent = JSON.stringify(res, null, 2);
+    renderFabricationOutputs(res);
+  } catch (e) {
+    out.textContent = 'ERROR:\n' + (e && e.message ? e.message : String(e));
+  } finally {
+    out.classList.remove('calculating');
+    if (indicator) indicator.classList.remove('show');
+  }
+}
+
+// Debounce function to prevent too many API calls
+let calcTimeout = null;
+function debounceCalc() {
+  const autoCalcEnabled = document.getElementById('autoCalc')?.checked;
+  if (!autoCalcEnabled) return;
+
+  if (calcTimeout) clearTimeout(calcTimeout);
+  calcTimeout = setTimeout(() => {
+    onCalc().catch(err => console.error('Auto-calc error:', err));
+  }, 500); // Wait 500ms after last change
+}
+
+// Add change listeners to all inputs/selects for auto-calculation
+function setupAutoCalc() {
+  const ids = [
+    // Step 1: Development
+    'dev_gender', 'dev_silhouette', 'dev_seam', 'dev_color', 'dev_size',
+    'dev_pack', 'dev_qty', 'dev_coo', 'dev_finish',
+
+    // Step 2: Fabrication
+    'fab_type', 'fab_contents', 'fab_part', 'fab_weight', 'fab_price_unit',
+    'fab_price', 'fab_mcoo',
+
+    // Step 3: Trims
+    'trim_type', 'trim_part', 'trim_usage', 'trim_price', 'trim_mcoo',
+
+    // Step 4: Embellishments
+    'emb_type', 'emb_dim', 'emb_usage',
+
+    // Step 5: Packing & Label
+    'pack_display', 'pack_transit', 'pack_label'
+  ];
+
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('change', debounceCalc);
+      el.addEventListener('input', debounceCalc); // For text/number inputs
+    }
+  });
+}
+
+document.getElementById('btnCalc').addEventListener('click', onCalc);
+document.getElementById('btnReload').addEventListener('click', () => buildUI().catch(err => alert(err)));
+
+buildUI().catch(err => {
+  document.getElementById('out').textContent = 'Failed to load dropdowns: ' + err;
+});
+</script>
+</body>
+</html>
