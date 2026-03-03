@@ -1,0 +1,45 @@
+printing_embroidery,dimension,default_price_each
+Rubber_Print,1X1 cm,0.15
+Rubber_Print,2X2 cm,0.165
+Rubber_Print,3X3 cm,0.1725
+Rubber_Print,4X4 cm,0.18
+Rubber_Print,2X1 cm,0.195
+Rubber_Print,3X1 cm,0.21
+Rubber_Print,4X1 cm,0.21
+Rubber_Print,5X1 cm,0.21
+Rubber_Print,6X1 cm,0.21
+Rubber_Print,7 X1 cm,0.21
+Rubber_Print,8X1 cm,0.22499999999999998
+Rubber_Print,9X1 cm,0.22499999999999998
+Rubber_Print,10X1 cm,0.22499999999999998
+Heat_Transfer,20X10 mm,0.04
+Heat_Transfer,30X10 mm,0.06
+Heat_Transfer,30X30 mm,0.07
+Heat_Transfer,40X20 mm,0.08
+Heat_Transfer,40X30 mm,0.09
+Heat_Transfer,40X40 mm,0.1
+Heat_Transfer,50X20 mm,0.1
+Heat_Transfer,50X30 mm,0.11
+Heat_Transfer,50X40 mm,0.12
+Heat_Transfer,50X50 mm,0.15
+Embroidery,27 mm x 18 mm(1162 Stitch),0.08
+Embroidery,35 mm x 24 mm(1745 Stitch),0.12013769363166953
+Embroidery,43 mm x 29 mm(2404 Stitch),0.16550774526678141
+Embroidery,55 mm x 37 mm(3195 Stitch),0.2199655765920826
+Embroidery,60 mm x 41 mm(3343 Stitch),0.2301549053356282
+Embroidery,27 mm x 18 mm(2271 Stitch),0.15635111876075733
+Embroidery,35 mm x 24 mm(3004 Stitch),0.20681583476764198
+Embroidery,35 mm x 24 mm(2284 Stitch),0.15724612736660928
+Embroidery,29 mm x 43 mm(3053 Stitch),0.21018932874354562
+Embroidery,41 mm x 60 mm(3994 Stitch),0.27497418244406197
+Embroidery,36 mm x 54 mm(3659 Stitch),0.2519104991394148
+Pignment_Print,Fabric  base White 1-3 colours,0.25
+Pignment_Print,Fabric base Solid 1-3 colours,0.3
+Pignment_Print,Fabric  base  Solid AOP,0.65
+Pignment_Print,Fabric base White  AOP,0.5
+Reactive_Print,Fabric  base White 1-3 colours,0.32
+Reactive_Print,Fabric base Solid 1-3 colours,0.38
+Reactive_Print,Fabric  base  Solid AOP,0.75
+Reactive_Print,Fabric base White  AOP,0.81
+Digital_Print,AOP,3.0
+Sublimation_Print,AOP,0.35

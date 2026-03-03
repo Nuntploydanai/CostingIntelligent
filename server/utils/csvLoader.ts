@@ -10,7 +10,8 @@ export async function loadCSV(filename: string): Promise<any[]> {
     const filePath = path.join(DATA_DIR, filename);
 
     if (!fs.existsSync(filePath)) {
-      reject(new Error(`CSV file not found: ${filename}`));
+      // Return empty array if file doesn't exist
+      resolve([]);
       return;
     }
 
