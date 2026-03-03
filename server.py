@@ -14,6 +14,8 @@ from trims_calc import compute_trim_row
 from embellishments_calc import compute_embellishment_row
 from packing_label_calc import compute_packing_label
 from manufacturing_calc import compute_all_manufacturing_rows
+from total_cost_calc import compute_total_cost_summary
+from country_comparison_calc import compute_fob_by_country
 
 BASE_DIR = Path(__file__).resolve().parent
 MASTER_DIR = BASE_DIR / "master_clean"
@@ -36,6 +38,11 @@ class CalculateRequest(BaseModel):
     trims: list[dict[str, Any]] = []
     embellishments: list[dict[str, Any]] = []
     packing_label: dict[str, Any] = {}
+    supplier_margin_percent: float = 7.0  # Default to 7% (Excel default)
+    freight_cost: float = 0.0
+    gmo_cost: float = 0.0
+    duty_cost: float = 0.0
+    additional_cost: float = 0.0
 
 
 def read_dropdown(name: str) -> list[str]:
@@ -255,6 +262,69 @@ def calculate(req: CalculateRequest):
         coo=normalized_dev.get("coo", ""),
     )
 
+    # Calculate totals from each step
+    fabric_cost = sum([r.get("total_cost", 0) or 0 for r in fab_calc])
+
+    # Trims cost: EXCLUDE sewing thread (it's calculated separately in total_cost_summary)
+    trim_cost = sum([
+        r.get("total_cost", 0) or 0
+        for r in trim_calc
+        if not (r.get("trims_type") or "").lower().strip().startswith("sewing thread")
+    ])
+
+    print_embroidery_cost = sum([r.get("total_cost", 0) or 0 for r in emb_calc])
+
+    packing = step5 or {}
+    display_packaging_cost = packing.get("display_packaging", {}).get("total", 0) or 0
+    transit_packaging_cost = packing.get("transit_package", {}).get("total", 0) or 0
+    label_cost = packing.get("label", {}).get("total", 0) or 0
+
+    # Get manufacturing (labour) cost for selected COO
+    coo = normalized_dev.get("coo", "INDIA")
+    mfg_row = next((r for r in manufacturing_rows if r.get("country") == coo), manufacturing_rows[0] if manufacturing_rows else {})
+    labour_cost = mfg_row.get("total_cost", 0) or 0
+
+    # Calculate total cost summary
+    total_summary = compute_total_cost_summary(
+        fabric_cost=fabric_cost,
+        trim_cost=trim_cost,
+        print_embroidery_cost=print_embroidery_cost,
+        display_packaging_cost=display_packaging_cost,
+        transit_packaging_cost=transit_packaging_cost,
+        label_cost=label_cost,
+        labour_cost=labour_cost,
+        gender=normalized_dev.get("gender", ""),
+        silhouette=normalized_dev.get("silhouette", ""),
+        size=normalized_dev.get("size", ""),
+        supplier_margin_percent=req.supplier_margin_percent,
+        product_testing_cost=0.01,
+        other_cost=req.additional_cost,  # Use user input
+        freight_cost=req.freight_cost,
+        gmo_cost=req.gmo_cost,
+        duty_cost=req.duty_cost,
+    )
+
+    # Calculate FOB cost for all countries (comparison table)
+    country_comparison = compute_fob_by_country(
+        fabric_cost=fabric_cost,
+        trim_cost=trim_cost,
+        print_embroidery_cost=print_embroidery_cost,
+        display_packaging_cost=display_packaging_cost,
+        transit_packaging_cost=transit_packaging_cost,
+        label_cost=label_cost,
+        gender=normalized_dev.get("gender", ""),
+        silhouette=normalized_dev.get("silhouette", ""),
+        seam=normalized_dev.get("seam", ""),
+        size=normalized_dev.get("size", ""),
+        quantity=normalized_dev.get("ideal_quantity", ""),
+        supplier_margin_percent=req.supplier_margin_percent,
+        product_testing_cost=0.01,
+        other_cost=0.0,
+        freight_cost=0.0,
+        gmo_cost=0.0,
+        duty_cost=0.0,
+    )
+
     outputs = {
         "fabrication": {
             "rows": fab_calc,
@@ -270,6 +340,8 @@ def calculate(req: CalculateRequest):
         "manufacturing": {
             "rows": manufacturing_rows,
         },
+        "total_cost_summary": total_summary,
+        "country_comparison": country_comparison,
         "note": "Step 1–6: Fabrication + Trims + Embellishments + Packing&Label + Manufacturing (Excelish).",
     }
 

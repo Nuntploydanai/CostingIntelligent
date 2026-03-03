@@ -191,17 +191,27 @@ def compute_all_manufacturing_rows(
     quantity: str = "",
     coo: str = "",
 ) -> list[dict[str, Any]]:
-    """Calculate manufacturing cost for ALL countries (for backward compatibility).
+    """Calculate manufacturing cost for ALL countries or selected COO.
 
-    Returns a list with one dict per country, matching Excel rows 30-35.
-    Primarily used to return the selected COO's data.
+    If coo is provided, returns only that country.
+    If coo is empty, returns all countries for comparison.
     """
 
-    # For the webapp, we only return the selected COO's data
-    result = compute_manufacturing_for_coo(gender, silhouette, seam, size, quantity, coo)
+    # Get all available countries
+    cost_rate_lookup = _load_cost_rate_data()
 
-    # Return as a list for backward compatibility
-    return [result]
+    # If COO is specified, only return that country
+    if coo:
+        result = compute_manufacturing_for_coo(gender, silhouette, seam, size, quantity, coo)
+        return [result]
+
+    # Otherwise, return ALL countries for comparison
+    results = []
+    for country in sorted(cost_rate_lookup.keys()):
+        result = compute_manufacturing_for_coo(gender, silhouette, seam, size, quantity, country)
+        results.append(result)
+
+    return results
 
 
 

@@ -46,6 +46,13 @@
       margin-top: 14px;
       border: 2px solid #4a90e2;
     }
+    .comparison-section {
+      background: #ffffff;
+      padding: 16px;
+      border-radius: 10px;
+      margin-top: 14px;
+      border: 2px solid #28a745;
+    }
     .summary-row {
       display: flex;
       justify-content: space-between;
@@ -117,29 +124,108 @@
   <div class="row summary-section">
     <h2>Total Cost Summary</h2>
     <div class="summary-row">
-      <span class="summary-label">Step 2: Fabrication</span>
-      <span class="summary-value" id="totalFabricCost">$0.00</span>
+      <span class="summary-label">1. Total Fabric Cost</span>
+      <span class="summary-value"><span id="totalFabricCost">$0.00</span> <span style="color: #666; font-size: 0.9em;">(<span id="totalFabricCostPct">0.0</span>%)</span></span>
     </div>
     <div class="summary-row">
-      <span class="summary-label">Step 3: Trims & Sewn in Label</span>
-      <span class="summary-value" id="totalTrimCost">$0.00</span>
+      <span class="summary-label">2. Total Trim Cost</span>
+      <span class="summary-value"><span id="totalTrimCost">$0.00</span> <span style="color: #666; font-size: 0.9em;">(<span id="totalTrimCostPct">0.0</span>%)</span></span>
     </div>
     <div class="summary-row">
-      <span class="summary-label">Step 4: Embellishments</span>
-      <span class="summary-value" id="totalEmbellishmentCost">$0.00</span>
+      <span class="summary-label">3. Total Display Packaging Cost</span>
+      <span class="summary-value"><span id="totalDisplayPackagingCost">$0.00</span> <span style="color: #666; font-size: 0.9em;">(<span id="totalDisplayPackagingCostPct">0.0</span>%)</span></span>
     </div>
     <div class="summary-row">
-      <span class="summary-label">Step 5: Packing & Label</span>
-      <span class="summary-value" id="totalPackingCost">$0.00</span>
+      <span class="summary-label">4. Total Transit Packaging Cost</span>
+      <span class="summary-value"><span id="totalTransitPackagingCost">$0.00</span> <span style="color: #666; font-size: 0.9em;">(<span id="totalTransitPackagingCostPct">0.0</span>%)</span></span>
     </div>
     <div class="summary-row">
-      <span class="summary-label">Step 6: Manufacturing (Selected Country)</span>
-      <span class="summary-value" id="totalManufacturingCost">$0.00</span>
+      <span class="summary-label">5. Total Label Cost</span>
+      <span class="summary-value"><span id="totalLabelCost">$0.00</span> <span style="color: #666; font-size: 0.9em;">(<span id="totalLabelCostPct">0.0</span>%)</span></span>
     </div>
     <div class="summary-row">
-      <span class="summary-label">TOTAL COST</span>
-      <span class="summary-value" id="grandTotalCost">$0.00</span>
+      <span class="summary-label">6. Total Sewing Thread Cost</span>
+      <span class="summary-value"><span id="totalSewingThreadCost">$0.00</span> <span style="color: #666; font-size: 0.9em;">(<span id="totalSewingThreadCostPct">0.0</span>%)</span></span>
     </div>
+    <div class="summary-row">
+      <span class="summary-label">7. Total Labour (Manufacturing)</span>
+      <span class="summary-value"><span id="totalLabourCost">$0.00</span> <span style="color: #666; font-size: 0.9em;">(<span id="totalLabourCostPct">0.0</span>%)</span></span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">8. Total Product Testing Cost</span>
+      <span class="summary-value"><span id="totalProductTestingCost">$0.00</span> <span style="color: #666; font-size: 0.9em;">(<span id="totalProductTestingCostPct">0.0</span>%)</span></span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">9. Total Print/Embroidery Cost</span>
+      <span class="summary-value"><span id="totalPrintEmbroideryCost">$0.00</span> <span style="color: #666; font-size: 0.9em;">(<span id="totalPrintEmbroideryCostPct">0.0</span>%)</span></span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">10. Total Other Cost</span>
+      <span class="summary-value"><span id="totalOtherCost">$0.00</span> <span style="color: #666; font-size: 0.9em;">(<span id="totalOtherCostPct">0.0</span>%)</span></span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">11. % FOR SUPPLIER MARGIN</span>
+      <span class="summary-value"><input type="number" id="supplierMarginInput" value="7" min="0" max="100" step="0.1" style="width: 60px;"> % = <span id="supplierMarginAmount">$0.00</span></span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">12. SUPPLIER FOB COST PER PIECE (U$D)</span>
+      <span class="summary-value" id="fobCostPerPiece">$0.00</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">13. Freight Cost</span>
+      <span class="summary-value">$ <input type="number" id="freightCostInput" value="0" min="0" step="0.001" style="width: 80px;"></span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">14. GMO</span>
+      <span class="summary-value">$ <input type="number" id="gmoCostInput" value="0" min="0" step="0.001" style="width: 80px;"></span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">15. Duty</span>
+      <span class="summary-value">$ <input type="number" id="dutyCostInput" value="0" min="0" step="0.001" style="width: 80px;"></span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">16. Additional Cost</span>
+      <span class="summary-value">$ <input type="number" id="additionalCostInput" value="0" min="0" step="0.001" style="width: 80px;"></span>
+    </div>
+    <div class="summary-row" style="border-top: 2px solid #4a90e2; margin-top: 10px; padding-top: 12px;">
+      <span class="summary-label" style="font-weight: bold;">Total FOB cost per PIECE ($USD)</span>
+      <span class="summary-value" id="totalFobPerPiece">$0.000</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label" style="font-weight: bold;">Total FOB cost per DOZEN ($USD)</span>
+      <span class="summary-value" id="totalFobPerDozen">$0.000</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label" style="font-weight: bold;">Total FLC cost per PIECE ($USD)</span>
+      <span class="summary-value" id="totalFlcPerPiece">$0.000</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label" style="font-weight: bold;">Total FLC cost per DOZEN ($USD)</span>
+      <span class="summary-value" id="totalFlcPerDozen">$0.000</span>
+    </div>
+    <div class="summary-row" style="border-top: 2px solid #4a90e2; margin-top: 10px; padding-top: 12px;">
+      <span class="summary-label" style="font-size: 1.2em; color: #4a90e2;">GRAND TOTAL</span>
+      <span class="summary-value" id="grandTotalCost" style="font-size: 1.3em; color: #4a90e2; font-weight: bold;">$0.00</span>
+    </div>
+  </div>
+
+  <div class="row comparison-section">
+    <h2>Cost Comparison by Country</h2>
+    <div class="small">FOB cost comparison for all manufacturing countries (labour cost varies by country)</div>
+    <table id="countryComparisonTable" style="width: 100%; margin-top: 16px; border-collapse: collapse;">
+      <thead>
+        <tr style="background-color: #4a90e2; color: white;">
+          <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Country</th>
+          <th style="padding: 12px; text-align: right; border: 1px solid #ddd;">Labour Cost</th>
+          <th style="padding: 12px; text-align: right; border: 1px solid #ddd;">Subtotal</th>
+          <th style="padding: 12px; text-align: right; border: 1px solid #ddd;">Margin</th>
+          <th style="padding: 12px; text-align: right; border: 1px solid #ddd;">FOB Cost</th>
+        </tr>
+      </thead>
+      <tbody id="countryComparisonBody">
+        <tr><td colspan="5" style="text-align: center; padding: 20px; color: #999;">Select inputs and calculate to see comparison</td></tr>
+      </tbody>
+    </table>
   </div>
 
   <h3>Response</h3>
@@ -406,7 +492,12 @@ function collectPayload() {
       display_packaging: document.getElementById('pack_display').value,
       transit_package: document.getElementById('pack_transit').value,
       label_type: document.getElementById('pack_label').value,
-    }
+    },
+    supplier_margin_percent: parseFloat(document.getElementById('supplierMarginInput')?.value || 7.0),
+    freight_cost: parseFloat(document.getElementById('freightCostInput')?.value || 0),
+    gmo_cost: parseFloat(document.getElementById('gmoCostInput')?.value || 0),
+    duty_cost: parseFloat(document.getElementById('dutyCostInput')?.value || 0),
+    additional_cost: parseFloat(document.getElementById('additionalCostInput')?.value || 0)
   };
 }
 
@@ -432,10 +523,17 @@ function renderFabricationOutputs(res) {
   const row = res?.outputs?.fabrication?.rows?.[0];
   if (!row) return;
 
+  const formatNum = (val) => {
+    if (val === null || val === undefined || val === '') return '';
+    const num = parseFloat(val);
+    if (isNaN(num)) return String(val);
+    return num.toFixed(3);
+  };
+
   const setRO = (id, val) => {
     const el = document.getElementById(id);
     if (!el) return;
-    el.value = (val === null || val === undefined || val === '') ? '' : String(val);
+    el.value = formatNum(val);
   };
 
   setRO('fab_width_ro', row.fixed_fabric_width);
@@ -485,37 +583,115 @@ function renderFabricationOutputs(res) {
 
 function updateSummary(res) {
   const formatCost = (cost) => {
-    if (cost === null || cost === undefined || cost === '') return '$0.00';
+    if (cost === null || cost === undefined || cost === '') return '$0.000';
     const num = parseFloat(cost);
-    if (isNaN(num)) return '$0.00';
-    return '$' + num.toFixed(2);
+    if (isNaN(num)) return '$0.000';
+    // Always show 3 decimal places
+    return '$' + num.toFixed(3);
   };
 
-  // Step 2: Fabrication
-  const fabricCost = res?.outputs?.fabrication?.total_fabric_cost || 0;
-  document.getElementById('totalFabricCost').textContent = formatCost(fabricCost);
+  const formatPct = (pct) => {
+    if (pct === null || pct === undefined || pct === '') return '0.000';
+    const num = parseFloat(pct);
+    if (isNaN(num)) return '0.000';
+    // Always show 3 decimal places
+    return num.toFixed(3);
+  };
 
-  // Step 3: Trims
-  const trimCost = res?.outputs?.trims?.rows?.reduce((sum, row) => sum + (row.total_cost || 0), 0) || 0;
-  document.getElementById('totalTrimCost').textContent = formatCost(trimCost);
+  // Get total cost summary from backend
+  const summary = res?.outputs?.total_cost_summary;
 
-  // Step 4: Embellishments
-  const embCost = res?.outputs?.embellishments?.rows?.reduce((sum, row) => sum + (row.total_cost || 0), 0) || 0;
-  document.getElementById('totalEmbellishmentCost').textContent = formatCost(embCost);
+  if (!summary) {
+    console.warn('No total_cost_summary in response');
+    return;
+  }
 
-  // Step 5: Packing & Label
-  const packingCost = res?.outputs?.packing_label?.total_cost || 0;
-  document.getElementById('totalPackingCost').textContent = formatCost(packingCost);
+  // Update all cost items and percentages from backend calculation
+  document.getElementById('totalFabricCost').textContent = formatCost(summary.total_fabric_cost);
+  document.getElementById('totalFabricCostPct').textContent = formatPct(summary.total_fabric_cost_pct);
 
-  // Step 6: Manufacturing (use first country as default, or COO if available)
-  const coo = res?.inputs?.development?.coo || 'INDIA';
-  const mfgRow = res?.outputs?.manufacturing?.rows?.find(r => r.country === coo) || res?.outputs?.manufacturing?.rows?.[0];
-  const mfgCost = mfgRow?.total_cost || 0;
-  document.getElementById('totalManufacturingCost').textContent = formatCost(mfgCost);
+  document.getElementById('totalTrimCost').textContent = formatCost(summary.total_trim_cost);
+  document.getElementById('totalTrimCostPct').textContent = formatPct(summary.total_trim_cost_pct);
 
-  // Grand Total
-  const grandTotal = fabricCost + trimCost + embCost + packingCost + mfgCost;
-  document.getElementById('grandTotalCost').textContent = formatCost(grandTotal);
+  document.getElementById('totalDisplayPackagingCost').textContent = formatCost(summary.total_display_packaging_cost);
+  document.getElementById('totalDisplayPackagingCostPct').textContent = formatPct(summary.total_display_packaging_cost_pct);
+
+  document.getElementById('totalTransitPackagingCost').textContent = formatCost(summary.total_transit_packaging_cost);
+  document.getElementById('totalTransitPackagingCostPct').textContent = formatPct(summary.total_transit_packaging_cost_pct);
+
+  document.getElementById('totalLabelCost').textContent = formatCost(summary.total_label_cost);
+  document.getElementById('totalLabelCostPct').textContent = formatPct(summary.total_label_cost_pct);
+
+  document.getElementById('totalSewingThreadCost').textContent = formatCost(summary.total_sewing_thread_cost);
+  document.getElementById('totalSewingThreadCostPct').textContent = formatPct(summary.total_sewing_thread_cost_pct);
+
+  document.getElementById('totalLabourCost').textContent = formatCost(summary.total_labour_cost);
+  document.getElementById('totalLabourCostPct').textContent = formatPct(summary.total_labour_cost_pct);
+
+  document.getElementById('totalProductTestingCost').textContent = formatCost(summary.total_product_testing_cost);
+  document.getElementById('totalProductTestingCostPct').textContent = formatPct(summary.total_product_testing_cost_pct);
+
+  document.getElementById('totalPrintEmbroideryCost').textContent = formatCost(summary.total_print_embroidery_cost);
+  document.getElementById('totalPrintEmbroideryCostPct').textContent = formatPct(summary.total_print_embroidery_cost_pct);
+
+  document.getElementById('totalOtherCost').textContent = formatCost(summary.total_other_cost);
+  document.getElementById('totalOtherCostPct').textContent = formatPct(summary.total_other_cost_pct);
+
+  // Update FOB and Grand Total
+  document.getElementById('supplierMarginAmount').textContent = formatCost(summary.supplier_margin_amount);
+  document.getElementById('fobCostPerPiece').textContent = formatCost(summary.fob_cost);
+  document.getElementById('totalFobPerPiece').textContent = formatCost(summary.total_fob_per_piece);
+  document.getElementById('totalFobPerDozen').textContent = formatCost(summary.total_fob_per_dozen);
+  document.getElementById('totalFlcPerPiece').textContent = formatCost(summary.total_flc_per_piece);
+  document.getElementById('totalFlcPerDozen').textContent = formatCost(summary.total_flc_per_dozen);
+  document.getElementById('grandTotalCost').textContent = formatCost(summary.grand_total);
+
+  // Update country comparison table
+  updateCountryComparison(res);
+}
+
+function updateCountryComparison(res) {
+  const formatCost = (cost) => {
+    if (cost === null || cost === undefined || cost === '') return '$0.000';
+    const num = parseFloat(cost);
+    if (isNaN(num)) return '$0.000';
+    return '$' + num.toFixed(3);
+  };
+
+  const comparison = res?.outputs?.country_comparison;
+
+  if (!comparison || comparison.length === 0) {
+    document.getElementById('countryComparisonBody').innerHTML =
+      '<tr><td colspan="5" style="text-align: center; padding: 20px; color: #999;">No data available</td></tr>';
+    return;
+  }
+
+  const tbody = document.getElementById('countryComparisonBody');
+  tbody.innerHTML = '';
+
+  // Find the selected country from Step 1
+  const selectedCountry = res?.inputs?.development?.coo || '';
+
+  comparison.forEach(row => {
+    const tr = document.createElement('tr');
+    const isSelected = row.country === selectedCountry;
+
+    // Highlight selected country
+    if (isSelected) {
+      tr.style.backgroundColor = '#e3f2fd';
+      tr.style.fontWeight = 'bold';
+    }
+
+    tr.innerHTML = `
+      <td style="padding: 10px; border: 1px solid #ddd; ${isSelected ? 'color: #4a90e2;' : ''}">${row.country}${isSelected ? ' (Selected)' : ''}</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: right;">${formatCost(row.labour_cost)}</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: right;">${formatCost(row.subtotal)}</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: right;">${formatCost(row.margin_amount)}</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: right; ${isSelected ? 'color: #4a90e2; font-weight: bold;' : ''}">${formatCost(row.fob_cost)}</td>
+    `;
+
+    tbody.appendChild(tr);
+  });
 }
 
 async function onCalc() {
@@ -568,7 +744,10 @@ function setupAutoCalc() {
     'emb_type', 'emb_dim', 'emb_usage',
 
     // Step 5: Packing & Label
-    'pack_display', 'pack_transit', 'pack_label'
+    'pack_display', 'pack_transit', 'pack_label',
+
+    // Total Cost Summary inputs
+    'supplierMarginInput', 'freightCostInput', 'gmoCostInput', 'dutyCostInput', 'additionalCostInput'
   ];
 
   ids.forEach(id => {

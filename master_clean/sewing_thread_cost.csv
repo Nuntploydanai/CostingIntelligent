@@ -1,0 +1,22 @@
+gender,silhouette,sewing_thread_cost
+Men,Tank Top/A Shirt,0.035
+Men,T-Shirt (Crew Neck),0.042
+Men,T-Shirt (V Neck),0.042
+Men,Long Sleeve Shirt (Crew Neck),0.048
+Men,Long Sleeve Shirt (V Neck),0.048
+Men,Sleeveless Shirt (Crew Neck),0.038
+Men,Sleeveless Shirt (V Neck),0.038
+Women,Tank Top/A Shirt,0.035
+Women,T-Shirt (Crew Neck),0.042
+Women,T-Shirt (V Neck),0.042
+Women,Long Sleeve Shirt (Crew Neck),0.048
+Women,Long Sleeve Shirt (V Neck),0.048
+Women,Sleeveless Shirt (Crew Neck),0.038
+Women,Sleeveless Shirt (V Neck),0.038
+Kids,Tank Top/A Shirt,0.035
+Kids,T-Shirt (Crew Neck),0.042
+Kids,T-Shirt (V Neck),0.042
+Kids,Long Sleeve Shirt (Crew Neck),0.048
+Kids,Long Sleeve Shirt (V Neck),0.048
+Kids,Sleeveless Shirt (Crew Neck),0.038
+Kids,Sleeveless Shirt (V Neck),0.038
