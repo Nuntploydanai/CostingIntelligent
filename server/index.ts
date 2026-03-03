@@ -4,20 +4,6 @@ import path from 'path';
 import fs from 'fs';
 import csv from 'csv-parser';
 
-// Types
-interface CalculateRequest {
-  development: any;
-  fabrication: any[];
-  trims: any[];
-  embellishments: any[];
-  packing_label: any;
-  supplier_margin_percent: number;
-  freight_cost: number;
-  gmo_cost: number;
-  duty_cost: number;
-  additional_cost: number;
-}
-
 // Utility functions
 const DATA_DIR = path.join(__dirname, '../data/master_clean');
 
@@ -273,15 +259,28 @@ async function computeCountryComparison(params: any) {
 const app = express();
 const PORT = process.env.PORT || 8000;
 
-app.use(cors());
+// CORS configuration for production
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production'
+    ? ['https://your-app-name.onrender.com']
+    : ['http://localhost:5173', 'http://localhost:3000'],
+  credentials: true
+}));
+
 app.use(express.json());
-app.use(express.static('client/dist'));
+
+// Serve static files from client build
+const clientBuildPath = path.join(__dirname, '../client/dist');
+if (fs.existsSync(clientBuildPath)) {
+  app.use(express.static(clientBuildPath));
+}
 
 async function loadDropdown(name: string): Promise<string[]> {
   const data = await loadCSV(`dropdown_${name}.csv`);
   return data.map(row => row.value).filter(v => v);
 }
 
+// API Routes
 app.get('/api/dropdown/:name', async (req: Request, res: Response) => {
   try {
     const values = await loadDropdown(req.params.name);
@@ -293,9 +292,9 @@ app.get('/api/dropdown/:name', async (req: Request, res: Response) => {
 
 app.post('/api/calculate', async (req: Request, res: Response) => {
   try {
-    const input: CalculateRequest = req.body;
+    const input = req.body;
 
-    // 1. Calculate fabrication
+    // Calculate fabrication
     const fabricationResults = [];
     let totalFabricCost = 0;
     for (const fab of input.fabrication) {
@@ -304,7 +303,7 @@ app.post('/api/calculate', async (req: Request, res: Response) => {
       totalFabricCost += result.total_cost;
     }
 
-    // 2. Calculate manufacturing
+    // Calculate manufacturing
     const manufacturingResults = [await computeManufacturing({
       gender: input.development.gender,
       silhouette: input.development.silhouette,
@@ -316,7 +315,7 @@ app.post('/api/calculate', async (req: Request, res: Response) => {
 
     const labourCost = manufacturingResults[0]?.total_cost || 0;
 
-    // 3. Calculate total cost summary
+    // Calculate total cost summary
     const totalSummary = await computeTotalCostSummary({
       fabric_cost: totalFabricCost,
       trim_cost: 0,
@@ -336,7 +335,7 @@ app.post('/api/calculate', async (req: Request, res: Response) => {
       duty_cost: input.duty_cost,
     });
 
-    // 4. Calculate country comparison
+    // Calculate country comparison
     const countryComparison = await computeCountryComparison({
       fabric_cost: totalFabricCost,
       trim_cost: 0,
@@ -383,10 +382,16 @@ app.get('/api/health', (req: Request, res: Response) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+// Serve React app for all other routes (SPA)
+app.get('*', (req: Request, res: Response) => {
+  if (fs.existsSync(path.join(clientBuildPath, 'index.html'))) {
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
+  } else {
+    res.status(404).json({ error: 'Frontend not built' });
+  }
+});
+
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📊 API endpoints:`);
-  console.log(`   - GET  /api/dropdown/:name`);
-  console.log(`   - POST /api/calculate`);
-  console.log(`   - GET  /api/health`);
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
 });
