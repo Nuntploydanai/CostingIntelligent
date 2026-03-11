@@ -478,6 +478,31 @@ function App() {
           </div>
         </section>
 
+        {/* Step 6: Manufacturing */}
+        <section className="card">
+          <h2>Step 6: Manufacturing</h2>
+          {!result ? (
+            <p style={{ color: '#6B7280' }}>
+              Labour cost will be calculated automatically after Step 1-5 inputs.
+            </p>
+          ) : (
+            <div className="summary-table">
+              <div className="summary-header">
+                <span>Country</span>
+                <span>Minutes</span>
+                <span>Labour Cost ($)</span>
+              </div>
+              {result.outputs.manufacturing.rows.map((row, i) => (
+                <div key={i} className="summary-row">
+                  <span>{row.country || development.coo || '-'}</span>
+                  <span>{(row.minutes ?? 0).toFixed(3)}</span>
+                  <span className="cost">${(row.total_cost ?? 0).toFixed(3)}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+
         {/* Fillable Inputs */}
         <section className="card">
           <h2>Additional Costs</h2>
