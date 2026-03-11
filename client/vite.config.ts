@@ -11,5 +11,15 @@ export default defineConfig({
         changeOrigin: true
       }
     }
+  },
+  build: {
+    // Exclude server files from build
+    rollupOptions: {
+      external: ['fs', 'path', 'csv-parser']
+    }
+  },
+  // Don't process server files
+  optimizeDeps: {
+    exclude: ['server']
   }
 })
