@@ -42,7 +42,7 @@ function toFloat(value: any): number | null {
   return null;
 }
 
-// Services
+// ==================== FABRICATION ====================
 async function computeFabrication(input: any) {
   const fabricWidthData = await loadCSV('dropdown_fabric_width.csv');
   const fabricPriceData = await loadCSV('dropdown_fabric_price.csv');
@@ -95,6 +95,116 @@ async function computeFabrication(input: any) {
   };
 }
 
+// ==================== TRIMS ====================
+async function computeTrims(input: any) {
+  const trimsPriceData = await loadCSV('packing_trims_item_price_unit.csv');
+  const trimsUsageData = await loadCSV('packing_trims_usage.csv');
+
+  const trimsType = normalizeString(input.trims_type);
+  const garmentPart = normalizeString(input.garment_part);
+
+  // Get default price
+  const priceRow = trimsPriceData.find(row =>
+    normalizeString(row.trims_type) === trimsType
+  );
+  const defaultPriceEach = toFloat(priceRow?.default_price_each) || 0;
+
+  // Get default usage
+  const usageRow = trimsUsageData.find(row =>
+    normalizeString(row.trims_type) === trimsType &&
+    normalizeString(row.garment_part) === garmentPart
+  );
+  const defaultUsage = toFloat(usageRow?.usage_small) || 0;
+
+  // Use overrides if provided
+  const usage = toFloat(input.usage_override) || defaultUsage;
+  const priceEach = toFloat(input.price_override) || defaultPriceEach;
+
+  // Calculate total cost
+  const totalCost = usage * priceEach;
+
+  const unit = priceRow?.unit || 'pcs';
+
+  return {
+    unit,
+    default_usage: Math.round(defaultUsage * 1000) / 1000,
+    default_price_each: Math.round(defaultPriceEach * 1000) / 1000,
+    total_cost: Math.round(totalCost * 1000) / 1000,
+  };
+}
+
+// ==================== EMBELLISHMENTS ====================
+async function computeEmbellishment(input: any) {
+  const embellishmentPriceData = await loadCSV('print_embroidery_price_lookup.csv');
+
+  const printingType = normalizeString(input.printing_embroidery);
+  const dimension = normalizeString(input.dimension);
+
+  // Find price
+  const priceRow = embellishmentPriceData.find(row =>
+    normalizeString(row.printing_embroidery) === printingType &&
+    normalizeString(row.dimension) === dimension
+  );
+
+  const defaultPriceEach = toFloat(priceRow?.price_each) || 0;
+
+  // Get usage (usually 1 for embellishments)
+  const usage = toFloat(input.usage_unit) || 1;
+
+  // Calculate total cost
+  const totalCost = usage * defaultPriceEach;
+
+  return {
+    default_price_each: Math.round(defaultPriceEach * 1000) / 1000,
+    total_cost: Math.round(totalCost * 1000) / 1000,
+  };
+}
+
+// ==================== PACKING & LABEL ====================
+async function computePackingLabel(input: any) {
+  const displayPackagingData = await loadCSV('label_display_packaging_price.csv');
+
+  const packCount = toFloat(input.pack_count) || 1;
+
+  // Calculate display packaging
+  const displayPackagingRow = displayPackagingData.find(row =>
+    normalizeString(row.display_packaging) === normalizeString(input.display_packaging)
+  );
+  const displayPackagingDefaultPrice = toFloat(displayPackagingRow?.price) || 0;
+  const displayPackagingDefaultUsage = 1 / packCount;
+  const displayPackagingTotal = displayPackagingDefaultUsage * displayPackagingDefaultPrice;
+
+  // Calculate transit package
+  const transitPackageDefaultUsage = input.transit_package ? 1 : 0;
+  const transitPackageTotal = input.transit_package ? (0.9 / toFloat(input.transit_package)) : 0;
+
+  // Calculate label
+  const labelDefaultUsage = input.label_type ? 1 : 0;
+  const labelBaseMap: { [key: string]: number } = {
+    'pad print': 0.0085,
+    'heat transfer': 0.03,
+    'woven label': 0.028,
+  };
+  const labelBase = labelBaseMap[normalizeString(input.label_type).toLowerCase()] || 0;
+  const labelTotal = input.label_type ? (labelBase * 1.03) : 0;
+
+  return {
+    display_packaging: {
+      default_usage: Math.round(displayPackagingDefaultUsage * 1000) / 1000,
+      total: Math.round(displayPackagingTotal * 1000) / 1000,
+    },
+    transit_package: {
+      default_usage: transitPackageDefaultUsage,
+      total: Math.round(transitPackageTotal * 1000) / 1000,
+    },
+    label: {
+      default_usage: labelDefaultUsage,
+      total: Math.round(labelTotal * 1000) / 1000,
+    },
+  };
+}
+
+// ==================== MANUFACTURING ====================
 async function computeManufacturing(input: any) {
   const samMinutesData = await loadCSV('sam_minutes_lookup.csv');
   const costRateData = await loadCSV('cost_rate.csv');
@@ -142,6 +252,7 @@ async function computeManufacturing(input: any) {
   };
 }
 
+// ==================== TOTAL COST SUMMARY ====================
 async function computeTotalCostSummary(params: any) {
   const sewingThreadData = await loadCSV('sewing_thread_cost.csv');
 
@@ -158,7 +269,7 @@ async function computeTotalCostSummary(params: any) {
   const total_label_cost = toFloat(params.label_cost) || 0;
   const total_sewing_thread_cost = sewingThreadCost;
   const total_labour_cost = toFloat(params.labour_cost) || 0;
-  const total_product_testing_cost = toFloat(params.product_testing_cost) || 0;
+  const total_product_testing_cost = 0.01; // Fixed $0.01
   const total_print_embroidery_cost = toFloat(params.print_embroidery_cost) || 0;
   const total_other_cost = toFloat(params.other_cost) || 0;
 
@@ -227,6 +338,7 @@ async function computeTotalCostSummary(params: any) {
   };
 }
 
+// ==================== COUNTRY COMPARISON ====================
 const COMPARISON_COUNTRIES = ['INDIA', 'BANGLADESH', 'INDONESIA', 'THAILAND', 'CAMBODIA', 'VIETNAM'];
 
 async function computeCountryComparison(params: any) {
@@ -255,11 +367,11 @@ async function computeCountryComparison(params: any) {
   return results;
 }
 
-// Express app
+// ==================== EXPRESS SERVER ====================
 const app = express();
 const PORT = process.env.PORT || 8000;
 
-// CORS configuration for production
+// CORS configuration
 app.use(cors({
   origin: process.env.NODE_ENV === 'production'
     ? ['https://your-app-name.onrender.com']
@@ -275,6 +387,7 @@ if (fs.existsSync(clientBuildPath)) {
   app.use(express.static(clientBuildPath));
 }
 
+// Load dropdown data
 async function loadDropdown(name: string): Promise<string[]> {
   const data = await loadCSV(`dropdown_${name}.csv`);
   return data.map(row => row.value).filter(v => v);
@@ -290,11 +403,12 @@ app.get('/api/dropdown/:name', async (req: Request, res: Response) => {
   }
 });
 
+// Main calculation endpoint
 app.post('/api/calculate', async (req: Request, res: Response) => {
   try {
     const input = req.body;
 
-    // Calculate fabrication
+    // 1. Calculate fabrication
     const fabricationResults = [];
     let totalFabricCost = 0;
     for (const fab of input.fabrication) {
@@ -303,53 +417,74 @@ app.post('/api/calculate', async (req: Request, res: Response) => {
       totalFabricCost += result.total_cost;
     }
 
-    // Calculate manufacturing
-    const manufacturingResults = [await computeManufacturing({
+    // 2. Calculate trims
+    const trimsResults = [];
+    let totalTrimCost = 0;
+    for (const trim of input.trims) {
+      const result = await computeTrims(trim);
+      trimsResults.push(result);
+      totalTrimCost += result.total_cost;
+    }
+
+    // 3. Calculate embellishments
+    const embellishmentResults = [];
+    let totalEmbellishmentCost = 0;
+    for (const emb of input.embellishments) {
+      const result = await computeEmbellishment(emb);
+      embellishmentResults.push(result);
+      totalEmbellishmentCost += result.total_cost;
+    }
+
+    // 4. Calculate packing & label
+    const packingLabelResult = await computePackingLabel(input.packing_label || {});
+    const totalDisplayPackagingCost = packingLabelResult.display_packaging.total;
+    const totalTransitPackagingCost = packingLabelResult.transit_package.total;
+    const totalLabelCost = packingLabelResult.label.total;
+
+    // 5. Calculate manufacturing
+    const manufacturingResult = await computeManufacturing({
       gender: input.development.gender,
       silhouette: input.development.silhouette,
       seam: input.development.seam,
       size: input.development.size,
       quantity: input.development.ideal_quantity,
       coo: input.development.coo,
-    })];
+    });
+    const labourCost = manufacturingResult.total_cost;
 
-    const labourCost = manufacturingResults[0]?.total_cost || 0;
-
-    // Calculate total cost summary
+    // 6. Calculate total cost summary
     const totalSummary = await computeTotalCostSummary({
       fabric_cost: totalFabricCost,
-      trim_cost: 0,
-      print_embroidery_cost: 0,
-      display_packaging_cost: 0,
-      transit_packaging_cost: 0,
-      label_cost: 0,
+      trim_cost: totalTrimCost,
+      print_embroidery_cost: totalEmbellishmentCost,
+      display_packaging_cost: totalDisplayPackagingCost,
+      transit_packaging_cost: totalTransitPackagingCost,
+      label_cost: totalLabelCost,
       labour_cost: labourCost,
       gender: input.development.gender,
       silhouette: input.development.silhouette,
       size: input.development.size,
       supplier_margin_percent: input.supplier_margin_percent,
-      product_testing_cost: 0.01,
       other_cost: input.additional_cost,
       freight_cost: input.freight_cost,
       gmo_cost: input.gmo_cost,
       duty_cost: input.duty_cost,
     });
 
-    // Calculate country comparison
+    // 7. Calculate country comparison
     const countryComparison = await computeCountryComparison({
       fabric_cost: totalFabricCost,
-      trim_cost: 0,
-      print_embroidery_cost: 0,
-      display_packaging_cost: 0,
-      transit_packaging_cost: 0,
-      label_cost: 0,
+      trim_cost: totalTrimCost,
+      print_embroidery_cost: totalEmbellishmentCost,
+      display_packaging_cost: totalDisplayPackagingCost,
+      transit_packaging_cost: totalTransitPackagingCost,
+      label_cost: totalLabelCost,
       gender: input.development.gender,
       silhouette: input.development.silhouette,
       seam: input.development.seam,
       size: input.development.size,
       quantity: input.development.ideal_quantity,
       supplier_margin_percent: input.supplier_margin_percent,
-      product_testing_cost: 0.01,
       other_cost: input.additional_cost,
       freight_cost: input.freight_cost,
       gmo_cost: input.gmo_cost,
@@ -360,14 +495,10 @@ app.post('/api/calculate', async (req: Request, res: Response) => {
       inputs: { development: input.development, fabrication: input.fabrication },
       outputs: {
         fabrication: { rows: fabricationResults, total_fabric_cost: totalFabricCost },
-        trims: { rows: [] },
-        embellishments: { rows: [] },
-        packing_label: {
-          display_packaging: { default_usage: 0, total: 0 },
-          transit_package: { default_usage: 0, total: 0 },
-          label: { default_usage: 0, total: 0 },
-        },
-        manufacturing: { rows: manufacturingResults },
+        trims: { rows: trimsResults, total_trim_cost: totalTrimCost },
+        embellishments: { rows: embellishmentResults, total_embellishment_cost: totalEmbellishmentCost },
+        packing_label: packingLabelResult,
+        manufacturing: { rows: [manufacturingResult] },
         total_cost_summary: totalSummary,
         country_comparison: countryComparison,
       },

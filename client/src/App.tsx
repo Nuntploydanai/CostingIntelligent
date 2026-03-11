@@ -10,6 +10,19 @@ interface CalculateResponse {
       rows: any[]
       total_fabric_cost: number
     }
+    trims: {
+      rows: any[]
+      total_trim_cost: number
+    }
+    embellishments: {
+      rows: any[]
+      total_embellishment_cost: number
+    }
+    packing_label: {
+      display_packaging: { default_usage: number; total: number }
+      transit_package: { default_usage: number; total: number }
+      label: { default_usage: number; total: number }
+    }
     manufacturing: {
       rows: any[]
     }
@@ -86,6 +99,27 @@ function App() {
     material_coo: ''
   }])
 
+  const [trims, setTrims] = useState([{
+    trims_type: '',
+    garment_part: '',
+    usage_override: '',
+    price_override: '',
+    material_coo: ''
+  }])
+
+  const [embellishments, setEmbellishments] = useState([{
+    printing_embroidery: '',
+    dimension: '',
+    usage_unit: ''
+  }])
+
+  const [packingLabel, setPackingLabel] = useState({
+    pack_count: '',
+    display_packaging: '',
+    transit_package: '',
+    label_type: ''
+  })
+
   const [supplierMarginPercent, setSupplierMarginPercent] = useState(7)
   const [freightCost, setFreightCost] = useState(0)
   const [gmoCost, setGmoCost] = useState(0)
@@ -98,7 +132,8 @@ function App() {
       'gender', 'silhouette', 'seam', 'color_design', 'size',
       'pack_count', 'ideal_quantity', 'coo', 'fabric_finishing',
       'fabric_type', 'fabric_contents', 'using_part', 'price_unit',
-      'material_coo'
+      'material_coo', 'trims_type', 'garment_part_trim', 'printing_embroidery',
+      'print_dimension', 'usage_unit', 'display_packaging', 'transit_package', 'label'
     ]
 
     Promise.all(
@@ -130,9 +165,9 @@ function App() {
         body: JSON.stringify({
           development,
           fabrication,
-          trims: [],
-          embellishments: [],
-          packing_label: {},
+          trims,
+          embellishments,
+          packing_label: packingLabel,
           supplier_margin_percent: supplierMarginPercent,
           freight_cost: freightCost,
           gmo_cost: gmoCost,
@@ -148,7 +183,7 @@ function App() {
     } finally {
       setLoading(false)
     }
-  }, [development, fabrication, supplierMarginPercent, freightCost, gmoCost, dutyCost, additionalCost])
+  }, [development, fabrication, trims, embellishments, packingLabel, supplierMarginPercent, freightCost, gmoCost, dutyCost, additionalCost])
 
   // Debounced calculation
   useEffect(() => {
@@ -159,11 +194,62 @@ function App() {
     return () => clearTimeout(timer)
   }, [calculateCost])
 
+  // Clear form function
+  const clearForm = () => {
+    setDevelopment({
+      gender: '',
+      silhouette: '',
+      seam: '',
+      color_design: '',
+      size: '',
+      pack_count: '',
+      ideal_quantity: '',
+      coo: '',
+      fabric_finishing: ''
+    })
+    setFabrication([{
+      fabric_type: '',
+      fabric_contents: '',
+      using_part: 'Self Fabric',
+      weight_gsm_override: '',
+      price_unit: 'Price / YD',
+      price_value: '',
+      material_coo: ''
+    }])
+    setTrims([{
+      trims_type: '',
+      garment_part: '',
+      usage_override: '',
+      price_override: '',
+      material_coo: ''
+    }])
+    setEmbellishments([{
+      printing_embroidery: '',
+      dimension: '',
+      usage_unit: ''
+    }])
+    setPackingLabel({
+      pack_count: '',
+      display_packaging: '',
+      transit_package: '',
+      label_type: ''
+    })
+    setSupplierMarginPercent(7)
+    setFreightCost(0)
+    setGmoCost(0)
+    setDutyCost(0)
+    setAdditionalCost(0)
+    setResult(null)
+  }
+
   return (
     <div className="container">
       <header>
         <h1>👕 Basic Shirts Costing Tool v2</h1>
         <p>Excel-Parity Cost Calculator (Node.js + React)</p>
+        <button onClick={clearForm} className="clear-button">
+          🔄 Clear Form
+        </button>
       </header>
 
       <div className="main-content">
@@ -284,6 +370,110 @@ function App() {
                 value={fabrication[0].price_value}
                 onChange={e => setFabrication([{ ...fabrication[0], price_value: e.target.value }])}
               />
+            </div>
+          </div>
+        </section>
+
+        {/* Step 3: Trims */}
+        <section className="card">
+          <h2>Step 3: Trims</h2>
+          <div className="form-grid">
+            <div className="form-group">
+              <label>Trims Type</label>
+              <select
+                value={trims[0].trims_type}
+                onChange={e => setTrims([{ ...trims[0], trims_type: e.target.value }])}
+              >
+                <option value="">Select...</option>
+                {dropdowns.trims_type?.map(v => <option key={v} value={v}>{v}</option>)}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label>Garment Part</label>
+              <select
+                value={trims[0].garment_part}
+                onChange={e => setTrims([{ ...trims[0], garment_part: e.target.value }])}
+              >
+                <option value="">Select...</option>
+                {dropdowns.garment_part_trim?.map(v => <option key={v} value={v}>{v}</option>)}
+              </select>
+            </div>
+          </div>
+        </section>
+
+        {/* Step 4: Embellishments */}
+        <section className="card">
+          <h2>Step 4: Embellishments</h2>
+          <div className="form-grid">
+            <div className="form-group">
+              <label>Printing/Embroidery</label>
+              <select
+                value={embellishments[0].printing_embroidery}
+                onChange={e => setEmbellishments([{ ...embellishments[0], printing_embroidery: e.target.value }])}
+              >
+                <option value="">Select...</option>
+                {dropdowns.printing_embroidery?.map(v => <option key={v} value={v}>{v}</option>)}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label>Dimension</label>
+              <select
+                value={embellishments[0].dimension}
+                onChange={e => setEmbellishments([{ ...embellishments[0], dimension: e.target.value }])}
+              >
+                <option value="">Select...</option>
+                {dropdowns.print_dimension?.map(v => <option key={v} value={v}>{v}</option>)}
+              </select>
+            </div>
+          </div>
+        </section>
+
+        {/* Step 5: Packing & Label */}
+        <section className="card">
+          <h2>Step 5: Packing & Label</h2>
+          <div className="form-grid">
+            <div className="form-group">
+              <label>Pack Count</label>
+              <input
+                type="number"
+                placeholder="e.g., 6"
+                value={packingLabel.pack_count}
+                onChange={e => setPackingLabel({ ...packingLabel, pack_count: e.target.value })}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Display Packaging</label>
+              <select
+                value={packingLabel.display_packaging}
+                onChange={e => setPackingLabel({ ...packingLabel, display_packaging: e.target.value })}
+              >
+                <option value="">Select...</option>
+                {dropdowns.display_packaging?.map(v => <option key={v} value={v}>{v}</option>)}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label>Transit Package</label>
+              <input
+                type="number"
+                placeholder="e.g., 24"
+                value={packingLabel.transit_package}
+                onChange={e => setPackingLabel({ ...packingLabel, transit_package: e.target.value })}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Label Type</label>
+              <select
+                value={packingLabel.label_type}
+                onChange={e => setPackingLabel({ ...packingLabel, label_type: e.target.value })}
+              >
+                <option value="">Select...</option>
+                {dropdowns.label?.map(v => <option key={v} value={v}>{v}</option>)}
+              </select>
             </div>
           </div>
         </section>
