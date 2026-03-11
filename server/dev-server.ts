@@ -176,8 +176,9 @@ async function computePackingLabel(input: any) {
   const displayPackagingDefaultUsage = 1 / packCount;
   const displayPackagingTotal = displayPackagingDefaultUsage * displayPackagingDefaultPrice;
 
-  const transitPackageDefaultUsage = input.transit_package ? 1 : 0;
-  const transitPackageTotal = input.transit_package ? (0.9 / toFloat(input.transit_package)) : 0;
+  const transitPackageValue = toFloat(input.transit_package) ?? 0;
+  const transitPackageDefaultUsage = transitPackageValue > 0 ? 1 : 0;
+  const transitPackageTotal = transitPackageValue > 0 ? (0.9 / transitPackageValue) : 0;
 
   const labelDefaultUsage = input.label_type ? 1 : 0;
   const labelBaseMap: { [key: string]: number } = {
