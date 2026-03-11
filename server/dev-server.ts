@@ -379,10 +379,32 @@ app.use(cors({
 
 app.use(express.json());
 
-// Load dropdown data
+// Load dropdown data (with aliases to match Python/web UI names)
+const DROPDOWN_ALIASES: Record<string, string> = {
+  silhouette: 'silhouette_pattern',
+  color_design: 'color',
+  ideal_quantity: 'quantity',
+  pack_count: 'packing_no',
+  garment_part_trim: 'garment_part_trim',
+};
+
+function pickDropdownValue(row: any): string {
+  const direct = (row?.value ?? '').toString().trim();
+  if (direct) return direct;
+  // fallback: first non-empty cell in the row
+  for (const v of Object.values(row || {})) {
+    const s = (v ?? '').toString().trim();
+    if (s) return s;
+  }
+  return '';
+}
+
 async function loadDropdown(name: string): Promise<string[]> {
-  const data = await loadCSV(`dropdown_${name}.csv`);
-  return data.map(row => row.value).filter(v => v);
+  const realName = DROPDOWN_ALIASES[name] || name;
+  const data = await loadCSV(`dropdown_${realName}.csv`);
+  const values = data.map(pickDropdownValue).filter(Boolean);
+  // de-dup while preserving order
+  return [...new Set(values)];
 }
 
 // API Routes
