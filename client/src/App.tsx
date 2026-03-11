@@ -291,6 +291,17 @@ function App() {
             </div>
 
             <div className="form-group">
+              <label>Color / Design</label>
+              <select
+                value={development.color_design}
+                onChange={e => setDevelopment({ ...development, color_design: e.target.value })}
+              >
+                <option value="">Select...</option>
+                {dropdowns.color_design?.map(v => <option key={v} value={v}>{v}</option>)}
+              </select>
+            </div>
+
+            <div className="form-group">
               <label>Size</label>
               <select
                 value={development.size}
@@ -313,6 +324,17 @@ function App() {
             </div>
 
             <div className="form-group">
+              <label>Pack count / Pack</label>
+              <select
+                value={development.pack_count}
+                onChange={e => setDevelopment({ ...development, pack_count: e.target.value })}
+              >
+                <option value="">Select...</option>
+                {dropdowns.pack_count?.map(v => <option key={v} value={v}>{v}</option>)}
+              </select>
+            </div>
+
+            <div className="form-group">
               <label>COO (Country of Origin)</label>
               <select
                 value={development.coo}
@@ -320,6 +342,17 @@ function App() {
               >
                 <option value="">Select...</option>
                 {dropdowns.coo?.map(v => <option key={v} value={v}>{v}</option>)}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label>Fabric Finishing</label>
+              <select
+                value={development.fabric_finishing}
+                onChange={e => setDevelopment({ ...development, fabric_finishing: e.target.value })}
+              >
+                <option value="">Select...</option>
+                {dropdowns.fabric_finishing?.map(v => <option key={v} value={v}>{v}</option>)}
               </select>
             </div>
           </div>
