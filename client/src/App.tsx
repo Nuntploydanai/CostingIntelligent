@@ -153,7 +153,8 @@ function App() {
 
   // Auto-calculate with debounce
   const calculateCost = useCallback(async () => {
-    if (!development.gender || !development.silhouette || !fabrication[0].fabric_type) {
+    // Step 6 (Manufacturing) should calculate from Step 1 even if Step 2+ are empty
+    if (!development.gender || !development.silhouette || !development.seam || !development.size || !development.ideal_quantity || !development.coo) {
       return
     }
 
