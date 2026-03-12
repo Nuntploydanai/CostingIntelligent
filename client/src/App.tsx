@@ -385,6 +385,27 @@ function App() {
             </div>
 
             <div className="form-group">
+              <label>Using Part</label>
+              <select
+                value={fabrication[0].using_part}
+                onChange={e => setFabrication([{ ...fabrication[0], using_part: e.target.value }])}
+              >
+                <option value="">Select...</option>
+                {dropdowns.using_part?.map(v => <option key={v} value={v}>{v}</option>)}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label>Weight (GSM)</label>
+              <input
+                type="number"
+                step="0.001"
+                value={fabrication[0].weight_gsm_override}
+                onChange={e => setFabrication([{ ...fabrication[0], weight_gsm_override: e.target.value }])}
+              />
+            </div>
+
+            <div className="form-group">
               <label>Price Unit</label>
               <select
                 value={fabrication[0].price_unit}
@@ -395,7 +416,7 @@ function App() {
             </div>
 
             <div className="form-group">
-              <label>Price Value (Optional)</label>
+              <label>Price Value</label>
               <input
                 type="number"
                 step="0.001"
@@ -403,6 +424,47 @@ function App() {
                 value={fabrication[0].price_value}
                 onChange={e => setFabrication([{ ...fabrication[0], price_value: e.target.value }])}
               />
+            </div>
+
+            <div className="form-group">
+              <label>Material COO</label>
+              <select
+                value={fabrication[0].material_coo}
+                onChange={e => setFabrication([{ ...fabrication[0], material_coo: e.target.value }])}
+              >
+                <option value="">Select...</option>
+                {dropdowns.material_coo?.map(v => <option key={v} value={v}>{v}</option>)}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label>Fixed Fabric Width</label>
+              <input readOnly value={result?.outputs.fabrication.rows?.[0]?.fixed_fabric_width?.toFixed?.(3) ?? ''} />
+            </div>
+
+            <div className="form-group">
+              <label>Default Weight (GSM)</label>
+              <input readOnly value={result?.outputs.fabrication.rows?.[0]?.default_weight_gsm?.toFixed?.(3) ?? ''} />
+            </div>
+
+            <div className="form-group">
+              <label>DEFAULT (PRICE/YD)</label>
+              <input readOnly value={result?.outputs.fabrication.rows?.[0]?.default_price_yd?.toFixed?.(3) ?? ''} />
+            </div>
+
+            <div className="form-group">
+              <label>DEFAULT (PRICE/KILO)</label>
+              <input readOnly value={result?.outputs.fabrication.rows?.[0]?.default_price_kilo?.toFixed?.(3) ?? ''} />
+            </div>
+
+            <div className="form-group">
+              <label>PRICE / Lbs (default)</label>
+              <input readOnly value={result?.outputs.fabrication.rows?.[0]?.default_price_lb?.toFixed?.(3) ?? ''} />
+            </div>
+
+            <div className="form-group">
+              <label>TOTAL COST</label>
+              <input readOnly value={result?.outputs.fabrication.rows?.[0]?.total_cost?.toFixed?.(3) ?? ''} />
             </div>
           </div>
         </section>
