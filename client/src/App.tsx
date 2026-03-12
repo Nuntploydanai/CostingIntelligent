@@ -553,7 +553,7 @@ function App() {
           <h2>Step 4: Embellishments</h2>
           <div className="form-grid">
             <div className="form-group">
-              <label>Printing/Embroidery</label>
+              <label>PRINTING/EMBROIDERY</label>
               <select
                 value={embellishments[0].printing_embroidery}
                 onChange={e => setEmbellishments([{ ...embellishments[0], printing_embroidery: e.target.value }])}
@@ -564,7 +564,7 @@ function App() {
             </div>
 
             <div className="form-group">
-              <label>Dimension</label>
+              <label>DIMENSION</label>
               <select
                 value={embellishments[0].dimension}
                 onChange={e => setEmbellishments([{ ...embellishments[0], dimension: e.target.value }])}
@@ -573,25 +573,36 @@ function App() {
                 {dropdowns.print_dimension?.map(v => <option key={v} value={v}>{v}</option>)}
               </select>
             </div>
+
+            <div className="form-group">
+              <label>USAGE / UNIT</label>
+              <select
+                value={embellishments[0].usage_unit}
+                onChange={e => setEmbellishments([{ ...embellishments[0], usage_unit: e.target.value }])}
+              >
+                <option value="">Select...</option>
+                {dropdowns.usage_unit?.map(v => <option key={v} value={v}>{v}</option>)}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label>DEFAULT PRICE / EACH</label>
+              <input readOnly value={result?.outputs.embellishments.rows?.[0]?.default_price_each?.toFixed?.(3) ?? ''} />
+            </div>
+
+            <div className="form-group">
+              <label>TOTAL</label>
+              <input readOnly value={result?.outputs.embellishments.rows?.[0]?.total_cost?.toFixed?.(3) ?? ''} />
+            </div>
           </div>
         </section>
 
         {/* Step 5: Packing & Label */}
         <section className="card">
-          <h2>Step 5: Packing & Label</h2>
+          <h2>Step 5: Packing and Label</h2>
           <div className="form-grid">
             <div className="form-group">
-              <label>Pack Count</label>
-              <input
-                type="number"
-                placeholder="e.g., 6"
-                value={packingLabel.pack_count}
-                onChange={e => setPackingLabel({ ...packingLabel, pack_count: e.target.value })}
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Display Packaging</label>
+              <label>Display Packaging (Details)</label>
               <select
                 value={packingLabel.display_packaging}
                 onChange={e => setPackingLabel({ ...packingLabel, display_packaging: e.target.value })}
@@ -602,17 +613,18 @@ function App() {
             </div>
 
             <div className="form-group">
-              <label>Transit Package</label>
-              <input
-                type="number"
-                placeholder="e.g., 24"
+              <label>Transit Package (Details)</label>
+              <select
                 value={packingLabel.transit_package}
                 onChange={e => setPackingLabel({ ...packingLabel, transit_package: e.target.value })}
-              />
+              >
+                <option value="">Select...</option>
+                {dropdowns.transit_package?.map(v => <option key={v} value={v}>{v}</option>)}
+              </select>
             </div>
 
             <div className="form-group">
-              <label>Label Type</label>
+              <label>Label (Details)</label>
               <select
                 value={packingLabel.label_type}
                 onChange={e => setPackingLabel({ ...packingLabel, label_type: e.target.value })}
@@ -621,30 +633,61 @@ function App() {
                 {dropdowns.label?.map(v => <option key={v} value={v}>{v}</option>)}
               </select>
             </div>
+
+            <div className="form-group">
+              <label>Display Packaging - DEFAULT USAGE</label>
+              <input readOnly value={result?.outputs.packing_label.display_packaging.default_usage?.toFixed?.(3) ?? ''} />
+            </div>
+            <div className="form-group">
+              <label>Display Packaging - TOTAL</label>
+              <input readOnly value={result?.outputs.packing_label.display_packaging.total?.toFixed?.(3) ?? ''} />
+            </div>
+
+            <div className="form-group">
+              <label>Transit Package - DEFAULT USAGE</label>
+              <input readOnly value={result?.outputs.packing_label.transit_package.default_usage?.toFixed?.(3) ?? ''} />
+            </div>
+            <div className="form-group">
+              <label>Transit Package - TOTAL</label>
+              <input readOnly value={result?.outputs.packing_label.transit_package.total?.toFixed?.(3) ?? ''} />
+            </div>
+
+            <div className="form-group">
+              <label>Label - DEFAULT USAGE</label>
+              <input readOnly value={result?.outputs.packing_label.label.default_usage?.toFixed?.(3) ?? ''} />
+            </div>
+            <div className="form-group">
+              <label>Label - TOTAL</label>
+              <input readOnly value={result?.outputs.packing_label.label.total?.toFixed?.(3) ?? ''} />
+            </div>
           </div>
         </section>
 
         {/* Step 6: Manufacturing */}
         <section className="card">
-          <h2>Step 6: Manufacturing</h2>
+          <h2>Step 6: Manufacturing Cost</h2>
           {!result ? (
             <p style={{ color: '#6B7280' }}>
-              Labour cost will be calculated automatically after Step 1-5 inputs.
+              Manufacturing cost based on COO selected in Step 1.
             </p>
           ) : (
-            <div className="summary-table">
-              <div className="summary-header">
-                <span>Country</span>
-                <span>Minutes</span>
-                <span>Labour Cost ($)</span>
+            <div className="form-grid">
+              <div className="form-group">
+                <label>Minutes (W18)</label>
+                <input readOnly value={result.outputs.manufacturing.rows?.[0]?.minutes?.toFixed?.(3) ?? ''} />
               </div>
-              {result.outputs.manufacturing.rows.map((row, i) => (
-                <div key={i} className="summary-row">
-                  <span>{row.country || development.coo || '-'}</span>
-                  <span>{(row.minutes ?? 0).toFixed(3)}</span>
-                  <span className="cost">${(row.total_cost ?? 0).toFixed(3)}</span>
-                </div>
-              ))}
+              <div className="form-group">
+                <label>Cost Rate (W19)</label>
+                <input readOnly value={result.outputs.manufacturing.rows?.[0]?.cost_rate?.toFixed?.(3) ?? ''} />
+              </div>
+              <div className="form-group">
+                <label>Efficiency (W20)</label>
+                <input readOnly value={result.outputs.manufacturing.rows?.[0]?.efficiency?.toFixed?.(3) ?? ''} />
+              </div>
+              <div className="form-group">
+                <label>TOTAL COST (W21)</label>
+                <input readOnly value={result.outputs.manufacturing.rows?.[0]?.total_cost?.toFixed?.(3) ?? ''} />
+              </div>
             </div>
           )}
         </section>

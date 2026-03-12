@@ -275,7 +275,7 @@ async function computeEmbellishment(input: any) {
     normalizeString(row.dimension) === dimension
   );
 
-  const defaultPriceEach = toFloat(priceRow?.price_each) || 0;
+  const defaultPriceEach = toFloat(priceRow?.default_price_each) || 0;
   const usage = toFloat(input.usage_unit) || 1;
 
   const totalCost = usage * defaultPriceEach;
@@ -584,8 +584,11 @@ app.post('/api/calculate', async (req: Request, res: Response) => {
       totalEmbellishmentCost += result.total_cost;
     }
 
-    // 4. Calculate packing & label
-    const packingLabelResult = await computePackingLabel(input.packing_label || {});
+    // 4. Calculate packing & label (pack_count falls back to Step 1)
+    const packingLabelResult = await computePackingLabel({
+      ...(input.packing_label || {}),
+      pack_count: (input.packing_label || {}).pack_count || input.development?.pack_count,
+    });
     const totalDisplayPackagingCost = packingLabelResult.display_packaging.total;
     const totalTransitPackagingCost = packingLabelResult.transit_package.total;
     const totalLabelCost = packingLabelResult.label.total;
