@@ -471,7 +471,7 @@ function App() {
 
         {/* Step 3: Trims */}
         <section className="card">
-          <h2>Step 3: Trims</h2>
+          <h2>Step 3: Trims & Sewn in Label</h2>
           <div className="form-grid">
             <div className="form-group">
               <label>Trims Type</label>
@@ -493,6 +493,57 @@ function App() {
                 <option value="">Select...</option>
                 {dropdowns.garment_part_trim?.map(v => <option key={v} value={v}>{v}</option>)}
               </select>
+            </div>
+
+            <div className="form-group">
+              <label>Usage (Yard/Piece) (optional input)</label>
+              <input
+                type="number"
+                step="0.001"
+                value={trims[0].usage_override}
+                onChange={e => setTrims([{ ...trims[0], usage_override: e.target.value }])}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Price / Unit (optional input)</label>
+              <input
+                type="number"
+                step="0.001"
+                value={trims[0].price_override}
+                onChange={e => setTrims([{ ...trims[0], price_override: e.target.value }])}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Material COO</label>
+              <select
+                value={trims[0].material_coo}
+                onChange={e => setTrims([{ ...trims[0], material_coo: e.target.value }])}
+              >
+                <option value="">Select...</option>
+                {dropdowns.material_coo?.map(v => <option key={v} value={v}>{v}</option>)}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label>UNIT</label>
+              <input readOnly value={result?.outputs.trims.rows?.[0]?.unit ?? ''} />
+            </div>
+
+            <div className="form-group">
+              <label>DEFAULT USAGE (YD/PIECE)</label>
+              <input readOnly value={result?.outputs.trims.rows?.[0]?.default_usage?.toFixed?.(3) ?? ''} />
+            </div>
+
+            <div className="form-group">
+              <label>DEFAULT PRICE/EACH</label>
+              <input readOnly value={result?.outputs.trims.rows?.[0]?.default_price_each?.toFixed?.(3) ?? ''} />
+            </div>
+
+            <div className="form-group">
+              <label>TOTAL COST</label>
+              <input readOnly value={result?.outputs.trims.rows?.[0]?.total_cost?.toFixed?.(3) ?? ''} />
             </div>
           </div>
         </section>

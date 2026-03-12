@@ -198,36 +198,68 @@ async function computeFabrication(input: any) {
 }
 
 // ==================== TRIMS ====================
+function trimsImportFactor(materialCoo: string): number {
+  const v = normalizeString(materialCoo);
+  if (v === 'Domestic') return 1.0;
+  if (v === 'Import') return 1.05;
+  return 1.0;
+}
+
+function trimsGenderFactor(gender: string): number {
+  const g = normalizeString(gender).toUpperCase();
+  if (g === 'MEN') return 1.0;
+  if (g === 'WOMEN') return 0.95;
+  if (g === 'KIDS') return 0.85;
+  return 0.0;
+}
+
+function trimsSizeMultiplier(size: string): number {
+  const s = normalizeString(size);
+  if (s === 'S-XL') return 1.0;
+  if (s === '2XL-3XL') return 1.15;
+  return 0.0;
+}
+
 async function computeTrims(input: any) {
   const trimsPriceData = await loadCSV('packing_trims_item_price_unit.csv');
   const trimsUsageData = await loadCSV('packing_trims_usage.csv');
 
   const trimsType = normalizeString(input.trims_type);
   const garmentPart = normalizeString(input.garment_part);
+  const materialCoo = normalizeString(input.material_coo);
+  const gender = normalizeString(input.gender);
+  const size = normalizeString(input.size);
 
-  const priceRow = trimsPriceData.find(row =>
-    normalizeString(row.trims_type) === trimsType
-  );
-  const defaultPriceEach = toFloat(priceRow?.default_price_each) || 0;
+  const usageOverride = toFloat(input.usage_override);
+  const priceOverride = toFloat(input.price_override);
+
+  const priceRow = trimsPriceData.find(row => normalizeString(row.trims_type) === trimsType);
+  const unit = normalizeString(priceRow?.unit);
+  const defaultPriceEachVal = toFloat(priceRow?.default_price_each) || 0;
 
   const usageRow = trimsUsageData.find(row =>
     normalizeString(row.trims_type) === trimsType &&
     normalizeString(row.garment_part) === garmentPart
   );
-  const defaultUsage = toFloat(usageRow?.usage_small) || 0;
+  const defaultUsageVal = toFloat(usageRow?.usage_small) || 0;
 
-  const usage = toFloat(input.usage_override) || defaultUsage;
-  const priceEach = toFloat(input.price_override) || defaultPriceEach;
+  const effectivePrice = (priceOverride ?? defaultPriceEachVal);
+  const effectiveUsage = (usageOverride ?? defaultUsageVal);
+  const v17 = trimsImportFactor(materialCoo);
+  const w17 = effectivePrice * v17 * effectiveUsage;
+  const x17 = w17 * trimsSizeMultiplier(size);
 
-  const totalCost = usage * priceEach;
+  let y17 = 0;
+  if (unit === 'YARD') y17 = x17;
+  else if (unit === 'PIECE') y17 = w17;
 
-  const unit = priceRow?.unit || 'pcs';
+  const z17 = y17 * trimsGenderFactor(gender);
 
   return {
-    unit,
-    default_usage: Math.round(defaultUsage * 1000) / 1000,
-    default_price_each: Math.round(defaultPriceEach * 1000) / 1000,
-    total_cost: Math.round(totalCost * 1000) / 1000,
+    unit: unit || 'PIECE',
+    default_usage: Math.round(defaultUsageVal * 1000) / 1000,
+    default_price_each: Math.round(defaultPriceEachVal * 1000) / 1000,
+    total_cost: Math.round(z17 * 1000) / 1000,
   };
 }
 
@@ -534,7 +566,11 @@ app.post('/api/calculate', async (req: Request, res: Response) => {
     const trimsResults = [];
     let totalTrimCost = 0;
     for (const trim of input.trims) {
-      const result = await computeTrims(trim);
+      const result = await computeTrims({
+        ...trim,
+        gender: input.development?.gender,
+        size: input.development?.size,
+      });
       trimsResults.push(result);
       totalTrimCost += result.total_cost;
     }
