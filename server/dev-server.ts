@@ -54,54 +54,145 @@ function toFloat(value: any): number | null {
 }
 
 // ==================== FABRICATION ====================
+function normPriceUnit(u: string): string {
+  return normalizeString(u).toLowerCase();
+}
+
+function conversionPriceYdKilo(args: {
+  fabric_type: string;
+  price_lb: number | null;
+  price_unit: string;
+  price_value: number | null;
+  weight_gsm: number;
+  fabric_finishing: string;
+  color_design: string;
+}): [number | string, number | string] {
+  const { fabric_type, price_lb, price_unit, price_value, weight_gsm, fabric_finishing, color_design } = args;
+  if ((price_lb == null && price_value == null) || !fabric_type || weight_gsm === 0) return ['-', 0.0];
+
+  const B2 = 60.0;
+  const B3 = weight_gsm;
+  const J2 = B2;
+  const J3 = weight_gsm;
+  const K3 = J2 * 0.0254;
+  const L3 = J3 / 1000.0;
+  const K13 = L3 * K3;
+
+  const A24 = price_lb ?? 0.0;
+  const C3 = B2 * 0.0254;
+  const D3 = B3 / 1000.0;
+  const C13 = D3 * C3;
+  const C11 = C13 * 2.20462262;
+  const C4 = C3 * D3 * 35.274;
+
+  let C23 = A24;
+  if (price_value != null) {
+    const unit = normPriceUnit(price_unit);
+    let C24 = A24;
+    if (unit.includes('yd')) C24 = price_value;
+    else if (unit.includes('kg')) C24 = price_value * C13 * 0.9144;
+    else if (unit.includes('meter')) C24 = price_value * 0.9144;
+    else if (unit.includes('lb')) C24 = price_value * C11 * 0.9144;
+    else if (unit.includes('ounce')) C24 = price_value * C4 * 0.9144;
+    C23 = C24;
+  }
+
+  const E23 = (C23 / 0.9144) / C13;
+  const V4 = weight_gsm;
+  const V5 = (V4 * 1.19599) * 1.6667;
+  const finishingLookup: Record<string, number> = {
+    'Wicking': 0.06615,
+    'Odor Control': 0.11025,
+    'Xtemp': 0.33075,
+    'Odor Control + Wicking': 0.1764,
+    'Xtemp + Odor Control': 0.441,
+    'None': 0.0,
+    'OTHER': 0.0,
+  };
+  const T4 = finishingLookup[normalizeString(fabric_finishing)] ?? 0.0;
+  const V6 = V5 * T4 / 1000.0;
+  const K16 = E23 + V6;
+  const M16 = (K16 * K13) * 0.9144;
+
+  const cd = normalizeString(color_design);
+  const V18 = cd === 'Solid' ? 1.0 : cd === 'white' ? 0.95 : cd === 'Heather' ? 1.1 : cd === 'Others' ? 1.07 : 0.0;
+
+  const M18 = (M16 + V6) * V18;
+  const O18 = M18;
+  const denom = J3 * 1.3946 / 1000.0;
+  const K20 = denom !== 0 ? O18 / denom : 0.0;
+  return [Math.round(O18 * 1000) / 1000, Math.round(K20 * 1000) / 1000];
+}
+
 async function computeFabrication(input: any) {
-  const fabricWidthData = await loadCSV('dropdown_fabric_width.csv');
-  const fabricPriceData = await loadCSV('dropdown_fabric_price.csv');
-  const fabricUsageData = await loadCSV('dropdown_fabric_usage.csv');
+  const fabricPriceLookup = await loadCSV('fabric_price_lookup.csv');
+  const keyMapRows = await loadCSV('product_part_key_map.csv');
+  const usageRows = await loadCSV('fabric_usage_lookup.csv');
 
-  const widthRow = fabricWidthData.find(row =>
-    normalizeString(row.fabric_type) === normalizeString(input.fabric_type) &&
-    normalizeString(row.fabric_contents) === normalizeString(input.fabric_contents)
-  );
-  const fixedFabricWidth = toFloat(widthRow?.fabric_width) || 60;
+  const fabric_type = normalizeString(input.fabric_type);
+  const fabric_contents = normalizeString(input.fabric_contents);
+  const using_part = normalizeString(input.using_part);
+  const material_coo = normalizeString(input.material_coo);
+  const silhouette = normalizeString(input.silhouette);
+  const seam = normalizeString(input.seam);
+  const gender = normalizeString(input.gender);
+  const size = normalizeString(input.size);
 
-  const priceRow = fabricPriceData.find(row =>
-    normalizeString(row.fabric_type) === normalizeString(input.fabric_type) &&
-    normalizeString(row.fabric_contents) === normalizeString(input.fabric_contents)
-  );
-  const defaultWeightGsm = toFloat(priceRow?.weight_gsm) || 200;
-  const defaultPriceYd = toFloat(priceRow?.price_yd) || 0;
-  const defaultPriceKilo = toFloat(priceRow?.price_kilo) || 0;
-  const defaultPriceLb = toFloat(priceRow?.price_lb) || 0;
+  const key = `${fabric_type}${fabric_contents}`;
+  const defaultPriceLb = toFloat((fabricPriceLookup.find(r => normalizeString(r.key) === key) || {}).value);
+  const overrideVal = toFloat(input.price_value);
 
-  const usageRow = fabricUsageData.find(row =>
-    normalizeString(row.fabric_type) === normalizeString(input.fabric_type) &&
-    normalizeString(row.fabric_contents) === normalizeString(input.fabric_contents) &&
-    normalizeString(row.using_part) === normalizeString(input.using_part)
-  );
-  const defaultUsage = toFloat(usageRow?.usage_yd) || 0;
+  const fixedFabricWidth = using_part ? 60.0 : 0.0;
+
+  const defaultGsmMap: Record<string, number> = {
+    Jersey: 160.0,
+    Rib1x1: 180.0,
+    Rib2x1: 180.0,
+    Mesh: 150.0,
+    Fleece: 220.0,
+  };
+
+  const weightInput = toFloat(input.weight_gsm_override);
+  const defaultWeightDisplay = weightInput != null ? 0 : (defaultGsmMap[fabric_type] ?? 0);
+  const effectiveGsm = weightInput ?? defaultWeightDisplay ?? 0;
+
+  const [defaultPriceYd, defaultPriceKilo] = conversionPriceYdKilo({
+    fabric_type,
+    price_lb: defaultPriceLb,
+    price_unit: normalizeString(input.price_unit || 'Price / Lbs'),
+    price_value: overrideVal,
+    weight_gsm: effectiveGsm,
+    fabric_finishing: normalizeString(input.fabric_finishing || ''),
+    color_design: normalizeString(input.color_design || 'Solid'),
+  });
+
+  const k7Key = normalizeString((keyMapRows.find(r => normalizeString(r.silhouette) === silhouette && normalizeString(r.seam) === seam) || {}).k7_key);
+  let usageVal: number | null = null;
+  if (fabric_contents && k7Key && using_part) {
+    usageVal = toFloat((usageRows.find(r => normalizeString(r.k7_key) === k7Key && normalizeString(r.using_part) === using_part) || {}).usage);
+  }
+
+  const genderMult = gender.toUpperCase() === 'MEN' ? 1 : gender.toUpperCase() === 'WOMEN' ? 0.85 : gender.toUpperCase() === 'KIDS' ? 0.75 : 0;
+  const sizeMult = size.toUpperCase() === 'S-XL' ? 1 : size.toUpperCase() === '2XL-3XL' ? 1.15 : size.toUpperCase() === 'S-3XL' ? 1.1 : 0;
+  const silhouetteMult = 1.0;
+  const importFactor = material_coo === 'Domestic' ? 1 : material_coo === 'Import' ? 1.05 : 0;
 
   let totalCost = 0;
-  if (input.price_unit === 'Price / YD') {
-    const pricePerYd = toFloat(input.price_value) || defaultPriceYd;
-    totalCost = defaultUsage * pricePerYd;
-  } else if (input.price_unit === 'Price / KILO') {
-    const pricePerKilo = toFloat(input.price_value) || defaultPriceKilo;
-    const weightGsm = toFloat(input.weight_gsm_override) || defaultWeightGsm;
-    totalCost = (defaultUsage * weightGsm * pricePerKilo) / 1000;
-  } else if (input.price_unit === 'Price / LB') {
-    const pricePerLb = toFloat(input.price_value) || defaultPriceLb;
-    const weightGsm = toFloat(input.weight_gsm_override) || defaultWeightGsm;
-    const pricePerKilo = pricePerLb * 2.20462;
-    totalCost = (defaultUsage * weightGsm * pricePerKilo) / 1000;
+  if (usageVal != null && typeof defaultPriceYd === 'number') {
+    const U7 = usageVal * genderMult;
+    const V7 = U7 * sizeMult;
+    const W7 = V7 * silhouetteMult;
+    const X7 = W7 * defaultPriceYd;
+    const Y7 = X7 * importFactor;
+    totalCost = Math.round(Y7 * 1000) / 1000;
   }
 
   return {
     fixed_fabric_width: Math.round(fixedFabricWidth * 1000) / 1000,
-    default_weight_gsm: Math.round(defaultWeightGsm * 1000) / 1000,
-    default_price_yd: Math.round(defaultPriceYd * 1000) / 1000,
-    default_price_kilo: Math.round(defaultPriceKilo * 1000) / 1000,
-    default_price_lb: Math.round(defaultPriceLb * 1000) / 1000,
+    default_weight_gsm: Math.round((defaultWeightDisplay || 0) * 1000) / 1000,
+    default_price_yd: typeof defaultPriceYd === 'number' ? defaultPriceYd : 0,
+    default_price_kilo: typeof defaultPriceKilo === 'number' ? defaultPriceKilo : 0,
+    default_price_lb: Math.round((defaultPriceLb || 0) * 1000) / 1000,
     total_cost: Math.round(totalCost * 1000) / 1000,
   };
 }
@@ -426,7 +517,15 @@ app.post('/api/calculate', async (req: Request, res: Response) => {
     const fabricationResults = [];
     let totalFabricCost = 0;
     for (const fab of input.fabrication) {
-      const result = await computeFabrication(fab);
+      const result = await computeFabrication({
+        ...fab,
+        silhouette: input.development?.silhouette,
+        seam: input.development?.seam,
+        gender: input.development?.gender,
+        size: input.development?.size,
+        fabric_finishing: input.development?.fabric_finishing,
+        color_design: input.development?.color_design,
+      });
       fabricationResults.push(result);
       totalFabricCost += result.total_cost;
     }
