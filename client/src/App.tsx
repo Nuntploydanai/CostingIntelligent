@@ -246,8 +246,7 @@ function App() {
   return (
     <div className="container">
       <header>
-        <h1>👕 Basic Shirts Costing Tool v2</h1>
-        <p>Excel-Parity Cost Calculator (Node.js + React)</p>
+        <h1>👕 Basic Shirts Costing Tool</h1>
         <button onClick={clearForm} className="clear-button">
           🔄 Clear Form
         </button>
