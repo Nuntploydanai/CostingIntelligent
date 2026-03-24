@@ -210,7 +210,7 @@ function App() {
     const g = (gender || '').toLowerCase()
     const c = (color || '').toLowerCase()
 
-    // Excel media extracted from workbook (client/public/excel_media)
+    // Mapping tuned from workbook media set. We keep this centralized for quick QA updates.
     if (g.includes('women')) {
       if (s.includes('v neck') || s.includes('v-neck')) return '/excel_media/image59.png'
       if (s.includes('tank')) return '/excel_media/image60.png'
@@ -224,7 +224,8 @@ function App() {
     }
 
     if (g.includes('kids')) {
-      return '/excel_media/image68.jpeg'
+      // switched to alternate kids candidate from workbook media after QA feedback
+      return '/excel_media/image69.jpeg'
     }
 
     if (c.includes('white')) return '/excel_media/image59.png'
@@ -377,7 +378,10 @@ function App() {
                 onChange={e => setDevelopment({ ...development, coo: e.target.value })}
               >
                 <option value="">Select...</option>
-                {dropdowns.coo?.map(v => <option key={v} value={v}>{v}</option>)}
+                {dropdowns.coo?.map(v => {
+                  const f = flagByCountry[(v || '').toUpperCase()] || '🏳️'
+                  return <option key={v} value={v}>{`${f} ${v}`}</option>
+                })}
               </select>
             </div>
 
@@ -922,7 +926,7 @@ function App() {
                       key={i}
                       className={country.country === development.coo ? 'selected' : ''}
                     >
-                      <td><strong>{country.country}</strong></td>
+                      <td><strong>{flagByCountry[(country.country || '').toUpperCase()] || '🏳️'} {country.country}</strong></td>
                       <td>${country.labour_cost.toFixed(3)}</td>
                       <td>${country.subtotal.toFixed(3)}</td>
                       <td>${country.margin_amount.toFixed(3)}</td>
