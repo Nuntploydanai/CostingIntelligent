@@ -207,6 +207,7 @@ function App() {
     PAKISTAN: 'pk',
     MALAYSIA: 'my',
     LAOS: 'la',
+    'SRI LANKA': 'lk',
     KENYA: 'ke',
     EGYPT: 'eg',
     JORDAN: 'jo',
@@ -318,119 +319,121 @@ function App() {
         {/* Step 1: Development */}
         <section className="card">
           <h2>Step 1: Development</h2>
-          <div className="form-grid">
-            <div className="form-group">
-              <label>Gender</label>
-              <select
-                value={development.gender}
-                onChange={e => setDevelopment({ ...development, gender: e.target.value })}
-              >
-                <option value="">Select...</option>
-                {dropdowns.gender?.map(v => <option key={v} value={v}>{v}</option>)}
-              </select>
+          <div className="dev-layout">
+            <div className="preview-wrap">
+              <img
+                src={modelPhotoBySilhouette(development.silhouette, development.gender, development.color_design)}
+                alt="Garment"
+                className="preview-photo"
+              />
             </div>
 
-            <div className="form-group">
-              <label>Silhouette</label>
-              <select
-                value={development.silhouette}
-                onChange={e => setDevelopment({ ...development, silhouette: e.target.value })}
-              >
-                <option value="">Select...</option>
-                {dropdowns.silhouette?.map(v => <option key={v} value={v}>{v}</option>)}
-              </select>
-            </div>
+            <div className="dev-form-grid">
+              <div className="form-group">
+                <label>Gender</label>
+                <select
+                  value={development.gender}
+                  onChange={e => setDevelopment({ ...development, gender: e.target.value })}
+                >
+                  <option value="">Select...</option>
+                  {dropdowns.gender?.map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
 
-            <div className="form-group">
-              <label>Seam</label>
-              <select
-                value={development.seam}
-                onChange={e => setDevelopment({ ...development, seam: e.target.value })}
-              >
-                <option value="">Select...</option>
-                {dropdowns.seam?.map(v => <option key={v} value={v}>{v}</option>)}
-              </select>
-            </div>
+              <div className="form-group">
+                <label>Silhouette</label>
+                <select
+                  value={development.silhouette}
+                  onChange={e => setDevelopment({ ...development, silhouette: e.target.value })}
+                >
+                  <option value="">Select...</option>
+                  {dropdowns.silhouette?.map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
 
-            <div className="form-group">
-              <label>Color / Design</label>
-              <select
-                value={development.color_design}
-                onChange={e => setDevelopment({ ...development, color_design: e.target.value })}
-              >
-                <option value="">Select...</option>
-                {dropdowns.color_design?.map(v => <option key={v} value={v}>{v}</option>)}
-              </select>
-            </div>
+              <div className="form-group">
+                <label>Seam</label>
+                <select
+                  value={development.seam}
+                  onChange={e => setDevelopment({ ...development, seam: e.target.value })}
+                >
+                  <option value="">Select...</option>
+                  {dropdowns.seam?.map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
 
-            <div className="form-group">
-              <label>Size</label>
-              <select
-                value={development.size}
-                onChange={e => setDevelopment({ ...development, size: e.target.value })}
-              >
-                <option value="">Select...</option>
-                {dropdowns.size?.map(v => <option key={v} value={v}>{v}</option>)}
-              </select>
-            </div>
+              <div className="form-group">
+                <label>Color / Design</label>
+                <select
+                  value={development.color_design}
+                  onChange={e => setDevelopment({ ...development, color_design: e.target.value })}
+                >
+                  <option value="">Select...</option>
+                  {dropdowns.color_design?.map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
 
-            <div className="form-group">
-              <label>Ideal Quantity</label>
-              <select
-                value={development.ideal_quantity}
-                onChange={e => setDevelopment({ ...development, ideal_quantity: e.target.value })}
-              >
-                <option value="">Select...</option>
-                {dropdowns.ideal_quantity?.map(v => <option key={v} value={v}>{v}</option>)}
-              </select>
-            </div>
+              <div className="form-group">
+                <label>Size</label>
+                <select
+                  value={development.size}
+                  onChange={e => setDevelopment({ ...development, size: e.target.value })}
+                >
+                  <option value="">Select...</option>
+                  {dropdowns.size?.map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
 
-            <div className="form-group">
-              <label>Pack count / Pack</label>
-              <select
-                value={normalizePackCount(development.pack_count)}
-                onChange={e => setDevelopment({ ...development, pack_count: normalizePackCount(e.target.value) })}
-              >
-                <option value="">Select...</option>
-                {dropdowns.pack_count?.map(v => {
-                  const n = normalizePackCount(v)
-                  return <option key={v} value={n}>{n}</option>
-                })}
-              </select>
-            </div>
+              <div className="form-group">
+                <label>Ideal Quantity</label>
+                <select
+                  value={development.ideal_quantity}
+                  onChange={e => setDevelopment({ ...development, ideal_quantity: e.target.value })}
+                >
+                  <option value="">Select...</option>
+                  {dropdowns.ideal_quantity?.map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
 
-            <div className="form-group">
-              <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                COO (Country of Origin)
-                <img className="country-flag-img" src={flagPath(development.coo)} alt="flag" />
-              </label>
-              <select
-                value={development.coo}
-                onChange={e => setDevelopment({ ...development, coo: e.target.value })}
-              >
-                <option value="">Select...</option>
-                {dropdowns.coo?.map(v => <option key={v} value={v}>{v}</option>)}
-              </select>
-            </div>
+              <div className="form-group">
+                <label>Pack count / Pack</label>
+                <select
+                  value={normalizePackCount(development.pack_count)}
+                  onChange={e => setDevelopment({ ...development, pack_count: normalizePackCount(e.target.value) })}
+                >
+                  <option value="">Select...</option>
+                  {dropdowns.pack_count?.map(v => {
+                    const n = normalizePackCount(v)
+                    return <option key={v} value={n}>{n}</option>
+                  })}
+                </select>
+              </div>
 
-            <div className="form-group">
-              <label>Fabric Finishing</label>
-              <select
-                value={development.fabric_finishing}
-                onChange={e => setDevelopment({ ...development, fabric_finishing: e.target.value })}
-              >
-                <option value="">Select...</option>
-                {dropdowns.fabric_finishing?.map(v => <option key={v} value={v}>{v}</option>)}
-              </select>
-            </div>
-          </div>
+              <div className="form-group">
+                <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  COO (Country of Origin)
+                  <img className="country-flag-img" src={flagPath(development.coo)} alt="flag" />
+                </label>
+                <select
+                  value={development.coo}
+                  onChange={e => setDevelopment({ ...development, coo: e.target.value })}
+                >
+                  <option value="">Select...</option>
+                  {dropdowns.coo?.map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
 
-          <div className="preview-wrap">
-            <img
-              src={modelPhotoBySilhouette(development.silhouette, development.gender, development.color_design)}
-              alt="Garment"
-              className="preview-photo"
-            />
+              <div className="form-group">
+                <label>Fabric Finishing</label>
+                <select
+                  value={development.fabric_finishing}
+                  onChange={e => setDevelopment({ ...development, fabric_finishing: e.target.value })}
+                >
+                  <option value="">Select...</option>
+                  {dropdowns.fabric_finishing?.map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
+            </div>
           </div>
         </section>
 

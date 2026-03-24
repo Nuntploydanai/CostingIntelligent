@@ -61,11 +61,24 @@ header p {
   gap: 18px;
 }
 
+.dev-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.dev-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 14px;
+}
+
 .preview-wrap {
-  margin-top: 14px;
+  margin-top: 0;
   display: flex;
   gap: 12px;
-  align-items: center;
+  align-items: flex-start;
   flex-wrap: wrap;
 }
 
@@ -337,6 +350,20 @@ footer a:hover {
 
   .form-grid {
     grid-template-columns: 1fr;
+  }
+
+  .dev-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .dev-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-photo {
+    width: 100%;
+    max-width: 260px;
+    height: 300px;
   }
 
   .summary-header,
