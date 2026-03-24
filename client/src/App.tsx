@@ -210,32 +210,41 @@ function App() {
     return code ? `/flags/${code}.svg` : '/flags/unknown.svg'
   }
 
-  const modelPhotoBySilhouette = (silhouette: string, gender: string, color: string) => {
-    const s = (silhouette || '').toLowerCase()
-    const g = (gender || '').toLowerCase()
-    const c = (color || '').toLowerCase()
+  const imageSheetMap: Record<string, string> = {
+    // Source: Excel "Image" sheet (sheet15), row-anchored drawing map
+    'men|tank top/a shirt': '/excel_media/image59.png',
+    'men|t-shirt (crew neck)': '/excel_media/image64.jpeg',
+    'men|t-shirt (v neck)': '/excel_media/image63.png',
+    'men|long sleeve shirt (crew neck)': '/excel_media/image61.jpeg',
+    'men|long sleeve shirt (v neck)': '/excel_media/image58.png',
+    'men|sleeveless shirt (crew neck)': '/excel_media/image60.png',
+    'men|sleeveless shirt (v neck)': '/excel_media/image62.jpeg',
 
-    // Mapping tuned from workbook media set. We keep this centralized for quick QA updates.
-    if (g.includes('women')) {
-      if (s.includes('crew')) return '/excel_media/image2.png' // women crew-neck (QA corrected)
-      if (s.includes('v neck') || s.includes('v-neck')) return '/excel_media/image59.png'
-      if (s.includes('tank')) return '/excel_media/image60.png'
-      return '/excel_media/image2.png'
-    }
+    'women|tank top/a shirt': '/excel_media/image68.jpeg',
+    'women|t-shirt (crew neck)': '/excel_media/image66.jpeg',
+    'women|t-shirt (v neck)': '/excel_media/image67.png',
+    'women|long sleeve shirt (crew neck)': '/excel_media/image70.jpeg',
+    'women|long sleeve shirt (v neck)': '/excel_media/image65.jpeg',
+    'women|sleeveless shirt (crew neck)': '/excel_media/image69.jpeg',
+    'women|sleeveless shirt (v neck)': '/excel_media/image71.png',
 
-    if (g.includes('men')) {
-      if (s.includes('v neck') || s.includes('v-neck')) return '/excel_media/image63.png'
-      if (s.includes('tank')) return '/excel_media/image67.png'
-      if (s.includes('crew')) return '/excel_media/image61.jpeg'
-      return '/excel_media/image61.jpeg'
-    }
+    'kids|tank top/a shirt': '/excel_media/image75.png',
+    'kids|t-shirt (crew neck)': '/excel_media/image77.png',
+    'kids|t-shirt (v neck)': '/excel_media/image78.png',
+    'kids|long sleeve shirt (crew neck)': '/excel_media/image76.png',
+    'kids|long sleeve shirt (v neck)': '/excel_media/image72.png',
+    'kids|sleeveless shirt (crew neck)': '/excel_media/image74.png',
+    'kids|sleeveless shirt (v neck)': '/excel_media/image73.png',
+  }
 
-    if (g.includes('kids')) {
-      return '/excel_media/image69.jpeg'
-    }
+  const modelPhotoBySilhouette = (silhouette: string, gender: string, _color: string) => {
+    const g = (gender || '').trim().toLowerCase()
+    const s = (silhouette || '').trim().toLowerCase()
+    const direct = imageSheetMap[`${g}|${s}`]
+    if (direct) return direct
 
-    if (c.includes('white')) return '/excel_media/image59.png'
-    return '/excel_media/image60.png'
+    // fallback from Excel Image sheet: "No silhouette"
+    return '/excel_media/image79.png'
   }
 
   // Clear form function
