@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="440" viewBox="0 0 400 440">
+  <rect width="400" height="440" fill="#f0fdf4"/>
+  <path d="M120 130 L160 110 L240 110 L280 130 L250 330 L150 330 Z" fill="#dcfce7" stroke="#16a34a" stroke-width="4"/>
+  <path d="M175 120 L200 160 L225 120" fill="none" stroke="#16a34a" stroke-width="4"/>
+  <text x="200" y="380" font-size="20" text-anchor="middle" fill="#166534">Polo</text>
+</svg>

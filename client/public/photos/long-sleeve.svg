@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="440" viewBox="0 0 400 440">
+  <rect width="400" height="440" fill="#fff7ed"/>
+  <path d="M90 150 L140 120 L260 120 L310 150 L280 210 L250 190 L240 330 L160 330 L150 190 L120 210 Z" fill="#ffedd5" stroke="#f97316" stroke-width="4"/>
+  <text x="200" y="380" font-size="20" text-anchor="middle" fill="#c2410c">Long Sleeve</text>
+</svg>

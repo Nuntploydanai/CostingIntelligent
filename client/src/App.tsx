@@ -195,6 +195,33 @@ function App() {
     return () => clearTimeout(timer)
   }, [calculateCost])
 
+  const flagByCountry: Record<string, string> = {
+    BANGLADESH: '🇧🇩',
+    INDIA: '🇮🇳',
+    INDONESIA: '🇮🇩',
+    THAILAND: '🇹🇭',
+    CAMBODIA: '🇰🇭',
+    VIETNAM: '🇻🇳',
+    CHINA: '🇨🇳',
+  }
+
+  const modelPhotoBySilhouette = (silhouette: string, gender: string) => {
+    const s = (silhouette || '').toLowerCase()
+    const g = (gender || '').toLowerCase()
+
+    if (s.includes('tank')) return '/photos/tank-top.svg'
+    if (s.includes('v neck') || s.includes('v-neck')) return '/photos/v-neck.svg'
+    if (s.includes('crew')) return '/photos/crew-neck.svg'
+    if (s.includes('polo')) return '/photos/polo.svg'
+    if (s.includes('long sleeve')) return '/photos/long-sleeve.svg'
+
+    if (g.includes('women')) return '/photos/women-basic.svg'
+    if (g.includes('men')) return '/photos/men-basic.svg'
+    if (g.includes('kids')) return '/photos/kids-basic.svg'
+
+    return '/photos/default.svg'
+  }
+
   // Clear form function
   const clearForm = () => {
     setDevelopment({
@@ -354,6 +381,23 @@ function App() {
                 <option value="">Select...</option>
                 {dropdowns.fabric_finishing?.map(v => <option key={v} value={v}>{v}</option>)}
               </select>
+            </div>
+          </div>
+
+          <div style={{ marginTop: 16, display: 'grid', gridTemplateColumns: '220px 1fr', gap: 16, alignItems: 'center' }}>
+            <img
+              src={modelPhotoBySilhouette(development.silhouette, development.gender)}
+              alt="Garment preview"
+              style={{ width: 200, height: 220, objectFit: 'cover', borderRadius: 8, border: '1px solid #E5E7EB', background: '#fff' }}
+            />
+            <div style={{ background: '#F9FAFB', border: '1px solid #E5E7EB', borderRadius: 8, padding: 12 }}>
+              <div><strong>Preview</strong></div>
+              <div style={{ marginTop: 8 }}>
+                {flagByCountry[(development.coo || '').toUpperCase()] || '🏳️'} {development.coo || 'Country not selected'}
+              </div>
+              <div style={{ marginTop: 6 }}>
+                {development.silhouette || 'Silhouette not selected'} {development.color_design ? `(${development.color_design})` : ''}
+              </div>
             </div>
           </div>
         </section>

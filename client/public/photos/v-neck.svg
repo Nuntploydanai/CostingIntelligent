@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="440" viewBox="0 0 400 440">
+  <rect width="400" height="440" fill="#ecfeff"/>
+  <path d="M120 120 L160 100 L180 140 L200 180 L220 140 L240 100 L280 120 L250 330 L150 330 Z" fill="#ccfbf1" stroke="#14b8a6" stroke-width="4"/>
+  <text x="200" y="380" font-size="20" text-anchor="middle" fill="#0f766e">V-Neck</text>
+</svg>

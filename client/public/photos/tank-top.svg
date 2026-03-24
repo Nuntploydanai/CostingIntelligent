@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="440" viewBox="0 0 400 440">
+  <rect width="400" height="440" fill="#eef2ff"/>
+  <path d="M140 90 L170 90 L180 120 L220 120 L230 90 L260 90 L280 140 L260 330 L140 330 L120 140 Z" fill="#dbeafe" stroke="#60a5fa" stroke-width="4"/>
+  <text x="200" y="380" font-size="20" text-anchor="middle" fill="#1d4ed8">Tank Top</text>
+</svg>
