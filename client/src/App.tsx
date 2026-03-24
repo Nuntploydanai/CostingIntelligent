@@ -195,14 +195,19 @@ function App() {
     return () => clearTimeout(timer)
   }, [calculateCost])
 
-  const flagByCountry: Record<string, string> = {
-    BANGLADESH: '🇧🇩',
-    INDIA: '🇮🇳',
-    INDONESIA: '🇮🇩',
-    THAILAND: '🇹🇭',
-    CAMBODIA: '🇰🇭',
-    VIETNAM: '🇻🇳',
-    CHINA: '🇨🇳',
+  const flagCodeByCountry: Record<string, string> = {
+    BANGLADESH: 'bd',
+    INDIA: 'in',
+    INDONESIA: 'id',
+    THAILAND: 'th',
+    CAMBODIA: 'kh',
+    VIETNAM: 'vn',
+    CHINA: 'cn',
+  }
+
+  const flagPath = (country: string) => {
+    const code = flagCodeByCountry[(country || '').toUpperCase()]
+    return code ? `/flags/${code}.svg` : '/flags/unknown.svg'
   }
 
   const modelPhotoBySilhouette = (silhouette: string, gender: string, color: string) => {
@@ -212,19 +217,20 @@ function App() {
 
     // Mapping tuned from workbook media set. We keep this centralized for quick QA updates.
     if (g.includes('women')) {
+      if (s.includes('crew')) return '/excel_media/image2.png' // women crew-neck (QA corrected)
       if (s.includes('v neck') || s.includes('v-neck')) return '/excel_media/image59.png'
       if (s.includes('tank')) return '/excel_media/image60.png'
-      return '/excel_media/image62.jpeg'
+      return '/excel_media/image2.png'
     }
 
     if (g.includes('men')) {
       if (s.includes('v neck') || s.includes('v-neck')) return '/excel_media/image63.png'
       if (s.includes('tank')) return '/excel_media/image67.png'
+      if (s.includes('crew')) return '/excel_media/image61.jpeg'
       return '/excel_media/image61.jpeg'
     }
 
     if (g.includes('kids')) {
-      // switched to alternate kids candidate from workbook media after QA feedback
       return '/excel_media/image69.jpeg'
     }
 
@@ -401,7 +407,7 @@ function App() {
               className="preview-photo"
             />
             <div className="preview-meta">
-              <span className="country-flag" aria-label="country-flag">{flagByCountry[(development.coo || '').toUpperCase()] || '🏳️'}</span>
+              <img className="country-flag-img" src={flagPath(development.coo)} alt="flag" />
               <span>{development.coo || 'Country not selected'}</span>
               <span>•</span>
               <span>{development.silhouette || 'Silhouette not selected'}</span>
@@ -924,8 +930,8 @@ function App() {
                       className={country.country === development.coo ? 'selected' : ''}
                     >
                       <td>
-                        <strong>
-                          <span className="country-flag" aria-label="country-flag">{flagByCountry[(country.country || '').toUpperCase()] || '🏳️'}</span>{' '}
+                        <strong style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                          <img className="country-flag-img" src={flagPath(country.country)} alt="flag" />
                           {country.country}
                         </strong>
                       </td>
