@@ -205,21 +205,30 @@ function App() {
     CHINA: '🇨🇳',
   }
 
-  const modelPhotoBySilhouette = (silhouette: string, gender: string) => {
+  const modelPhotoBySilhouette = (silhouette: string, gender: string, color: string) => {
     const s = (silhouette || '').toLowerCase()
     const g = (gender || '').toLowerCase()
+    const c = (color || '').toLowerCase()
 
-    if (s.includes('tank')) return '/photos/tank-top.svg'
-    if (s.includes('v neck') || s.includes('v-neck')) return '/photos/v-neck.svg'
-    if (s.includes('crew')) return '/photos/crew-neck.svg'
-    if (s.includes('polo')) return '/photos/polo.svg'
-    if (s.includes('long sleeve')) return '/photos/long-sleeve.svg'
+    // Excel media extracted from workbook (client/public/excel_media)
+    if (g.includes('women')) {
+      if (s.includes('v neck') || s.includes('v-neck')) return '/excel_media/image59.png'
+      if (s.includes('tank')) return '/excel_media/image60.png'
+      return '/excel_media/image62.jpeg'
+    }
 
-    if (g.includes('women')) return '/photos/women-basic.svg'
-    if (g.includes('men')) return '/photos/men-basic.svg'
-    if (g.includes('kids')) return '/photos/kids-basic.svg'
+    if (g.includes('men')) {
+      if (s.includes('v neck') || s.includes('v-neck')) return '/excel_media/image63.png'
+      if (s.includes('tank')) return '/excel_media/image67.png'
+      return '/excel_media/image61.jpeg'
+    }
 
-    return '/photos/default.svg'
+    if (g.includes('kids')) {
+      return '/excel_media/image68.jpeg'
+    }
+
+    if (c.includes('white')) return '/excel_media/image59.png'
+    return '/excel_media/image60.png'
   }
 
   // Clear form function
@@ -386,7 +395,7 @@ function App() {
 
           <div style={{ marginTop: 16, display: 'grid', gridTemplateColumns: '220px 1fr', gap: 16, alignItems: 'center' }}>
             <img
-              src={modelPhotoBySilhouette(development.silhouette, development.gender)}
+              src={modelPhotoBySilhouette(development.silhouette, development.gender, development.color_design)}
               alt="Garment preview"
               style={{ width: 200, height: 220, objectFit: 'cover', borderRadius: 8, border: '1px solid #E5E7EB', background: '#fff' }}
             />
