@@ -70,9 +70,9 @@ header p {
 }
 
 .preview-photo {
-  width: 170px;
-  height: 190px;
-  object-fit: cover;
+  width: 260px;
+  height: 320px;
+  object-fit: contain;
   border-radius: 10px;
   border: 1px solid var(--border-color);
   background: #fff;

@@ -203,6 +203,14 @@ function App() {
     CAMBODIA: 'kh',
     VIETNAM: 'vn',
     CHINA: 'cn',
+    'SOUTH AFRICA': 'za',
+    PAKISTAN: 'pk',
+    MALAYSIA: 'my',
+    LAOS: 'la',
+    KENYA: 'ke',
+    EGYPT: 'eg',
+    JORDAN: 'jo',
+    OTHER: 'unknown',
   }
 
   const flagPath = (country: string) => {
@@ -236,6 +244,8 @@ function App() {
     'kids|sleeveless shirt (crew neck)': '/excel_media/image74.png',
     'kids|sleeveless shirt (v neck)': '/excel_media/image73.png',
   }
+
+  const normalizePackCount = (value: string) => (value || '').replace(/^X/i, '')
 
   const modelPhotoBySilhouette = (silhouette: string, gender: string, _color: string) => {
     const g = (gender || '').trim().toLowerCase()
@@ -378,16 +388,22 @@ function App() {
             <div className="form-group">
               <label>Pack count / Pack</label>
               <select
-                value={development.pack_count}
-                onChange={e => setDevelopment({ ...development, pack_count: e.target.value })}
+                value={normalizePackCount(development.pack_count)}
+                onChange={e => setDevelopment({ ...development, pack_count: normalizePackCount(e.target.value) })}
               >
                 <option value="">Select...</option>
-                {dropdowns.pack_count?.map(v => <option key={v} value={v}>{v}</option>)}
+                {dropdowns.pack_count?.map(v => {
+                  const n = normalizePackCount(v)
+                  return <option key={v} value={n}>{n}</option>
+                })}
               </select>
             </div>
 
             <div className="form-group">
-              <label>COO (Country of Origin)</label>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                COO (Country of Origin)
+                <img className="country-flag-img" src={flagPath(development.coo)} alt="flag" />
+              </label>
               <select
                 value={development.coo}
                 onChange={e => setDevelopment({ ...development, coo: e.target.value })}
@@ -415,13 +431,6 @@ function App() {
               alt="Garment"
               className="preview-photo"
             />
-            <div className="preview-meta">
-              <img className="country-flag-img" src={flagPath(development.coo)} alt="flag" />
-              <span>{development.coo || 'Country not selected'}</span>
-              <span>•</span>
-              <span>{development.silhouette || 'Silhouette not selected'}</span>
-              {development.color_design ? <span>({development.color_design})</span> : null}
-            </div>
           </div>
         </section>
 
