@@ -378,10 +378,7 @@ function App() {
                 onChange={e => setDevelopment({ ...development, coo: e.target.value })}
               >
                 <option value="">Select...</option>
-                {dropdowns.coo?.map(v => {
-                  const f = flagByCountry[(v || '').toUpperCase()] || '🏳️'
-                  return <option key={v} value={v}>{`${f} ${v}`}</option>
-                })}
+                {dropdowns.coo?.map(v => <option key={v} value={v}>{v}</option>)}
               </select>
             </div>
 
@@ -404,7 +401,7 @@ function App() {
               className="preview-photo"
             />
             <div className="preview-meta">
-              <span>{flagByCountry[(development.coo || '').toUpperCase()] || '🏳️'}</span>
+              <span className="country-flag" aria-label="country-flag">{flagByCountry[(development.coo || '').toUpperCase()] || '🏳️'}</span>
               <span>{development.coo || 'Country not selected'}</span>
               <span>•</span>
               <span>{development.silhouette || 'Silhouette not selected'}</span>
@@ -926,7 +923,12 @@ function App() {
                       key={i}
                       className={country.country === development.coo ? 'selected' : ''}
                     >
-                      <td><strong>{flagByCountry[(country.country || '').toUpperCase()] || '🏳️'} {country.country}</strong></td>
+                      <td>
+                        <strong>
+                          <span className="country-flag" aria-label="country-flag">{flagByCountry[(country.country || '').toUpperCase()] || '🏳️'}</span>{' '}
+                          {country.country}
+                        </strong>
+                      </td>
                       <td>${country.labour_cost.toFixed(3)}</td>
                       <td>${country.subtotal.toFixed(3)}</td>
                       <td>${country.margin_amount.toFixed(3)}</td>

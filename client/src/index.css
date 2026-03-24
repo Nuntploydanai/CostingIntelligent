@@ -90,6 +90,12 @@ header p {
   font-size: 0.95rem;
 }
 
+.country-flag {
+  font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
+  font-size: 20px;
+  line-height: 1;
+}
+
 .card {
   background: var(--bg-secondary);
   border-radius: 12px;
