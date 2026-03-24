@@ -393,20 +393,18 @@ function App() {
             </div>
           </div>
 
-          <div style={{ marginTop: 16, display: 'grid', gridTemplateColumns: '220px 1fr', gap: 16, alignItems: 'center' }}>
+          <div className="preview-wrap">
             <img
               src={modelPhotoBySilhouette(development.silhouette, development.gender, development.color_design)}
-              alt="Garment preview"
-              style={{ width: 200, height: 220, objectFit: 'cover', borderRadius: 8, border: '1px solid #E5E7EB', background: '#fff' }}
+              alt="Garment"
+              className="preview-photo"
             />
-            <div style={{ background: '#F9FAFB', border: '1px solid #E5E7EB', borderRadius: 8, padding: 12 }}>
-              <div><strong>Preview</strong></div>
-              <div style={{ marginTop: 8 }}>
-                {flagByCountry[(development.coo || '').toUpperCase()] || '🏳️'} {development.coo || 'Country not selected'}
-              </div>
-              <div style={{ marginTop: 6 }}>
-                {development.silhouette || 'Silhouette not selected'} {development.color_design ? `(${development.color_design})` : ''}
-              </div>
+            <div className="preview-meta">
+              <span>{flagByCountry[(development.coo || '').toUpperCase()] || '🏳️'}</span>
+              <span>{development.coo || 'Country not selected'}</span>
+              <span>•</span>
+              <span>{development.silhouette || 'Silhouette not selected'}</span>
+              {development.color_design ? <span>({development.color_design})</span> : null}
             </div>
           </div>
         </section>
