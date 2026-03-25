@@ -223,6 +223,32 @@ body {
   font-family: 'Courier New', monospace;
 }
 
+.section-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.fabric-row-card {
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid #d6e4f2;
+  border-radius: 12px;
+  background: #f9fcff;
+}
+
+.inline-alert {
+  margin: 6px 0 10px;
+  background: #fff7ed;
+  color: #9a3412;
+  border: 1px solid #fdba74;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 0.92rem;
+}
+
 /* Loading */
 .loading {
   text-align: center;

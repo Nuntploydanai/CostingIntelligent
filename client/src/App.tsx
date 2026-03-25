@@ -77,6 +77,16 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<CalculateResponse | null>(null)
 
+  const newFabricRow = () => ({
+    fabric_type: '',
+    fabric_contents: '',
+    using_part: '',
+    weight_gsm_override: '',
+    price_unit: 'Price / YD',
+    price_value: '',
+    material_coo: ''
+  })
+
   // Form state
   const [development, setDevelopment] = useState({
     gender: '',
@@ -90,15 +100,7 @@ function App() {
     fabric_finishing: ''
   })
 
-  const [fabrication, setFabrication] = useState([{
-    fabric_type: '',
-    fabric_contents: '',
-    using_part: 'Self Fabric',
-    weight_gsm_override: '',
-    price_unit: 'Price / YD',
-    price_value: '',
-    material_coo: ''
-  }])
+  const [fabrication, setFabrication] = useState([newFabricRow()])
 
   const [trims, setTrims] = useState([{
     trims_type: '',
@@ -159,6 +161,10 @@ function App() {
       return
     }
 
+    if (invalidFabricationRows.length > 0) {
+      return
+    }
+
     setLoading(true)
     try {
       const response = await fetch('/api/calculate', {
@@ -166,7 +172,7 @@ function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           development,
-          fabrication,
+          fabrication: fabrication.filter(fabricationHasValue),
           trims,
           embellishments,
           packing_label: packingLabel,
@@ -249,6 +255,23 @@ function App() {
 
   const normalizePackCount = (value: string) => (value || '').replace(/^X/i, '')
 
+  const fabricationHasValue = (row: any) => {
+    return Boolean(row.fabric_type || row.fabric_contents || row.using_part || row.weight_gsm_override || row.price_value || row.material_coo)
+  }
+
+  const invalidFabricationRows = fabrication
+    .map((row, idx) => ({ row, idx }))
+    .filter(({ row }) => (row.fabric_type || row.fabric_contents) && !row.using_part)
+    .map(({ idx }) => idx)
+
+  const validateFabricationRows = () => {
+    if (invalidFabricationRows.length > 0) {
+      alert(`Please choose Using Part for Fabric Row(s): ${invalidFabricationRows.map(i => i + 1).join(', ')}`)
+      return false
+    }
+    return true
+  }
+
   const modelPhotoBySilhouette = (silhouette: string, gender: string, _color: string) => {
     const g = (gender || '').trim().toLowerCase()
     const s = (silhouette || '').trim().toLowerCase()
@@ -276,15 +299,7 @@ function App() {
       coo: '',
       fabric_finishing: ''
     })
-    setFabrication([{
-      fabric_type: '',
-      fabric_contents: '',
-      using_part: 'Self Fabric',
-      weight_gsm_override: '',
-      price_unit: 'Price / YD',
-      price_value: '',
-      material_coo: ''
-    }])
+    setFabrication([newFabricRow()])
     setTrims([{
       trims_type: '',
       garment_part: '',
@@ -449,112 +464,129 @@ function App() {
 
         {/* Step 2: Fabrication */}
         <section className="card">
-          <h2>Step 2: Fabrication</h2>
-          <div className="form-grid">
-            <div className="form-group">
-              <label>Fabric Type</label>
-              <select
-                value={fabrication[0].fabric_type}
-                onChange={e => setFabrication([{ ...fabrication[0], fabric_type: e.target.value }])}
+          <div className="section-head-row">
+            <h2>Step 2: Fabrication (Up to 3 Fabric Types)</h2>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <button className="clear-button" onClick={validateFabricationRows} style={{ background: '#0f4f8a' }}>
+                Validate Rows
+              </button>
+              <button
+                className="clear-button"
+                onClick={() => {
+                  if (fabrication.length >= 3) return
+                  setFabrication([...fabrication, newFabricRow()])
+                }}
+                style={{ background: fabrication.length >= 3 ? '#94a3b8' : '#0b2f59' }}
               >
-                <option value="">Select...</option>
-                {dropdowns.fabric_type?.map(v => <option key={v} value={v}>{v}</option>)}
-              </select>
+                + Add Fabric Type
+              </button>
             </div>
+          </div>
 
-            <div className="form-group">
-              <label>Fabric Contents</label>
-              <select
-                value={fabrication[0].fabric_contents}
-                onChange={e => setFabrication([{ ...fabrication[0], fabric_contents: e.target.value }])}
-              >
-                <option value="">Select...</option>
-                {dropdowns.fabric_contents?.map(v => <option key={v} value={v}>{v}</option>)}
-              </select>
-            </div>
+          {fabrication.map((row, i) => (
+            <div key={i} className="fabric-row-card">
+              <div className="section-head-row" style={{ marginBottom: 10 }}>
+                <h3 style={{ margin: 0, color: '#0b3f77' }}>Fabric Row {i + 1}</h3>
+                {fabrication.length > 1 && (
+                  <button
+                    className="clear-button"
+                    style={{ background: '#b91c1c' }}
+                    onClick={() => setFabrication(fabrication.filter((_, idx) => idx !== i))}
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
 
-            <div className="form-group">
-              <label>Using Part</label>
-              <select
-                value={fabrication[0].using_part}
-                onChange={e => setFabrication([{ ...fabrication[0], using_part: e.target.value }])}
-              >
-                <option value="">Select...</option>
-                {dropdowns.using_part?.map(v => <option key={v} value={v}>{v}</option>)}
-              </select>
-            </div>
+              {invalidFabricationRows.includes(i) && (
+                <div className="inline-alert">⚠ Please select <strong>Using Part</strong> for this row.</div>
+              )}
 
-            <div className="form-group">
-              <label>Weight (GSM)</label>
-              <input
-                type="number"
-                step="0.001"
-                value={fabrication[0].weight_gsm_override}
-                onChange={e => setFabrication([{ ...fabrication[0], weight_gsm_override: e.target.value }])}
-              />
-            </div>
+              <div className="form-grid">
+                <div className="form-group">
+                  <label>Fabric Type</label>
+                  <select value={row.fabric_type} onChange={e => setFabrication(fabrication.map((r, idx) => idx === i ? { ...r, fabric_type: e.target.value } : r))}>
+                    <option value="">Select...</option>
+                    {dropdowns.fabric_type?.map(v => <option key={v} value={v}>{v}</option>)}
+                  </select>
+                </div>
 
-            <div className="form-group">
-              <label>Price Unit</label>
-              <select
-                value={fabrication[0].price_unit}
-                onChange={e => setFabrication([{ ...fabrication[0], price_unit: e.target.value }])}
-              >
-                {dropdowns.price_unit?.map(v => <option key={v} value={v}>{v}</option>)}
-              </select>
-            </div>
+                <div className="form-group">
+                  <label>Fabric Contents</label>
+                  <select value={row.fabric_contents} onChange={e => setFabrication(fabrication.map((r, idx) => idx === i ? { ...r, fabric_contents: e.target.value } : r))}>
+                    <option value="">Select...</option>
+                    {dropdowns.fabric_contents?.map(v => <option key={v} value={v}>{v}</option>)}
+                  </select>
+                </div>
 
-            <div className="form-group">
-              <label>Price Value</label>
-              <input
-                type="number"
-                step="0.001"
-                placeholder="Override price..."
-                value={fabrication[0].price_value}
-                onChange={e => setFabrication([{ ...fabrication[0], price_value: e.target.value }])}
-              />
-            </div>
+                <div className="form-group">
+                  <label>Using Part</label>
+                  <select value={row.using_part} onChange={e => setFabrication(fabrication.map((r, idx) => idx === i ? { ...r, using_part: e.target.value } : r))}>
+                    <option value="">Select...</option>
+                    {dropdowns.using_part?.map(v => <option key={v} value={v}>{v}</option>)}
+                  </select>
+                </div>
 
-            <div className="form-group">
-              <label>Material COO</label>
-              <select
-                value={fabrication[0].material_coo}
-                onChange={e => setFabrication([{ ...fabrication[0], material_coo: e.target.value }])}
-              >
-                <option value="">Select...</option>
-                {dropdowns.material_coo?.map(v => <option key={v} value={v}>{v}</option>)}
-              </select>
-            </div>
+                <div className="form-group">
+                  <label>Weight (GSM)</label>
+                  <input type="number" step="0.001" value={row.weight_gsm_override} onChange={e => setFabrication(fabrication.map((r, idx) => idx === i ? { ...r, weight_gsm_override: e.target.value } : r))} />
+                </div>
 
-            <div className="form-group">
-              <label>Fixed Fabric Width</label>
-              <input readOnly value={result?.outputs.fabrication.rows?.[0]?.fixed_fabric_width?.toFixed?.(3) ?? ''} />
-            </div>
+                <div className="form-group">
+                  <label>Price Unit</label>
+                  <select value={row.price_unit} onChange={e => setFabrication(fabrication.map((r, idx) => idx === i ? { ...r, price_unit: e.target.value } : r))}>
+                    {dropdowns.price_unit?.map(v => <option key={v} value={v}>{v}</option>)}
+                  </select>
+                </div>
 
-            <div className="form-group">
-              <label>Default Weight (GSM)</label>
-              <input readOnly value={result?.outputs.fabrication.rows?.[0]?.default_weight_gsm?.toFixed?.(3) ?? ''} />
-            </div>
+                <div className="form-group">
+                  <label>Price Value</label>
+                  <input type="number" step="0.001" value={row.price_value} onChange={e => setFabrication(fabrication.map((r, idx) => idx === i ? { ...r, price_value: e.target.value } : r))} />
+                </div>
 
-            <div className="form-group">
-              <label>DEFAULT (PRICE/YD)</label>
-              <input readOnly value={result?.outputs.fabrication.rows?.[0]?.default_price_yd?.toFixed?.(3) ?? ''} />
-            </div>
+                <div className="form-group">
+                  <label>Material COO</label>
+                  <select value={row.material_coo} onChange={e => setFabrication(fabrication.map((r, idx) => idx === i ? { ...r, material_coo: e.target.value } : r))}>
+                    <option value="">Select...</option>
+                    {dropdowns.material_coo?.map(v => <option key={v} value={v}>{v}</option>)}
+                  </select>
+                </div>
 
-            <div className="form-group">
-              <label>DEFAULT (PRICE/KILO)</label>
-              <input readOnly value={result?.outputs.fabrication.rows?.[0]?.default_price_kilo?.toFixed?.(3) ?? ''} />
-            </div>
+                <div className="form-group">
+                  <label>Fixed Fabric Width</label>
+                  <input readOnly value={result?.outputs.fabrication.rows?.[i]?.fixed_fabric_width?.toFixed?.(3) ?? ''} />
+                </div>
 
-            <div className="form-group">
-              <label>PRICE / Lbs (default)</label>
-              <input readOnly value={result?.outputs.fabrication.rows?.[0]?.default_price_lb?.toFixed?.(3) ?? ''} />
-            </div>
+                <div className="form-group">
+                  <label>Default Weight (GSM)</label>
+                  <input readOnly value={result?.outputs.fabrication.rows?.[i]?.default_weight_gsm?.toFixed?.(3) ?? ''} />
+                </div>
 
-            <div className="form-group">
-              <label>TOTAL COST</label>
-              <input readOnly value={result?.outputs.fabrication.rows?.[0]?.total_cost?.toFixed?.(3) ?? ''} />
+                <div className="form-group">
+                  <label>DEFAULT (PRICE/YD)</label>
+                  <input readOnly value={result?.outputs.fabrication.rows?.[i]?.default_price_yd?.toFixed?.(3) ?? ''} />
+                </div>
+
+                <div className="form-group">
+                  <label>DEFAULT (PRICE/KILO)</label>
+                  <input readOnly value={result?.outputs.fabrication.rows?.[i]?.default_price_kilo?.toFixed?.(3) ?? ''} />
+                </div>
+
+                <div className="form-group">
+                  <label>PRICE / Lbs (default)</label>
+                  <input readOnly value={result?.outputs.fabrication.rows?.[i]?.default_price_lb?.toFixed?.(3) ?? ''} />
+                </div>
+
+                <div className="form-group">
+                  <label>TOTAL COST</label>
+                  <input readOnly value={result?.outputs.fabrication.rows?.[i]?.total_cost?.toFixed?.(3) ?? ''} />
+                </div>
+              </div>
             </div>
+          ))}
+
+          <div style={{ marginTop: 12, fontWeight: 700, color: '#0b3f77' }}>
+            Fabric Total Cost: ${(result?.outputs.fabrication.total_fabric_cost ?? 0).toFixed(3)}
           </div>
         </section>
 
