@@ -129,6 +129,13 @@ async function computeFabrication(input: any) {
   const keyMapRows = await loadCSV('product_part_key_map.csv');
   const usageRows = await loadCSV('fabric_usage_lookup.csv');
 
+  const normLookup = (v: any) => normalizeString(v)
+    .replace(/\s*\/\s*/g, '/')
+    .replace(/_/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase();
+
   const fabric_type = normalizeString(input.fabric_type);
   const fabric_contents = normalizeString(input.fabric_contents);
   const using_part = normalizeString(input.using_part);
@@ -138,8 +145,8 @@ async function computeFabrication(input: any) {
   const gender = normalizeString(input.gender);
   const size = normalizeString(input.size);
 
-  const key = `${fabric_type}${fabric_contents}`;
-  const defaultPriceLb = toFloat((fabricPriceLookup.find(r => normalizeString(r.key) === key) || {}).value);
+  const key = `${normLookup(fabric_type)}${normLookup(fabric_contents)}`;
+  const defaultPriceLb = toFloat((fabricPriceLookup.find(r => normLookup(r.key) === key) || {}).value);
   const overrideVal = toFloat(input.price_value);
 
   const fixedFabricWidth = using_part ? 60.0 : 0.0;
@@ -166,16 +173,19 @@ async function computeFabrication(input: any) {
     color_design: normalizeString(input.color_design || 'Solid'),
   });
 
-  const k7Key = normalizeString((keyMapRows.find(r => normalizeString(r.silhouette) === silhouette && normalizeString(r.seam) === seam) || {}).k7_key);
+  const k7Key = normalizeString((keyMapRows.find(r => normLookup(r.silhouette) === normLookup(silhouette) && normLookup(r.seam) === normLookup(seam)) || {}).k7_key);
   let usageVal: number | null = null;
   if (fabric_contents && k7Key && using_part) {
-    usageVal = toFloat((usageRows.find(r => normalizeString(r.k7_key) === k7Key && normalizeString(r.using_part) === using_part) || {}).usage);
+    usageVal = toFloat((usageRows.find(r => normLookup(r.k7_key) === normLookup(k7Key) && normLookup(r.using_part) === normLookup(using_part)) || {}).usage);
   }
 
-  const genderMult = gender.toUpperCase() === 'MEN' ? 1 : gender.toUpperCase() === 'WOMEN' ? 0.85 : gender.toUpperCase() === 'KIDS' ? 0.75 : 0;
-  const sizeMult = size.toUpperCase() === 'S-XL' ? 1 : size.toUpperCase() === '2XL-3XL' ? 1.15 : size.toUpperCase() === 'S-3XL' ? 1.1 : 0;
+  const g = gender.toUpperCase();
+  const s = size.toUpperCase();
+  const m = material_coo.toUpperCase();
+  const genderMult = g === 'MEN' ? 1 : g === 'WOMEN' ? 0.85 : g === 'KIDS' ? 0.75 : 1;
+  const sizeMult = s === 'S-XL' ? 1 : s === '2XL-3XL' ? 1.15 : s === 'S-3XL' ? 1.1 : s === '2XL-5XL' ? 1.15 : 1;
   const silhouetteMult = 1.0;
-  const importFactor = material_coo === 'Domestic' ? 1 : material_coo === 'Import' ? 1.05 : 0;
+  const importFactor = m === 'DOMESTIC' ? 1 : m === 'IMPORT' ? 1.05 : 1;
 
   let totalCost = 0;
   if (usageVal != null && typeof defaultPriceYd === 'number') {
