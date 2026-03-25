@@ -73,6 +73,7 @@ interface CalculateResponse {
 
 function App() {
   const [dropdowns, setDropdowns] = useState<DropdownData>({})
+  const asset = (p: string) => `./${p}`
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<CalculateResponse | null>(null)
 
@@ -253,13 +254,13 @@ function App() {
     const s = (silhouette || '').trim().toLowerCase()
 
     // default state: show Gildan logo before user makes selections
-    if (!g && !s) return '/brand/gildan-logo.jpg'
+    if (!g && !s) return asset('brand/gildan-logo.jpg')
 
     const direct = imageSheetMap[`${g}|${s}`]
     if (direct) return direct
 
     // fallback if combo not found
-    return '/brand/gildan-logo.jpg'
+    return asset('brand/gildan-logo.jpg')
   }
 
   // Clear form function
@@ -314,7 +315,7 @@ function App() {
     <div className="container theme-midnight">
       <header className="brand-header">
         <div className="brand-title-wrap">
-          <img src="/brand/gildan-mark.svg" alt="Gildan" className="brand-logo" />
+          <img src={asset('brand/gildan-mark.svg')} alt="Gildan" className="brand-logo" onError={(e) => { e.currentTarget.src = asset('brand/gildan-logo.jpg') }} />
           <h1>Basic Shirts Costing Tool</h1>
         </div>
         <div className="header-actions">
