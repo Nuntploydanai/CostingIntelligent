@@ -173,8 +173,8 @@ function App() {
         body: JSON.stringify({
           development,
           fabrication: fabrication.filter(fabricationHasValue),
-          trims,
-          embellishments,
+          trims: trims.filter(trimsHasValue),
+          embellishments: embellishments.filter(embellishmentHasValue),
           packing_label: packingLabel,
           supplier_margin_percent: supplierMarginPercent,
           freight_cost: freightCost,
@@ -257,6 +257,14 @@ function App() {
 
   const fabricationHasValue = (row: any) => {
     return Boolean(row.fabric_type || row.fabric_contents || row.using_part || row.weight_gsm_override || row.price_value || row.material_coo)
+  }
+
+  const trimsHasValue = (row: any) => {
+    return Boolean(row.trims_type || row.garment_part || row.usage_override || row.price_override || row.material_coo)
+  }
+
+  const embellishmentHasValue = (row: any) => {
+    return Boolean(row.printing_embroidery || row.dimension || row.usage_unit)
   }
 
   const invalidFabricationRows = fabrication
@@ -581,129 +589,161 @@ function App() {
 
         {/* Step 3: Trims */}
         <section className="card">
-          <h2>Step 3: Trims & Sewn in Label</h2>
-          <div className="form-grid">
-            <div className="form-group">
-              <label>Trims Type</label>
-              <select
-                value={trims[0].trims_type}
-                onChange={e => setTrims([{ ...trims[0], trims_type: e.target.value }])}
-              >
-                <option value="">Select...</option>
-                {dropdowns.trims_type?.map(v => <option key={v} value={v}>{v}</option>)}
-              </select>
-            </div>
+          <div className="section-head-row">
+            <h2>Step 3: Trims & Sewn in Label (Up to 3 Types)</h2>
+            <button
+              className="clear-button"
+              onClick={() => {
+                if (trims.length >= 3) return
+                setTrims([...trims, { trims_type: '', garment_part: '', usage_override: '', price_override: '', material_coo: '' }])
+              }}
+              style={{ background: trims.length >= 3 ? '#94a3b8' : '#0b2f59' }}
+            >
+              + Add Trim Type
+            </button>
+          </div>
 
-            <div className="form-group">
-              <label>Garment Part</label>
-              <select
-                value={trims[0].garment_part}
-                onChange={e => setTrims([{ ...trims[0], garment_part: e.target.value }])}
-              >
-                <option value="">Select...</option>
-                {dropdowns.garment_part_trim?.map(v => <option key={v} value={v}>{v}</option>)}
-              </select>
-            </div>
+          {trims.map((row, i) => (
+            <div key={i} className="fabric-row-card">
+              <div className="section-head-row" style={{ marginBottom: 10 }}>
+                <h3 style={{ margin: 0, color: '#0b3f77' }}>Trim Row {i + 1}</h3>
+                {trims.length > 1 && (
+                  <button className="clear-button" style={{ background: '#b91c1c' }} onClick={() => setTrims(trims.filter((_, idx) => idx !== i))}>
+                    Remove
+                  </button>
+                )}
+              </div>
 
-            <div className="form-group">
-              <label>Usage (Yard/Piece) (optional input)</label>
-              <input
-                type="number"
-                step="0.001"
-                value={trims[0].usage_override}
-                onChange={e => setTrims([{ ...trims[0], usage_override: e.target.value }])}
-              />
-            </div>
+              <div className="form-grid">
+                <div className="form-group">
+                  <label>Trims Type</label>
+                  <select value={row.trims_type} onChange={e => setTrims(trims.map((r, idx) => idx === i ? { ...r, trims_type: e.target.value } : r))}>
+                    <option value="">Select...</option>
+                    {dropdowns.trims_type?.map(v => <option key={v} value={v}>{v}</option>)}
+                  </select>
+                </div>
 
-            <div className="form-group">
-              <label>Price / Unit (optional input)</label>
-              <input
-                type="number"
-                step="0.001"
-                value={trims[0].price_override}
-                onChange={e => setTrims([{ ...trims[0], price_override: e.target.value }])}
-              />
-            </div>
+                <div className="form-group">
+                  <label>Garment Part</label>
+                  <select value={row.garment_part} onChange={e => setTrims(trims.map((r, idx) => idx === i ? { ...r, garment_part: e.target.value } : r))}>
+                    <option value="">Select...</option>
+                    {dropdowns.garment_part_trim?.map(v => <option key={v} value={v}>{v}</option>)}
+                  </select>
+                </div>
 
-            <div className="form-group">
-              <label>Material COO</label>
-              <select
-                value={trims[0].material_coo}
-                onChange={e => setTrims([{ ...trims[0], material_coo: e.target.value }])}
-              >
-                <option value="">Select...</option>
-                {dropdowns.material_coo?.map(v => <option key={v} value={v}>{v}</option>)}
-              </select>
-            </div>
+                <div className="form-group">
+                  <label>Usage (Yard/Piece) (optional input)</label>
+                  <input type="number" step="0.001" value={row.usage_override} onChange={e => setTrims(trims.map((r, idx) => idx === i ? { ...r, usage_override: e.target.value } : r))} />
+                </div>
 
-            <div className="form-group">
-              <label>UNIT</label>
-              <input readOnly value={result?.outputs.trims.rows?.[0]?.unit ?? ''} />
-            </div>
+                <div className="form-group">
+                  <label>Price / Unit (optional input)</label>
+                  <input type="number" step="0.001" value={row.price_override} onChange={e => setTrims(trims.map((r, idx) => idx === i ? { ...r, price_override: e.target.value } : r))} />
+                </div>
 
-            <div className="form-group">
-              <label>DEFAULT USAGE (YD/PIECE)</label>
-              <input readOnly value={result?.outputs.trims.rows?.[0]?.default_usage?.toFixed?.(3) ?? ''} />
-            </div>
+                <div className="form-group">
+                  <label>Material COO</label>
+                  <select value={row.material_coo} onChange={e => setTrims(trims.map((r, idx) => idx === i ? { ...r, material_coo: e.target.value } : r))}>
+                    <option value="">Select...</option>
+                    {dropdowns.material_coo?.map(v => <option key={v} value={v}>{v}</option>)}
+                  </select>
+                </div>
 
-            <div className="form-group">
-              <label>DEFAULT PRICE/EACH</label>
-              <input readOnly value={result?.outputs.trims.rows?.[0]?.default_price_each?.toFixed?.(3) ?? ''} />
-            </div>
+                <div className="form-group">
+                  <label>UNIT</label>
+                  <input readOnly value={result?.outputs.trims.rows?.[i]?.unit ?? ''} />
+                </div>
 
-            <div className="form-group">
-              <label>TOTAL COST</label>
-              <input readOnly value={result?.outputs.trims.rows?.[0]?.total_cost?.toFixed?.(3) ?? ''} />
+                <div className="form-group">
+                  <label>DEFAULT USAGE (YD/PIECE)</label>
+                  <input readOnly value={result?.outputs.trims.rows?.[i]?.default_usage?.toFixed?.(3) ?? ''} />
+                </div>
+
+                <div className="form-group">
+                  <label>DEFAULT PRICE/EACH</label>
+                  <input readOnly value={result?.outputs.trims.rows?.[i]?.default_price_each?.toFixed?.(3) ?? ''} />
+                </div>
+
+                <div className="form-group">
+                  <label>TOTAL COST</label>
+                  <input readOnly value={result?.outputs.trims.rows?.[i]?.total_cost?.toFixed?.(3) ?? ''} />
+                </div>
+              </div>
             </div>
+          ))}
+
+          <div style={{ marginTop: 12, fontWeight: 700, color: '#0b3f77' }}>
+            Trim Total Cost: ${(result?.outputs.trims.total_trim_cost ?? 0).toFixed(3)}
           </div>
         </section>
 
         {/* Step 4: Embellishments */}
         <section className="card">
-          <h2>Step 4: Embellishments</h2>
-          <div className="form-grid">
-            <div className="form-group">
-              <label>PRINTING/EMBROIDERY</label>
-              <select
-                value={embellishments[0].printing_embroidery}
-                onChange={e => setEmbellishments([{ ...embellishments[0], printing_embroidery: e.target.value }])}
-              >
-                <option value="">Select...</option>
-                {dropdowns.printing_embroidery?.map(v => <option key={v} value={v}>{v}</option>)}
-              </select>
-            </div>
+          <div className="section-head-row">
+            <h2>Step 4: Embellishments (Up to 3 Types)</h2>
+            <button
+              className="clear-button"
+              onClick={() => {
+                if (embellishments.length >= 3) return
+                setEmbellishments([...embellishments, { printing_embroidery: '', dimension: '', usage_unit: '' }])
+              }}
+              style={{ background: embellishments.length >= 3 ? '#94a3b8' : '#0b2f59' }}
+            >
+              + Add Embellishment
+            </button>
+          </div>
 
-            <div className="form-group">
-              <label>DIMENSION</label>
-              <select
-                value={embellishments[0].dimension}
-                onChange={e => setEmbellishments([{ ...embellishments[0], dimension: e.target.value }])}
-              >
-                <option value="">Select...</option>
-                {dropdowns.print_dimension?.map(v => <option key={v} value={v}>{v}</option>)}
-              </select>
-            </div>
+          {embellishments.map((row, i) => (
+            <div key={i} className="fabric-row-card">
+              <div className="section-head-row" style={{ marginBottom: 10 }}>
+                <h3 style={{ margin: 0, color: '#0b3f77' }}>Embellishment Row {i + 1}</h3>
+                {embellishments.length > 1 && (
+                  <button className="clear-button" style={{ background: '#b91c1c' }} onClick={() => setEmbellishments(embellishments.filter((_, idx) => idx !== i))}>
+                    Remove
+                  </button>
+                )}
+              </div>
 
-            <div className="form-group">
-              <label>USAGE / UNIT</label>
-              <select
-                value={embellishments[0].usage_unit}
-                onChange={e => setEmbellishments([{ ...embellishments[0], usage_unit: e.target.value }])}
-              >
-                <option value="">Select...</option>
-                {dropdowns.usage_unit?.map(v => <option key={v} value={v}>{v}</option>)}
-              </select>
-            </div>
+              <div className="form-grid">
+                <div className="form-group">
+                  <label>PRINTING/EMBROIDERY</label>
+                  <select value={row.printing_embroidery} onChange={e => setEmbellishments(embellishments.map((r, idx) => idx === i ? { ...r, printing_embroidery: e.target.value } : r))}>
+                    <option value="">Select...</option>
+                    {dropdowns.printing_embroidery?.map(v => <option key={v} value={v}>{v}</option>)}
+                  </select>
+                </div>
 
-            <div className="form-group">
-              <label>DEFAULT PRICE / EACH</label>
-              <input readOnly value={result?.outputs.embellishments.rows?.[0]?.default_price_each?.toFixed?.(3) ?? ''} />
-            </div>
+                <div className="form-group">
+                  <label>DIMENSION</label>
+                  <select value={row.dimension} onChange={e => setEmbellishments(embellishments.map((r, idx) => idx === i ? { ...r, dimension: e.target.value } : r))}>
+                    <option value="">Select...</option>
+                    {dropdowns.print_dimension?.map(v => <option key={v} value={v}>{v}</option>)}
+                  </select>
+                </div>
 
-            <div className="form-group">
-              <label>TOTAL</label>
-              <input readOnly value={result?.outputs.embellishments.rows?.[0]?.total_cost?.toFixed?.(3) ?? ''} />
+                <div className="form-group">
+                  <label>USAGE / UNIT</label>
+                  <select value={row.usage_unit} onChange={e => setEmbellishments(embellishments.map((r, idx) => idx === i ? { ...r, usage_unit: e.target.value } : r))}>
+                    <option value="">Select...</option>
+                    {dropdowns.usage_unit?.map(v => <option key={v} value={v}>{v}</option>)}
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label>DEFAULT PRICE / EACH</label>
+                  <input readOnly value={result?.outputs.embellishments.rows?.[i]?.default_price_each?.toFixed?.(3) ?? ''} />
+                </div>
+
+                <div className="form-group">
+                  <label>TOTAL</label>
+                  <input readOnly value={result?.outputs.embellishments.rows?.[i]?.total_cost?.toFixed?.(3) ?? ''} />
+                </div>
+              </div>
             </div>
+          ))}
+
+          <div style={{ marginTop: 12, fontWeight: 700, color: '#0b3f77' }}>
+            Embellishment Total Cost: ${(result?.outputs.embellishments.total_embellishment_cost ?? 0).toFixed(3)}
           </div>
         </section>
 
