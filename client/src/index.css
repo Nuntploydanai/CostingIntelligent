@@ -35,6 +35,19 @@ body {
   max-width: 1400px;
   margin: 0 auto;
   padding: 20px;
+  border-radius: 14px;
+}
+
+.theme-azure {
+  background: linear-gradient(180deg, rgba(244, 250, 255, 0.9), rgba(239, 247, 255, 0.9));
+}
+
+.theme-midnight {
+  background: linear-gradient(180deg, #eaf1fa, #dde8f7);
+}
+
+.theme-champagne {
+  background: linear-gradient(180deg, #fffaf1, #f8f1e6);
 }
 
 .brand-header {
@@ -54,6 +67,25 @@ body {
   display: flex;
   align-items: center;
   gap: 14px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.theme-select {
+  border: 1px solid rgba(255,255,255,0.72);
+  background: rgba(255,255,255,0.16);
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-weight: 600;
+}
+
+.theme-select option {
+  color: #0f172a;
 }
 
 .brand-logo {
@@ -383,6 +415,11 @@ footer a:hover {
   .brand-header {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .brand-header h1 {

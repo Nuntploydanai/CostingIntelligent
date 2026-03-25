@@ -75,6 +75,7 @@ function App() {
   const [dropdowns, setDropdowns] = useState<DropdownData>({})
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<CalculateResponse | null>(null)
+  const [pageTheme, setPageTheme] = useState<'midnight' | 'azure' | 'champagne'>('azure')
 
   // Form state
   const [development, setDevelopment] = useState({
@@ -254,8 +255,8 @@ function App() {
     const direct = imageSheetMap[`${g}|${s}`]
     if (direct) return direct
 
-    // fallback from Excel Image sheet: "No silhouette"
-    return '/excel_media/image79.png'
+    // fallback: avoid Hanes logo image from workbook "No silhouette"
+    return '/excel_media/image2.png'
   }
 
   // Clear form function
@@ -307,15 +308,22 @@ function App() {
   }
 
   return (
-    <div className="container">
+    <div className={`container theme-${pageTheme}`}>
       <header className="brand-header">
         <div className="brand-title-wrap">
           <img src="/brand/gildan-logo.jpg" alt="Gildan" className="brand-logo" />
           <h1>Basic Shirts Costing Tool</h1>
         </div>
-        <button onClick={clearForm} className="clear-button">
-          Clear Form
-        </button>
+        <div className="header-actions">
+          <select value={pageTheme} onChange={e => setPageTheme(e.target.value as any)} className="theme-select" aria-label="Theme">
+            <option value="azure">Azure Luxe</option>
+            <option value="midnight">Midnight Glam</option>
+            <option value="champagne">Champagne Pro</option>
+          </select>
+          <button onClick={clearForm} className="clear-button">
+            Clear Form
+          </button>
+        </div>
       </header>
 
       <div className="main-content">
