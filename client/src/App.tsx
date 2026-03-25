@@ -264,14 +264,6 @@ function App() {
     .filter(({ row }) => (row.fabric_type || row.fabric_contents) && !row.using_part)
     .map(({ idx }) => idx)
 
-  const validateFabricationRows = () => {
-    if (invalidFabricationRows.length > 0) {
-      alert(`Please choose Using Part for Fabric Row(s): ${invalidFabricationRows.map(i => i + 1).join(', ')}`)
-      return false
-    }
-    return true
-  }
-
   const modelPhotoBySilhouette = (silhouette: string, gender: string, _color: string) => {
     const g = (gender || '').trim().toLowerCase()
     const s = (silhouette || '').trim().toLowerCase()
@@ -467,9 +459,6 @@ function App() {
           <div className="section-head-row">
             <h2>Step 2: Fabrication (Up to 3 Fabric Types)</h2>
             <div style={{ display: 'flex', gap: 8 }}>
-              <button className="clear-button" onClick={validateFabricationRows} style={{ background: '#0f4f8a' }}>
-                Validate Rows
-              </button>
               <button
                 className="clear-button"
                 onClick={() => {
