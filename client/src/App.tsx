@@ -315,8 +315,8 @@ function App() {
     <div className="container theme-midnight">
       <header className="brand-header">
         <div className="brand-title-wrap">
-          <img src={asset('brand/gildan-logo.jpg')} alt="Gildan" className="brand-logo" />
-          <h1>Basic Shirts Costing Tool</h1>
+          <img src={asset('brand/gildan-mark.svg')} alt="Gildan" className="brand-logo" onError={(e) => { e.currentTarget.src = asset('brand/gildan-logo.jpg') }} />
+          <h1>BASIC-A TSHIRT QUICK COST TOOLS</h1>
         </div>
         <div className="header-actions">
           <button onClick={clearForm} className="clear-button">
