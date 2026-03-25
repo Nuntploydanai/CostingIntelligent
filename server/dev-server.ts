@@ -214,10 +214,11 @@ function trimsGenderFactor(gender: string): number {
 }
 
 function trimsSizeMultiplier(size: string): number {
-  const s = normalizeString(size);
-  if (s === 'S-XL') return 1.0;
-  if (s === '2XL-3XL') return 1.15;
-  return 0.0;
+  const s = normalizeString(size).toUpperCase();
+  // Accept legacy and new naming variants from dropdown masters
+  if (s === 'S-XL' || s === 'S-3XL') return 1.0;
+  if (s === '2XL-3XL' || s === '2XL-5XL') return 1.15;
+  return 1.0;
 }
 
 async function computeTrims(input: any) {
