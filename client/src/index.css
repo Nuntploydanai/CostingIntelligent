@@ -130,6 +130,10 @@ body {
   grid-template-columns: 280px 1fr;
   gap: 18px;
   align-items: start;
+  padding: 14px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #eef4fb 0%, #e3edf9 45%, #f2eefa 100%);
+  border: 1px solid #d4e1ef;
 }
 
 .dev-form-grid {
@@ -152,7 +156,7 @@ body {
   object-fit: contain;
   border-radius: 12px;
   border: 1px solid #cddced;
-  background: linear-gradient(180deg, #ffffff, #f6faff);
+  background: linear-gradient(180deg, #edf3fb, #e3ebf7);
   box-shadow: 0 8px 16px rgba(15, 23, 42, 0.08);
 }
 

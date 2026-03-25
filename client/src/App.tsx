@@ -252,11 +252,15 @@ function App() {
   const modelPhotoBySilhouette = (silhouette: string, gender: string, _color: string) => {
     const g = (gender || '').trim().toLowerCase()
     const s = (silhouette || '').trim().toLowerCase()
+
+    // default state: show Gildan logo before user makes selections
+    if (!g && !s) return '/brand/gildan-logo.jpg'
+
     const direct = imageSheetMap[`${g}|${s}`]
     if (direct) return direct
 
-    // fallback: avoid Hanes logo image from workbook "No silhouette"
-    return '/excel_media/image2.png'
+    // fallback if combo not found
+    return '/brand/gildan-logo.jpg'
   }
 
   // Clear form function
