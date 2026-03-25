@@ -308,10 +308,13 @@ function App() {
 
   return (
     <div className="container">
-      <header>
-        <h1>👕 Basic Shirts Costing Tool</h1>
+      <header className="brand-header">
+        <div className="brand-title-wrap">
+          <img src="/brand/gildan-logo.jpg" alt="Gildan" className="brand-logo" />
+          <h1>Basic Shirts Costing Tool</h1>
+        </div>
         <button onClick={clearForm} className="clear-button">
-          🔄 Clear Form
+          Clear Form
         </button>
       </header>
 

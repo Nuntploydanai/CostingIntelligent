@@ -5,18 +5,19 @@
 }
 
 :root {
-  --primary-color: #4F46E5;
-  --secondary-color: #7C3AED;
-  --success-color: #10B981;
-  --warning-color: #F59E0B;
-  --danger-color: #EF4444;
-  --text-primary: #111827;
-  --text-secondary: #6B7280;
-  --bg-primary: #F9FAFB;
-  --bg-secondary: #FFFFFF;
-  --border-color: #E5E7EB;
-  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  /* Gildan-inspired professional palette */
+  --primary-color: #0057a8;
+  --secondary-color: #00a3e0;
+  --success-color: #2e7d32;
+  --warning-color: #f59e0b;
+  --danger-color: #dc2626;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --bg-primary: #f5f8fb;
+  --bg-secondary: #ffffff;
+  --border-color: #dbe5ef;
+  --shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px 0 rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 8px 20px -8px rgba(0, 87, 168, 0.28);
 }
 
 body {
@@ -35,24 +36,52 @@ body {
   padding: 20px;
 }
 
-header {
-  text-align: center;
-  margin-bottom: 40px;
-  padding: 30px 0;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+.brand-header {
+  margin-bottom: 22px;
+  padding: 18px 20px;
+  background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
   color: white;
   border-radius: 12px;
   box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
 }
 
-header h1 {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
+.brand-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
-header p {
-  font-size: 1.1rem;
-  opacity: 0.9;
+.brand-logo {
+  width: 92px;
+  height: 58px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: white;
+  padding: 4px;
+}
+
+.brand-header h1 {
+  font-size: 1.9rem;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.clear-button {
+  border: 1px solid rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.14);
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.clear-button:hover {
+  background: rgba(255,255,255,0.24);
 }
 
 .main-content {
@@ -340,8 +369,13 @@ footer a:hover {
     padding: 10px;
   }
 
-  header h1 {
-    font-size: 1.8rem;
+  .brand-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .brand-header h1 {
+    font-size: 1.4rem;
   }
 
   .card {
