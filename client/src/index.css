@@ -38,25 +38,17 @@ body {
   border-radius: 14px;
 }
 
-.theme-azure {
-  background: linear-gradient(180deg, rgba(244, 250, 255, 0.9), rgba(239, 247, 255, 0.9));
-}
-
 .theme-midnight {
-  background: linear-gradient(180deg, #eaf1fa, #dde8f7);
-}
-
-.theme-champagne {
-  background: linear-gradient(180deg, #fffaf1, #f8f1e6);
+  background: linear-gradient(180deg, #dfe9f7 0%, #d4e2f4 100%);
 }
 
 .brand-header {
   margin-bottom: 22px;
   padding: 18px 20px;
-  background: linear-gradient(120deg, #0057a8 0%, #007cc2 45%, #00a3e0 100%);
+  background: linear-gradient(120deg, #0b2f59 0%, #0f4f8a 45%, #1c78b8 100%);
   color: white;
   border-radius: 14px;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 12px 28px -10px rgba(10, 42, 82, 0.45);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -75,27 +67,16 @@ body {
   gap: 10px;
 }
 
-.theme-select {
-  border: 1px solid rgba(255,255,255,0.72);
-  background: rgba(255,255,255,0.16);
-  color: #fff;
-  border-radius: 10px;
-  padding: 10px 12px;
-  font-weight: 600;
-}
-
-.theme-select option {
-  color: #0f172a;
-}
+/* theme selector removed: midnight glam fixed */
 
 .brand-logo {
-  width: 98px;
-  height: 62px;
+  width: 132px;
+  height: 46px;
   object-fit: contain;
-  border-radius: 10px;
-  background: white;
-  padding: 6px;
-  box-shadow: 0 6px 14px rgba(2, 25, 55, 0.22);
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
 }
 
 .brand-header h1 {

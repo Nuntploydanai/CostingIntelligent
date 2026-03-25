@@ -75,7 +75,6 @@ function App() {
   const [dropdowns, setDropdowns] = useState<DropdownData>({})
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<CalculateResponse | null>(null)
-  const [pageTheme, setPageTheme] = useState<'midnight' | 'azure' | 'champagne'>('azure')
 
   // Form state
   const [development, setDevelopment] = useState({
@@ -312,18 +311,13 @@ function App() {
   }
 
   return (
-    <div className={`container theme-${pageTheme}`}>
+    <div className="container theme-midnight">
       <header className="brand-header">
         <div className="brand-title-wrap">
-          <img src="/brand/gildan-logo.jpg" alt="Gildan" className="brand-logo" />
+          <img src="/brand/gildan-mark.svg" alt="Gildan" className="brand-logo" />
           <h1>Basic Shirts Costing Tool</h1>
         </div>
         <div className="header-actions">
-          <select value={pageTheme} onChange={e => setPageTheme(e.target.value as any)} className="theme-select" aria-label="Theme">
-            <option value="azure">Azure Luxe</option>
-            <option value="midnight">Midnight Glam</option>
-            <option value="champagne">Champagne Pro</option>
-          </select>
           <button onClick={clearForm} className="clear-button">
             Clear Form
           </button>

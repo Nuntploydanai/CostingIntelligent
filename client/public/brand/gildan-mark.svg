@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="120" viewBox="0 0 320 120" fill="none">
+  <g transform="translate(8,18)">
+    <path d="M18 8L34 16V34L18 42L2 34V16L18 8Z" fill="#5BC2E7"/>
+    <path d="M18 8L34 16L18 24L2 16L18 8Z" fill="#8DD8F8"/>
+    <path d="M18 24L34 16V34L18 42V24Z" fill="#0072BC"/>
+    <path d="M18 24L2 16V34L18 42V24Z" fill="#0057A8"/>
+  </g>
+  <text x="58" y="58" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="42" font-weight="700" fill="#EAF3FF" letter-spacing="1">GILDAN</text>
+</svg>
