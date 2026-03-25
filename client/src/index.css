@@ -21,12 +21,13 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--bg-primary);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(0, 163, 224, 0.08), transparent 30%),
+    radial-gradient(circle at 90% 10%, rgba(0, 87, 168, 0.10), transparent 28%),
+    var(--bg-primary);
   color: var(--text-primary);
 }
 
@@ -39,9 +40,9 @@ body {
 .brand-header {
   margin-bottom: 22px;
   padding: 18px 20px;
-  background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
+  background: linear-gradient(120deg, #0057a8 0%, #007cc2 45%, #00a3e0 100%);
   color: white;
-  border-radius: 12px;
+  border-radius: 14px;
   box-shadow: var(--shadow-md);
   display: flex;
   align-items: center;
@@ -56,12 +57,13 @@ body {
 }
 
 .brand-logo {
-  width: 92px;
-  height: 58px;
+  width: 98px;
+  height: 62px;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 10px;
   background: white;
-  padding: 4px;
+  padding: 6px;
+  box-shadow: 0 6px 14px rgba(2, 25, 55, 0.22);
 }
 
 .brand-header h1 {
@@ -71,17 +73,18 @@ body {
 }
 
 .clear-button {
-  border: 1px solid rgba(255,255,255,0.7);
-  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.15);
   color: #fff;
-  border-radius: 8px;
-  padding: 10px 14px;
-  font-weight: 600;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
   cursor: pointer;
 }
 
 .clear-button:hover {
-  background: rgba(255,255,255,0.24);
+  background: rgba(255,255,255,0.26);
 }
 
 .main-content {
@@ -115,9 +118,10 @@ body {
   width: 260px;
   height: 320px;
   object-fit: contain;
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
-  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #cddced;
+  background: linear-gradient(180deg, #ffffff, #f6faff);
+  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.08);
 }
 
 .preview-meta {
@@ -141,19 +145,20 @@ body {
 }
 
 .card {
-  background: var(--bg-secondary);
-  border-radius: 12px;
+  background: linear-gradient(180deg, #ffffff, #fbfdff);
+  border-radius: 14px;
   padding: 24px;
   box-shadow: var(--shadow);
   border: 1px solid var(--border-color);
 }
 
 .card h2 {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
-  color: var(--primary-color);
-  border-bottom: 2px solid var(--border-color);
+  font-size: 1.45rem;
+  margin-bottom: 18px;
+  color: #0b3f77;
+  border-bottom: 2px solid #e9f1f8;
   padding-bottom: 10px;
+  letter-spacing: 0.2px;
 }
 
 .form-grid {
@@ -177,17 +182,23 @@ body {
 .form-group select,
 .form-group input {
   padding: 10px 14px;
-  border: 2px solid var(--border-color);
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.2s;
-  background: white;
+  border: 1.5px solid var(--border-color);
+  border-radius: 10px;
+  font-size: 0.98rem;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.05s;
+  background: #fff;
+}
+
+.form-group select:hover,
+.form-group input:hover {
+  border-color: #bfd3e6;
 }
 
 .form-group select:focus,
 .form-group input:focus {
   outline: none;
   border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 87, 168, 0.12);
 }
 
 .form-group input[type="number"] {
@@ -284,11 +295,11 @@ body {
 }
 
 .stat-box {
-  background: var(--bg-primary);
+  background: linear-gradient(180deg, #f8fbff, #f0f7ff);
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 12px;
   text-align: center;
-  border: 2px solid var(--border-color);
+  border: 1px solid #d6e4f2;
 }
 
 .stat-box label {
