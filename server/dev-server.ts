@@ -114,8 +114,8 @@ function conversionPriceYdKilo(args: {
   const K16 = E23 + V6;
   const M16 = (K16 * K13) * 0.9144;
 
-  const cd = normalizeString(color_design);
-  const V18 = cd === 'Solid' ? 1.0 : cd === 'white' ? 0.95 : cd === 'Heather' ? 1.1 : cd === 'Others' ? 1.07 : 0.0;
+  const cd = normalizeString(color_design).toLowerCase();
+  const V18 = cd === 'solid' ? 1.0 : cd === 'white' ? 0.95 : cd === 'heather' ? 1.1 : cd === 'others' ? 1.07 : 1.0;
 
   const M18 = (M16 + V6) * V18;
   const O18 = M18;
