@@ -3,16 +3,6 @@
   "root": "master_clean",
   "datasets": [
     {
-      "id": "conversion_constants",
-      "path": "master_clean/conversion_constants.csv",
-      "description": "Unit conversion constants used across calculations.",
-      "primary_key": ["key"],
-      "columns": {
-        "key": "string",
-        "value": "number"
-      }
-    },
-    {
       "id": "cost_rate",
       "path": "master_clean/cost_rate.csv",
       "description": "Cost rate per SAM by country (USD). Built from Cost Rate sheet extract.",

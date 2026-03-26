@@ -234,23 +234,7 @@ def build_fabric_price():
     _write_csv(OUT / "fabric_price.csv", out_rows)
 
 
-def build_conversion_constants():
-    out_rows = [
-        ["key", "value"],
-        ["inch_to_meter", 0.0254],
-        ["yard_to_meter", 0.9144],
-        ["kg_to_oz", 35.274],
-        ["lb_to_oz", 16.0],
-        ["lb_to_kg", 0.453592],
-        ["oz_to_kg", 0.0283495],
-        ["lb_to_kg_factor", 0.453592],
-        ["kg_to_lb_factor", 2.20462262],
-    ]
-    _write_csv(OUT / "conversion_constants.csv", out_rows)
-
-
 def main():
-    build_conversion_constants()
     build_cost_rate()
     build_packing_trims()
     build_sam_product_eff()
