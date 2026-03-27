@@ -17,6 +17,36 @@ if (!fs.existsSync(DATA_DIR)) {
 console.log('📁 Data directory:', DATA_DIR);
 console.log('📁 Exists:', fs.existsSync(DATA_DIR));
 
+const LOOKUP_EDITABLE_FILES = [
+  'cost_rate.csv',
+  'efficiency_by_quantity.csv',
+  'fabric_price.csv',
+  'fabric_price_ar_as_lookup.csv',
+  'fabric_price_lookup.csv',
+  'fabric_type_default_gsm.csv',
+  'fabric_usage_lookup.csv',
+  'fabric_width_condition_map.csv',
+  'label_display_packaging_price.csv',
+  'manufacturing_cost_by_country.csv',
+  'overhead_costs.csv',
+  'packing_trims.csv',
+  'packing_trims_item_price_unit.csv',
+  'packing_trims_usage.csv',
+  'print_embroidery_price_lookup.csv',
+  'product_part_key_map.csv',
+  'sam_minutes_lookup.csv',
+  'sam_product_eff.csv',
+  'sewing_thread_cost.csv',
+] as const;
+
+function isEditableLookupFile(filename: string) {
+  return (LOOKUP_EDITABLE_FILES as readonly string[]).includes(filename);
+}
+
+function getCsvHeaderLine(content: string): string {
+  return (content || '').split(/\r?\n/).find(line => line.trim().length > 0)?.trim() || '';
+}
+
 async function loadCSV(filename: string): Promise<any[]> {
   return new Promise((resolve, reject) => {
     const results: any[] = [];
@@ -511,7 +541,7 @@ app.use(cors({
   credentials: true
 }));
 
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 
 // Load dropdown data (with aliases to match Python/web UI names)
 const DROPDOWN_ALIASES: Record<string, string> = {
@@ -548,6 +578,76 @@ app.get('/api/dropdown/:name', async (req: Request, res: Response) => {
     res.json({ values });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+// Admin: lookup CSV download/upload
+app.get('/api/admin/lookup-files', (req: Request, res: Response) => {
+  res.json({ files: LOOKUP_EDITABLE_FILES });
+});
+
+app.get('/api/admin/lookup-files/:file/download', (req: Request, res: Response) => {
+  const file = path.basename(req.params.file || '');
+  if (!isEditableLookupFile(file)) {
+    return res.status(400).json({ error: 'File is not in editable lookup scope.' });
+  }
+
+  const filePath = path.join(DATA_DIR, file);
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).json({ error: 'File not found.' });
+  }
+
+  return res.download(filePath, file);
+});
+
+app.post('/api/admin/lookup-files/:file/upload', (req: Request, res: Response) => {
+  try {
+    const file = path.basename(req.params.file || '');
+    if (!isEditableLookupFile(file)) {
+      return res.status(400).json({ error: 'File is not in editable lookup scope.' });
+    }
+
+    const content = String(req.body?.content || '');
+    if (!content.trim()) {
+      return res.status(400).json({ error: 'Uploaded content is empty.' });
+    }
+
+    const filePath = path.join(DATA_DIR, file);
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).json({ error: 'Target file not found.' });
+    }
+
+    const existingHeader = getCsvHeaderLine(fs.readFileSync(filePath, 'utf-8'));
+    const incomingHeader = getCsvHeaderLine(content);
+
+    if (!existingHeader || !incomingHeader || existingHeader !== incomingHeader) {
+      return res.status(400).json({
+        error: 'CSV header mismatch. Please use downloaded template and keep the same columns/order.',
+        expectedHeader: existingHeader,
+        incomingHeader,
+      });
+    }
+
+    const versionsDir = path.join(DATA_DIR, '..', '_versions');
+    fs.mkdirSync(versionsDir, { recursive: true });
+    const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const backupPath = path.join(versionsDir, `${file}.${stamp}.bak.csv`);
+    fs.copyFileSync(filePath, backupPath);
+
+    const normalized = content.replace(/^\uFEFF/, '');
+    fs.writeFileSync(filePath, normalized, 'utf-8');
+
+    const rowCount = normalized.split(/\r?\n/).filter(line => line.trim().length > 0).length - 1;
+
+    return res.json({
+      ok: true,
+      file,
+      rows: Math.max(0, rowCount),
+      backup: path.basename(backupPath),
+      message: 'Upload applied successfully.',
+    });
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
   }
 });
 

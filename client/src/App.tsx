@@ -129,6 +129,11 @@ function App() {
   const [dutyCost, setDutyCost] = useState(0)
   const [additionalCost, setAdditionalCost] = useState(0)
 
+  // Admin data upload/download (lookup CSV only)
+  const [lookupFiles, setLookupFiles] = useState<string[]>([])
+  const [selectedLookupFile, setSelectedLookupFile] = useState('')
+  const [uploadStatus, setUploadStatus] = useState('')
+
   // Load dropdowns
   useEffect(() => {
     const dropdownNames = [
@@ -152,6 +157,18 @@ function App() {
       })
       setDropdowns(dropdownMap)
     })
+
+    fetch('/api/admin/lookup-files')
+      .then(res => res.json())
+      .then(data => {
+        const files = data?.files || []
+        setLookupFiles(files)
+        setSelectedLookupFile(files[0] || '')
+      })
+      .catch(() => {
+        setLookupFiles([])
+        setSelectedLookupFile('')
+      })
   }, [])
 
   // Auto-calculate with debounce
@@ -326,6 +343,31 @@ function App() {
     setResult(null)
   }
 
+  const downloadLookupFile = () => {
+    if (!selectedLookupFile) return
+    window.open(`/api/admin/lookup-files/${selectedLookupFile}/download`, '_blank')
+  }
+
+  const uploadLookupFile = async (file: File | null) => {
+    if (!file || !selectedLookupFile) return
+    setUploadStatus('Uploading...')
+    const content = await file.text()
+
+    const response = await fetch(`/api/admin/lookup-files/${selectedLookupFile}/upload`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content })
+    })
+
+    const data = await response.json()
+    if (!response.ok) {
+      setUploadStatus(`❌ ${data?.error || 'Upload failed'}`)
+      return
+    }
+
+    setUploadStatus(`✅ Uploaded ${selectedLookupFile} (${data.rows} rows). Backup: ${data.backup}`)
+  }
+
   return (
     <div className="container theme-midnight">
       <header className="brand-header">
@@ -341,6 +383,33 @@ function App() {
       </header>
 
       <div className="main-content">
+        <section className="card">
+          <div className="section-head-row">
+            <h2>Admin Data (Lookup CSV Upload/Download)</h2>
+          </div>
+          <div className="form-grid">
+            <div className="form-group">
+              <label>Editable Lookup File (19 files)</label>
+              <select value={selectedLookupFile} onChange={e => setSelectedLookupFile(e.target.value)}>
+                {lookupFiles.map(file => <option key={file} value={file}>{file}</option>)}
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Download Current CSV</label>
+              <button className="clear-button" style={{ background: '#0b2f59' }} onClick={downloadLookupFile}>Download</button>
+            </div>
+            <div className="form-group">
+              <label>Upload Updated CSV (same header/order)</label>
+              <input
+                type="file"
+                accept=".csv,text/csv"
+                onChange={e => uploadLookupFile(e.target.files?.[0] || null)}
+              />
+            </div>
+          </div>
+          {uploadStatus ? <p style={{ marginTop: 10 }}>{uploadStatus}</p> : null}
+        </section>
+
         {/* Step 1: Development */}
         <section className="card">
           <h2>Step 1: Development</h2>
