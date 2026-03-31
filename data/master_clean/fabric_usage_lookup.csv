@@ -1,109 +1,109 @@
 fabric,design,using_part,usage_s_xl,usage_2xl_3xl,usage_s_3xl,k7_key
-OPEN WIDTH,A_Shirt_Side_Seam,Whole Garment,0.4572,0.4572,0.4572,A_Shirt_Side_Seam
-OPEN WIDTH,A_Shirt_Side_Seam,Body,0.438,0.438,0.438,A_Shirt_Side_Seam
-OPEN WIDTH,A_Shirt_Side_Seam,Front Body Panel,0.219,0.219,0.219,A_Shirt_Side_Seam
-OPEN WIDTH,A_Shirt_Side_Seam,Back Body Panel,0.219,0.219,0.219,A_Shirt_Side_Seam
-OPEN WIDTH,A_Shirt_Side_Seam,Binding Collar,0.0192,0.0192,0.0192,A_Shirt_Side_Seam
-OPEN WIDTH,A_Shirt_Side_Seam,Binding Collar & Armhole,0.0561,0.0561,0.0561,A_Shirt_Side_Seam
-OPEN WIDTH,A_Shirt_Side_Seam,Back Neck Tape,0.0098,0.0098,0.0098,A_Shirt_Side_Seam
-OPEN WIDTH,A_Shirt_Side_Seam,Binding Armhole,0.0369,0.0369,0.0369,A_Shirt_Side_Seam
-OPEN WIDTH,A_Shirt_Side_Seam,Insert Side Panel (cut part),0.05,0.05,0.05,A_Shirt_Side_Seam
-OPEN WIDTH,A_Shirt_Side_Seam,Binding Bottom Hem,0.037,0.037,0.037,A_Shirt_Side_Seam
-OPEN WIDTH,A_Shirt_Side_Seam,Pocket bag,0.0152,0.0152,0.0152,A_Shirt_Side_Seam
+OPEN WIDTH,A_Shirt_Side_Seam,Whole Garment,0.4572,0.64008,0.5409663353666289,A_Shirt_Side_Seam
+OPEN WIDTH,A_Shirt_Side_Seam,Body,0.438,0.6132,0.5182485889995263,A_Shirt_Side_Seam
+OPEN WIDTH,A_Shirt_Side_Seam,Front Body Panel,0.219,0.3066,0.25912429449976315,A_Shirt_Side_Seam
+OPEN WIDTH,A_Shirt_Side_Seam,Back Body Panel,0.219,0.3066,0.25912429449976315,A_Shirt_Side_Seam
+OPEN WIDTH,A_Shirt_Side_Seam,Binding Collar,0.0192,0.026879999999999998,0.022717746367102526,A_Shirt_Side_Seam
+OPEN WIDTH,A_Shirt_Side_Seam,Binding Collar & Armhole,0.0561,0.07853999999999998,0.06637841516637769,A_Shirt_Side_Seam
+OPEN WIDTH,A_Shirt_Side_Seam,Back Neck Tape,0.0098,0.013719999999999998,0.011595516374875246,A_Shirt_Side_Seam
+OPEN WIDTH,A_Shirt_Side_Seam,Binding Armhole,0.0369,0.05166,0.04366066879927517,A_Shirt_Side_Seam
+OPEN WIDTH,A_Shirt_Side_Seam,Insert Side Panel (cut part),0.05,0.06999999999999999,0.059160797830996155,A_Shirt_Side_Seam
+OPEN WIDTH,A_Shirt_Side_Seam,Binding Bottom Hem,0.037,0.05179999999999999,0.043778990394937156,A_Shirt_Side_Seam
+OPEN WIDTH,A_Shirt_Side_Seam,Pocket bag,0.0152,0.02128,0.017984882540622832,A_Shirt_Side_Seam
 OPEN WIDTH,A_Shirt_Side_Seam,Not specific yet,1.0,1.0,1.0,A_Shirt_Side_Seam
-OPEN WIDTH,A_Shirt_No_Seam,Whole Garment,0.9898,0.9898,0.9898,A_Shirt_No_Seam
-OPEN WIDTH,A_Shirt_No_Seam,Body,0.97,0.97,0.97,A_Shirt_No_Seam
-OPEN WIDTH,A_Shirt_No_Seam,Binding Collar,0.0198,0.0198,0.0198,A_Shirt_No_Seam
-OPEN WIDTH,A_Shirt_No_Seam,Binding Collar & Armhole,0.0538,0.0538,0.0538,A_Shirt_No_Seam
-OPEN WIDTH,A_Shirt_No_Seam,Back Neck Tape,0.0086,0.0086,0.0086,A_Shirt_No_Seam
-OPEN WIDTH,A_Shirt_No_Seam,Binding Armhole,0.034,0.034,0.034,A_Shirt_No_Seam
-OPEN WIDTH,A_Shirt_No_Seam,Insert Side Panel (cut part),0.05,0.05,0.05,A_Shirt_No_Seam
-OPEN WIDTH,A_Shirt_No_Seam,Binding Bottom Hem,0.037,0.037,0.037,A_Shirt_No_Seam
-OPEN WIDTH,A_Shirt_No_Seam,Pocket bag,0.0201,0.0201,0.0201,A_Shirt_No_Seam
-OPEN WIDTH,A_Shirt_No_Seam,Not specific yet,1.0,1.0,1.0,A_Shirt_No_Seam
-OPEN WIDTH,T_Shirt_Side_Seam,Whole Garment,0.88,0.88,0.88,T_Shirt_Side_Seam
-OPEN WIDTH,T_Shirt_Side_Seam,Body & Sleeves,0.772,0.772,0.772,T_Shirt_Side_Seam
-OPEN WIDTH,T_Shirt_Side_Seam,Collar,0.027,0.027,0.027,T_Shirt_Side_Seam
-OPEN WIDTH,T_Shirt_Side_Seam,Sleeves Panel,0.21,0.21,0.21,T_Shirt_Side_Seam
-OPEN WIDTH,T_Shirt_Side_Seam,Front Body Panel,0.281,0.281,0.281,T_Shirt_Side_Seam
-OPEN WIDTH,T_Shirt_Side_Seam,Back Body Panel,0.281,0.281,0.281,T_Shirt_Side_Seam
-OPEN WIDTH,T_Shirt_Side_Seam,Gusset Under Arms,0.073,0.073,0.073,T_Shirt_Side_Seam
-OPEN WIDTH,T_Shirt_Side_Seam,Insert Side Panel (cut part),0.05,0.05,0.05,T_Shirt_Side_Seam
-OPEN WIDTH,T_Shirt_Side_Seam,Back Neck Tape,0.0098,0.0098,0.0098,T_Shirt_Side_Seam
-OPEN WIDTH,T_Shirt_Side_Seam,Binding Collar,0.0148,0.0148,0.0148,T_Shirt_Side_Seam
-OPEN WIDTH,T_Shirt_Side_Seam,Binding Shoulder Tape,0.0116,0.0116,0.0116,T_Shirt_Side_Seam
-OPEN WIDTH,T_Shirt_Side_Seam,Binding Back Neck &Shoulder line tape,0.0097,0.0097,0.0097,T_Shirt_Side_Seam
-OPEN WIDTH,T_Shirt_Side_Seam,Binding Bottom Hem,0.0267,0.0267,0.0267,T_Shirt_Side_Seam
-OPEN WIDTH,T_Shirt_Side_Seam,Binding Sleeve Hem Opening,0.0192,0.0192,0.0192,T_Shirt_Side_Seam
-OPEN WIDTH,T_Shirt_Side_Seam,Pocket bag,0.0152,0.0152,0.0152,T_Shirt_Side_Seam
+TUBULAR,A_Shirt_No_Seam,Whole Garment,0.9898,1.08878,1.0381109979188161,A_Shirt_No_Seam
+TUBULAR,A_Shirt_No_Seam,Body,0.97,1.067,1.017344582725047,A_Shirt_No_Seam
+TUBULAR,A_Shirt_No_Seam,Binding Collar,0.0198,0.021780000000000004,0.020766415193769004,A_Shirt_No_Seam
+TUBULAR,A_Shirt_No_Seam,Binding Collar & Armhole,0.0538,0.05918,0.056425916031554155,A_Shirt_No_Seam
+TUBULAR,A_Shirt_No_Seam,Back Neck Tape,0.0086,0.009460000000000001,0.009019756094263304,A_Shirt_No_Seam
+TUBULAR,A_Shirt_No_Seam,Binding Armhole,0.034,0.0374,0.03565950083778516,A_Shirt_No_Seam
+TUBULAR,A_Shirt_No_Seam,Insert Side Panel (cut part),0.05,0.05500000000000001,0.052440442408507586,A_Shirt_No_Seam
+TUBULAR,A_Shirt_No_Seam,Binding Bottom Hem,0.037,0.0407,0.03880592738229561,A_Shirt_No_Seam
+TUBULAR,A_Shirt_No_Seam,Pocket bag,0.0201,0.02814,0.023782640728060456,A_Shirt_No_Seam
+TUBULAR,A_Shirt_No_Seam,Not specific yet,1.0,1.0,1.0,A_Shirt_No_Seam
+OPEN WIDTH,T_Shirt_Side_Seam,Whole Garment,0.88,1.232,1.0412300418255325,T_Shirt_Side_Seam
+OPEN WIDTH,T_Shirt_Side_Seam,Body & Sleeves,0.772,1.0808,0.9134427185105808,T_Shirt_Side_Seam
+OPEN WIDTH,T_Shirt_Side_Seam,Collar,0.027,0.0378,0.03194683082873793,T_Shirt_Side_Seam
+OPEN WIDTH,T_Shirt_Side_Seam,Sleeves Panel,0.21,0.294,0.24847535089018385,T_Shirt_Side_Seam
+OPEN WIDTH,T_Shirt_Side_Seam,Front Body Panel,0.281,0.3934,0.33248368381019844,T_Shirt_Side_Seam
+OPEN WIDTH,T_Shirt_Side_Seam,Back Body Panel,0.281,0.3934,0.33248368381019844,T_Shirt_Side_Seam
+OPEN WIDTH,T_Shirt_Side_Seam,Gusset Under Arms,0.073,0.10219999999999999,0.08637476483325439,T_Shirt_Side_Seam
+OPEN WIDTH,T_Shirt_Side_Seam,Insert Side Panel (cut part),0.05,0.06999999999999999,0.059160797830996155,T_Shirt_Side_Seam
+OPEN WIDTH,T_Shirt_Side_Seam,Back Neck Tape,0.0098,0.013719999999999998,0.011595516374875246,T_Shirt_Side_Seam
+OPEN WIDTH,T_Shirt_Side_Seam,Binding Collar,0.0148,0.02072,0.017511596157974863,T_Shirt_Side_Seam
+OPEN WIDTH,T_Shirt_Side_Seam,Binding Shoulder Tape,0.0116,0.016239999999999997,0.013725305096791108,T_Shirt_Side_Seam
+OPEN WIDTH,T_Shirt_Side_Seam,Binding Back Neck &Shoulder line tape,0.0097,0.01358,0.011477194779213256,T_Shirt_Side_Seam
+OPEN WIDTH,T_Shirt_Side_Seam,Binding Bottom Hem,0.0267,0.03738,0.03159186604175195,T_Shirt_Side_Seam
+OPEN WIDTH,T_Shirt_Side_Seam,Binding Sleeve Hem Opening,0.0192,0.026879999999999998,0.022717746367102526,T_Shirt_Side_Seam
+OPEN WIDTH,T_Shirt_Side_Seam,Pocket bag,0.0152,0.02128,0.017984882540622832,T_Shirt_Side_Seam
 OPEN WIDTH,T_Shirt_Side_Seam,Not specific yet,1.0,1.0,1.0,T_Shirt_Side_Seam
-OPEN WIDTH,T_Shirt_No_Seam,Whole Garment,0.997,0.997,0.997,T_Shirt_No_Seam
-OPEN WIDTH,T_Shirt_No_Seam,Body & Sleeves,0.97,0.97,0.97,T_Shirt_No_Seam
-OPEN WIDTH,T_Shirt_No_Seam,Collar,0.027,0.027,0.027,T_Shirt_No_Seam
-OPEN WIDTH,T_Shirt_No_Seam,Sleeves Panel,0.277,0.277,0.277,T_Shirt_No_Seam
-OPEN WIDTH,T_Shirt_No_Seam,Gusset Under Arms,0.073,0.073,0.073,T_Shirt_No_Seam
-OPEN WIDTH,T_Shirt_No_Seam,Insert Side Panel (cut part),0.05,0.05,0.05,T_Shirt_No_Seam
-OPEN WIDTH,T_Shirt_No_Seam,Back Neck Tape,0.0098,0.0098,0.0098,T_Shirt_No_Seam
-OPEN WIDTH,T_Shirt_No_Seam,Binding Collar,0.0154,0.0154,0.0154,T_Shirt_No_Seam
-OPEN WIDTH,T_Shirt_No_Seam,Binding Shoulder Tape,0.0116,0.0116,0.0116,T_Shirt_No_Seam
-OPEN WIDTH,T_Shirt_No_Seam,Binding Back Neck &Shoulder line tape,0.0097,0.0097,0.0097,T_Shirt_No_Seam
-OPEN WIDTH,T_Shirt_No_Seam,Binding Bottom Hem,0.0267,0.0267,0.0267,T_Shirt_No_Seam
-OPEN WIDTH,T_Shirt_No_Seam,Binding Sleeve Hem Opening,0.0194,0.0194,0.0194,T_Shirt_No_Seam
-OPEN WIDTH,T_Shirt_No_Seam,Pocket bag,0.0201,0.0201,0.0201,T_Shirt_No_Seam
-OPEN WIDTH,T_Shirt_No_Seam,Not specific yet,1.0,1.0,1.0,T_Shirt_No_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Whole Garment,1.167,1.167,1.167,Long_Sleeve_Shirt_Side_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Body & Sleeves,1.1400000000000001,1.1400000000000001,1.1400000000000001,Long_Sleeve_Shirt_Side_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Collar,0.027,0.027,0.027,Long_Sleeve_Shirt_Side_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Sleeves Panel,0.45999999999999996,0.45999999999999996,0.45999999999999996,Long_Sleeve_Shirt_Side_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Front Body Panel,0.34,0.34,0.34,Long_Sleeve_Shirt_Side_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Back Body Panel,0.34,0.34,0.34,Long_Sleeve_Shirt_Side_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Gusset Under Arms,0.073,0.073,0.073,Long_Sleeve_Shirt_Side_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Insert Side Panel (cut part),0.05,0.05,0.05,Long_Sleeve_Shirt_Side_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Back Neck Tape,0.0098,0.0098,0.0098,Long_Sleeve_Shirt_Side_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Binding Collar,0.0148,0.0148,0.0148,Long_Sleeve_Shirt_Side_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Binding Shoulder Tape,0.0116,0.0116,0.0116,Long_Sleeve_Shirt_Side_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Binding Back Neck &Shoulder line tape,0.0097,0.0097,0.0097,Long_Sleeve_Shirt_Side_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Binding Bottom Hem,0.0267,0.0267,0.0267,Long_Sleeve_Shirt_Side_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Binding Sleeve Hem Opening,0.0116,0.0116,0.0116,Long_Sleeve_Shirt_Side_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Pocket bag,0.0152,0.0152,0.0152,Long_Sleeve_Shirt_Side_Seam
+TUBULAR,T_Shirt_No_Seam,Whole Garment,0.997,1.0967,1.0456624216256412,T_Shirt_No_Seam
+TUBULAR,T_Shirt_No_Seam,Body & Sleeves,0.97,1.067,1.017344582725047,T_Shirt_No_Seam
+TUBULAR,T_Shirt_No_Seam,Collar,0.027,0.0297,0.028317838900594094,T_Shirt_No_Seam
+TUBULAR,T_Shirt_No_Seam,Sleeves Panel,0.277,0.3047,0.290520050943132,T_Shirt_No_Seam
+TUBULAR,T_Shirt_No_Seam,Gusset Under Arms,0.073,0.0803,0.07656304591642106,T_Shirt_No_Seam
+TUBULAR,T_Shirt_No_Seam,Insert Side Panel (cut part),0.05,0.05500000000000001,0.052440442408507586,T_Shirt_No_Seam
+TUBULAR,T_Shirt_No_Seam,Back Neck Tape,0.0098,0.010780000000000001,0.010278326712067486,T_Shirt_No_Seam
+TUBULAR,T_Shirt_No_Seam,Binding Collar,0.0154,0.01694,0.016151656261820333,T_Shirt_No_Seam
+TUBULAR,T_Shirt_No_Seam,Binding Shoulder Tape,0.0116,0.01276,0.012166182638773757,T_Shirt_No_Seam
+TUBULAR,T_Shirt_No_Seam,Binding Back Neck &Shoulder line tape,0.0097,0.01067,0.010173445827250471,T_Shirt_No_Seam
+TUBULAR,T_Shirt_No_Seam,Binding Bottom Hem,0.0267,0.029370000000000004,0.02800319624614305,T_Shirt_No_Seam
+TUBULAR,T_Shirt_No_Seam,Binding Sleeve Hem Opening,0.0194,0.02134,0.020346891654500942,T_Shirt_No_Seam
+TUBULAR,T_Shirt_No_Seam,Pocket bag,0.0201,0.02814,0.023782640728060456,T_Shirt_No_Seam
+TUBULAR,T_Shirt_No_Seam,Not specific yet,1.0,1.1,1.0488088481701516,T_Shirt_No_Seam
+OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Whole Garment,1.167,1.69215,1.405254087345061,Long_Sleeve_Shirt_Side_Seam
+OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Body & Sleeves,1.1400000000000001,1.653,1.3727417819823218,Long_Sleeve_Shirt_Side_Seam
+OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Collar,0.027,0.03915,0.0325123053627392,Long_Sleeve_Shirt_Side_Seam
+OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Sleeves Panel,0.45999999999999996,0.6669999999999999,0.5539133506244456,Long_Sleeve_Shirt_Side_Seam
+OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Front Body Panel,0.34,0.493,0.40941421567893804,Long_Sleeve_Shirt_Side_Seam
+OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Back Body Panel,0.34,0.493,0.40941421567893804,Long_Sleeve_Shirt_Side_Seam
+OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Gusset Under Arms,0.073,0.10584999999999999,0.08790364042518375,Long_Sleeve_Shirt_Side_Seam
+OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Insert Side Panel (cut part),0.05,0.0725,0.06020797289396147,Long_Sleeve_Shirt_Side_Seam
+OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Back Neck Tape,0.0098,0.014209999999999999,0.01180076268721645,Long_Sleeve_Shirt_Side_Seam
+OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Binding Collar,0.0148,0.02146,0.017821559976612597,Long_Sleeve_Shirt_Side_Seam
+OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Binding Shoulder Tape,0.0116,0.016819999999999998,0.013968249711399061,Long_Sleeve_Shirt_Side_Seam
+OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Binding Back Neck &Shoulder line tape,0.0097,0.014065,0.011680346741428527,Long_Sleeve_Shirt_Side_Seam
+OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Binding Bottom Hem,0.0267,0.038715,0.03215105752537543,Long_Sleeve_Shirt_Side_Seam
+OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Binding Sleeve Hem Opening,0.0116,0.016819999999999998,0.013968249711399061,Long_Sleeve_Shirt_Side_Seam
+OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Pocket bag,0.0152,0.02128,0.017984882540622832,Long_Sleeve_Shirt_Side_Seam
 OPEN WIDTH,Long_Sleeve_Shirt_Side_Seam,Not specific yet,1.0,1.0,1.0,Long_Sleeve_Shirt_Side_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_No_Seam,Whole Garment,1.5447,1.5447,1.5447,Long_Sleeve_Shirt_No_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_No_Seam,Body & Sleeves,1.48,1.48,1.48,Long_Sleeve_Shirt_No_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_No_Seam,Collar,0.055,0.055,0.055,Long_Sleeve_Shirt_No_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_No_Seam,Sleeves Panel,0.75,0.75,0.75,Long_Sleeve_Shirt_No_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_No_Seam,Gusset Under Arms,0.073,0.073,0.073,Long_Sleeve_Shirt_No_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_No_Seam,Insert Side Panel (cut part),0.05,0.05,0.05,Long_Sleeve_Shirt_No_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_No_Seam,Back Neck Tape,0.0098,0.0098,0.0098,Long_Sleeve_Shirt_No_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_No_Seam,Binding Collar,0.0148,0.0148,0.0148,Long_Sleeve_Shirt_No_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_No_Seam,Binding Shoulder Tape,0.0116,0.0116,0.0116,Long_Sleeve_Shirt_No_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_No_Seam,Binding Back Neck &Shoulder line tape,0.0097,0.0097,0.0097,Long_Sleeve_Shirt_No_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_No_Seam,Binding Bottom Hem,0.0267,0.0267,0.0267,Long_Sleeve_Shirt_No_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_No_Seam,Binding Sleeve Hem Opening,0.0116,0.0116,0.0116,Long_Sleeve_Shirt_No_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_No_Seam,Pocket bag,0.0201,0.0201,0.0201,Long_Sleeve_Shirt_No_Seam
-OPEN WIDTH,Long_Sleeve_Shirt_No_Seam,Not specific yet,1.0,1.0,1.0,Long_Sleeve_Shirt_No_Seam
-OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Whole Garment,0.6567000000000001,0.6567000000000001,0.6567000000000001,Sleeveless_Shirt_Side_Seam
-OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Body,0.62,0.62,0.62,Sleeveless_Shirt_Side_Seam
-OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Collar,0.027,0.027,0.027,Sleeveless_Shirt_Side_Seam
-OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Front Body Panel,0.31,0.31,0.31,Sleeveless_Shirt_Side_Seam
-OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Back Body Panel,0.31,0.31,0.31,Sleeveless_Shirt_Side_Seam
-OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Gusset Under Arms,0.073,0.073,0.073,Sleeveless_Shirt_Side_Seam
-OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Insert Side Panel (cut part),0.05,0.05,0.05,Sleeveless_Shirt_Side_Seam
-OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Back Neck Tape,0.0068,0.0068,0.0068,Sleeveless_Shirt_Side_Seam
-OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Binding Collar,0.0148,0.0148,0.0148,Sleeveless_Shirt_Side_Seam
-OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Binding Shoulder Tape,0.0116,0.0116,0.0116,Sleeveless_Shirt_Side_Seam
-OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Binding Back Neck &Shoulder line tape,0.0097,0.0097,0.0097,Sleeveless_Shirt_Side_Seam
-OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Binding Bottom Hem,0.0267,0.0267,0.0267,Sleeveless_Shirt_Side_Seam
-OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Binding Sleeve Hem Opening,0.029,0.029,0.029,Sleeveless_Shirt_Side_Seam
-OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Pocket bag,0.0152,0.0152,0.0152,Sleeveless_Shirt_Side_Seam
+TUBULAR,Long_Sleeve_Shirt_No_Seam,Whole Garment,1.5447,2.2398149999999997,1.8600651145860458,Long_Sleeve_Shirt_No_Seam
+TUBULAR,Long_Sleeve_Shirt_No_Seam,Body & Sleeves,1.48,2.146,1.7821559976612598,Long_Sleeve_Shirt_No_Seam
+TUBULAR,Long_Sleeve_Shirt_No_Seam,Collar,0.055,0.07975,0.06622877018335763,Long_Sleeve_Shirt_No_Seam
+TUBULAR,Long_Sleeve_Shirt_No_Seam,Sleeves Panel,0.75,1.0875,0.9031195934094222,Long_Sleeve_Shirt_No_Seam
+TUBULAR,Long_Sleeve_Shirt_No_Seam,Gusset Under Arms,0.073,0.10584999999999999,0.08790364042518375,Long_Sleeve_Shirt_No_Seam
+TUBULAR,Long_Sleeve_Shirt_No_Seam,Insert Side Panel (cut part),0.05,0.0725,0.06020797289396147,Long_Sleeve_Shirt_No_Seam
+TUBULAR,Long_Sleeve_Shirt_No_Seam,Back Neck Tape,0.0098,0.014209999999999999,0.01180076268721645,Long_Sleeve_Shirt_No_Seam
+TUBULAR,Long_Sleeve_Shirt_No_Seam,Binding Collar,0.0148,0.02146,0.017821559976612597,Long_Sleeve_Shirt_No_Seam
+TUBULAR,Long_Sleeve_Shirt_No_Seam,Binding Shoulder Tape,0.0116,0.016819999999999998,0.013968249711399061,Long_Sleeve_Shirt_No_Seam
+TUBULAR,Long_Sleeve_Shirt_No_Seam,Binding Back Neck &Shoulder line tape,0.0097,0.014065,0.011680346741428527,Long_Sleeve_Shirt_No_Seam
+TUBULAR,Long_Sleeve_Shirt_No_Seam,Binding Bottom Hem,0.0267,0.038715,0.03215105752537543,Long_Sleeve_Shirt_No_Seam
+TUBULAR,Long_Sleeve_Shirt_No_Seam,Binding Sleeve Hem Opening,0.0116,0.016819999999999998,0.013968249711399061,Long_Sleeve_Shirt_No_Seam
+TUBULAR,Long_Sleeve_Shirt_No_Seam,Pocket bag,0.0201,0.02814,0.023782640728060456,Long_Sleeve_Shirt_No_Seam
+TUBULAR,Long_Sleeve_Shirt_No_Seam,Not specific yet,1.0,1.0,1.0,Long_Sleeve_Shirt_No_Seam
+OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Whole Garment,0.6567000000000001,0.952215,0.7907715159892901,Sleeveless_Shirt_Side_Seam
+OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Body,0.62,0.899,0.7465788638851223,Sleeveless_Shirt_Side_Seam
+OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Collar,0.027,0.03915,0.0325123053627392,Sleeveless_Shirt_Side_Seam
+OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Front Body Panel,0.31,0.4495,0.37328943194256115,Sleeveless_Shirt_Side_Seam
+OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Back Body Panel,0.31,0.4495,0.37328943194256115,Sleeveless_Shirt_Side_Seam
+OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Gusset Under Arms,0.073,0.10584999999999999,0.08790364042518375,Sleeveless_Shirt_Side_Seam
+OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Insert Side Panel (cut part),0.05,0.0725,0.06020797289396147,Sleeveless_Shirt_Side_Seam
+OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Back Neck Tape,0.0068,0.009859999999999999,0.00818828431357876,Sleeveless_Shirt_Side_Seam
+OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Binding Collar,0.0148,0.02146,0.017821559976612597,Sleeveless_Shirt_Side_Seam
+OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Binding Shoulder Tape,0.0116,0.016819999999999998,0.013968249711399061,Sleeveless_Shirt_Side_Seam
+OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Binding Back Neck &Shoulder line tape,0.0097,0.014065,0.011680346741428527,Sleeveless_Shirt_Side_Seam
+OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Binding Bottom Hem,0.0267,0.038715,0.03215105752537543,Sleeveless_Shirt_Side_Seam
+OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Binding Sleeve Hem Opening,0.029,0.042050000000000004,0.03492062427849766,Sleeveless_Shirt_Side_Seam
+OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Pocket bag,0.0152,0.02128,0.017984882540622832,Sleeveless_Shirt_Side_Seam
 OPEN WIDTH,Sleeveless_Shirt_Side_Seam,Not specific yet,1.0,1.0,1.0,Sleeveless_Shirt_Side_Seam
-OPEN WIDTH,Sleeveless_Shirt_No_Seam,Whole Garment,0.885,0.885,0.885,Sleeveless_Shirt_No_Seam
-OPEN WIDTH,Sleeveless_Shirt_No_Seam,Body,0.83,0.83,0.83,Sleeveless_Shirt_No_Seam
-OPEN WIDTH,Sleeveless_Shirt_No_Seam,Collar,0.055,0.055,0.055,Sleeveless_Shirt_No_Seam
-OPEN WIDTH,Sleeveless_Shirt_No_Seam,Gusset Under Arms,0.065,0.065,0.065,Sleeveless_Shirt_No_Seam
-OPEN WIDTH,Sleeveless_Shirt_No_Seam,Insert Side Panel (cut part),0.05,0.05,0.05,Sleeveless_Shirt_No_Seam
-OPEN WIDTH,Sleeveless_Shirt_No_Seam,Back Neck Tape,0.0068,0.0068,0.0068,Sleeveless_Shirt_No_Seam
-OPEN WIDTH,Sleeveless_Shirt_No_Seam,Binding Back Neck &Shoulder line tape,0.0097,0.0097,0.0097,Sleeveless_Shirt_No_Seam
-OPEN WIDTH,Sleeveless_Shirt_No_Seam,Binding Bottom Hem,0.0267,0.0267,0.0267,Sleeveless_Shirt_No_Seam
-OPEN WIDTH,Sleeveless_Shirt_No_Seam,Binding Sleeve Hem Opening,0.0076,0.0076,0.0076,Sleeveless_Shirt_No_Seam
-OPEN WIDTH,Sleeveless_Shirt_No_Seam,Pocket bag,0.0201,0.0201,0.0201,Sleeveless_Shirt_No_Seam
-OPEN WIDTH,Sleeveless_Shirt_No_Seam,Not specific yet,1.0,1.0,1.0,Sleeveless_Shirt_No_Seam
+TUBULAR,Sleeveless_Shirt_No_Seam,Whole Garment,0.885,1.28325,1.0656811202231182,Sleeveless_Shirt_No_Seam
+TUBULAR,Sleeveless_Shirt_No_Seam,Body,0.83,1.2035,0.9994523500397605,Sleeveless_Shirt_No_Seam
+TUBULAR,Sleeveless_Shirt_No_Seam,Collar,0.055,0.07975,0.06622877018335763,Sleeveless_Shirt_No_Seam
+TUBULAR,Sleeveless_Shirt_No_Seam,Gusset Under Arms,0.065,0.09425,0.07827036476214992,Sleeveless_Shirt_No_Seam
+TUBULAR,Sleeveless_Shirt_No_Seam,Insert Side Panel (cut part),0.05,0.0725,0.06020797289396147,Sleeveless_Shirt_No_Seam
+TUBULAR,Sleeveless_Shirt_No_Seam,Back Neck Tape,0.0068,0.009859999999999999,0.00818828431357876,Sleeveless_Shirt_No_Seam
+TUBULAR,Sleeveless_Shirt_No_Seam,Binding Back Neck &Shoulder line tape,0.0097,0.014065,0.011680346741428527,Sleeveless_Shirt_No_Seam
+TUBULAR,Sleeveless_Shirt_No_Seam,Binding Bottom Hem,0.0267,0.038715,0.03215105752537543,Sleeveless_Shirt_No_Seam
+TUBULAR,Sleeveless_Shirt_No_Seam,Binding Sleeve Hem Opening,0.0076,0.01102,0.009151611879882145,Sleeveless_Shirt_No_Seam
+TUBULAR,Sleeveless_Shirt_No_Seam,Pocket bag,0.0201,0.02814,0.023782640728060456,Sleeveless_Shirt_No_Seam
+TUBULAR,Sleeveless_Shirt_No_Seam,Not specific yet,1.0,1.0,1.0,Sleeveless_Shirt_No_Seam
