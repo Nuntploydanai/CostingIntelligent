@@ -389,7 +389,7 @@ function App() {
           </div>
           <div className="form-grid">
             <div className="form-group">
-              <label>Editable Lookup File (19 files)</label>
+              <label>Editable Lookup File</label>
               <select value={selectedLookupFile} onChange={e => setSelectedLookupFile(e.target.value)}>
                 {lookupFiles.map(file => <option key={file} value={file}>{file}</option>)}
               </select>

@@ -20,8 +20,6 @@ console.log('📁 Exists:', fs.existsSync(DATA_DIR));
 const LOOKUP_EDITABLE_FILES = [
   'cost_rate.csv',
   'efficiency_by_quantity.csv',
-  'fabric_price.csv',
-  'fabric_price_ar_as_lookup.csv',
   'fabric_price_lookup.csv',
   'fabric_type_default_gsm.csv',
   'fabric_usage_lookup.csv',
