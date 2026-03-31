@@ -204,9 +204,29 @@ async function computeFabrication(input: any) {
   });
 
   const k7Key = normalizeString((keyMapRows.find(r => normLookup(r.silhouette) === normLookup(silhouette) && normLookup(r.seam) === normLookup(seam)) || {}).k7_key);
+
+  const sizeBucket = (() => {
+    const s = size.toUpperCase();
+    if (s === 'S-XL') return 'usage_s_xl';
+    if (s === '2XL-3XL' || s === '2XL-5XL') return 'usage_2xl_3xl';
+    if (s === 'S-3XL') return 'usage_s_3xl';
+    return 'usage_s_xl';
+  })();
+
   let usageVal: number | null = null;
-  if (fabric_contents && k7Key && using_part) {
-    usageVal = toFloat((usageRows.find(r => normLookup(r.k7_key) === normLookup(k7Key) && normLookup(r.using_part) === normLookup(using_part)) || {}).usage);
+  if (k7Key && using_part) {
+    const usageRow = usageRows.find(r => {
+      const sameDesign = normLookup(r.design || r.k7_key) === normLookup(k7Key);
+      const samePart = normLookup(r.using_part) === normLookup(using_part);
+      // keep fabric optional/flexible for now (some source rows may not provide it)
+      return sameDesign && samePart;
+    }) || null;
+
+    if (usageRow) {
+      usageVal = toFloat((usageRow as any)[sizeBucket]);
+      if (usageVal == null) usageVal = toFloat((usageRow as any).usage);
+      if (usageVal == null) usageVal = toFloat((usageRow as any).usage_s_xl);
+    }
   }
 
   const g = gender.toUpperCase();
