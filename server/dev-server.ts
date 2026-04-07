@@ -203,14 +203,8 @@ async function computeFabrication(input: any) {
 
   const k7Key = normalizeString((keyMapRows.find(r => normLookup(r.silhouette) === normLookup(silhouette) && normLookup(r.seam) === normLookup(seam)) || {}).k7_key);
 
-  const sizeBucket = (() => {
-    const s = size.toUpperCase();
-    if (s === 'S-XL') return 'usage_s_xl';
-    if (s === '2XL-3XL' || s === '2XL-5XL') return 'usage_2xl_3xl';
-    if (s === 'S-3XL') return 'usage_s_3xl';
-    return 'usage_s_xl';
-  })();
-
+  const sizeBucket = 'usage_s_xl'; // Always use S-XL base; sizeMult below handles scaling
+  
   let usageVal: number | null = null;
   if (k7Key && using_part) {
     const usageRow = usageRows.find(r => {
