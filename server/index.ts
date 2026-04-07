@@ -412,7 +412,12 @@ app.post('/api/calculate', async (req: Request, res: Response) => {
     const fabricationResults = [];
     let totalFabricCost = 0;
     for (const fab of input.fabrication) {
-      const result = await computeFabrication(fab);
+      const result = await computeFabrication({
+        ...fab,
+        silhouette: input.development.silhouette,
+        seam: input.development.seam,
+        size: input.development.size,
+      });
       fabricationResults.push(result);
       totalFabricCost += result.total_cost;
     }
