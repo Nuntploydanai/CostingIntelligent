@@ -23,6 +23,11 @@ export interface FabricationInput {
   silhouette?: string;
   seam?:       string;
   size?:       string;
+  gender?:          string;
+  fabric_finishing?: string;
+  color_design?:    string;
+
+  
 }
 
 export interface FabricationOutput {
