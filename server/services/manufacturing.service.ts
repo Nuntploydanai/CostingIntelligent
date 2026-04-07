@@ -2,12 +2,11 @@ import { loadCSV, toFloat, normalizeString } from '../utils/csvLoader';
 import { ManufacturingInput, ManufacturingOutput } from '../types';
 
 export async function computeManufacturing(input: ManufacturingInput): Promise<ManufacturingOutput> {
-  // Load CSV data
   const samMinutesData = await loadCSV('sam_minutes_lookup.csv');
   const costRateData = await loadCSV('cost_rate.csv');
   const efficiencyData = await loadCSV('efficiency_by_quantity.csv');
+  const samProdEffData = await loadCSV('sam_product_eff.csv');
 
-  // Normalize inputs
   const gender = normalizeString(input.gender);
   const silhouette = normalizeString(input.silhouette);
   const seam = normalizeString(input.seam);
@@ -23,11 +22,9 @@ export async function computeManufacturing(input: ManufacturingInput): Promise<M
     normalizeString(row.seam) === seam &&
     normalizeString(row.size) === size
   );
-
   if (samRow) {
     baseMinutes = toFloat(samRow.sam_minutes) || 0;
   } else {
-    // Try case-insensitive match
     const samRowCI = samMinutesData.find(row =>
       normalizeString(row.gender).toLowerCase() === gender.toLowerCase() &&
       normalizeString(row.product).toLowerCase() === silhouette.toLowerCase() &&
@@ -45,11 +42,24 @@ export async function computeManufacturing(input: ManufacturingInput): Promise<M
   );
   const costRate = toFloat(costRateRow?.cost_rate) || 0;
 
-  // Find efficiency based on quantity
+  // Find BASE efficiency by quantity range
   const efficiencyRow = efficiencyData.find(row =>
     normalizeString(row.quantity_range) === quantity
   );
-  const efficiency = toFloat(efficiencyRow?.efficiency) || 0.738; // Default to 0.738
+  const baseEfficiency = toFloat(efficiencyRow?.efficiency) || 0.738;
+
+  // BUG FIX: Find product efficiency factor from sam_product_eff.csv
+  // Excel: final_efficiency = base_efficiency × eff_pct (by gender/silhouette/seam/size)
+  const prodEffRow = samProdEffData.find(row =>
+    normalizeString(row.gender).toLowerCase() === gender.toLowerCase() &&
+    normalizeString(row.product_shape).toLowerCase() === silhouette.toLowerCase() &&
+    normalizeString(row.side_seam).toLowerCase() === seam.toLowerCase() &&
+    normalizeString(row.size).toLowerCase() === size.toLowerCase()
+  );
+  const productEfficiency = toFloat(prodEffRow?.eff_pct) || 1.0;
+
+  // Final efficiency = base × product factor (e.g. 0.70 × 0.90 = 0.63)
+  const efficiency = baseEfficiency * productEfficiency;
 
   // Calculate total cost: (minutes / efficiency) * cost_rate
   let totalCost = 0;
@@ -69,26 +79,20 @@ export async function computeManufacturing(input: ManufacturingInput): Promise<M
 export async function computeAllManufacturing(
   input: ManufacturingInput
 ): Promise<ManufacturingOutput[]> {
-  // Load all countries
   const costRateData = await loadCSV('cost_rate.csv');
 
-  // If COO is specified, only return that country
   if (input.coo) {
     const result = await computeManufacturing(input);
     return [result];
   }
 
-  // Otherwise, return ALL countries for comparison
   const results: ManufacturingOutput[] = [];
   const countries = costRateData
     .map(row => normalizeString(row.country))
-    .filter(c => c); // Remove empty strings
+    .filter(c => c);
 
   for (const country of countries) {
-    const result = await computeManufacturing({
-      ...input,
-      coo: country,
-    });
+    const result = await computeManufacturing({ ...input, coo: country });
     results.push(result);
   }
 
