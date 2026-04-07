@@ -253,6 +253,12 @@ def calculate(req: CalculateRequest):
     })
 
     # Step 6: Manufacturing Cost (based on COO selected in Step 1)
+    fabric_using_parts = [
+        (r.get("using_part") or "").strip()
+        for r in fab_rows
+        if (r.get("using_part") or "").strip()
+    ]
+
     manufacturing_rows = compute_all_manufacturing_rows(
         gender=normalized_dev.get("gender", ""),
         silhouette=normalized_dev.get("silhouette", ""),
@@ -260,6 +266,7 @@ def calculate(req: CalculateRequest):
         size=normalized_dev.get("size", ""),
         quantity=normalized_dev.get("ideal_quantity", ""),
         coo=normalized_dev.get("coo", ""),
+        using_parts=fabric_using_parts,
     )
 
     # Calculate totals from each step
