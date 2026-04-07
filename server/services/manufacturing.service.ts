@@ -6,17 +6,23 @@ export async function computeManufacturing(input: ManufacturingInput): Promise<M
   const efficiencyData = await loadCSV('efficiency_by_quantity.csv');
   const samProdEffData = await loadCSV('sam_product_eff.csv');
 
-  // Normalise all input strings (trim whitespace only)
-  const gender     = normalizeString(input.gender    ?? '');
+  // --- Normalize all input strings (trim whitespace only) ---
+  const gender     = normalizeString(input.gender     ?? '');
   const silhouette = normalizeString(input.silhouette ?? '');
   const seam       = normalizeString(input.seam       ?? '');
   const size       = normalizeString(input.size       ?? '');
   const quantity   = normalizeString(input.quantity   ?? '');
   const coo        = normalizeString(input.coo        ?? '');
 
-  // ── Lookup row in sam_product_eff.csv ─────────────────────────────────────
+  // --- DEBUG: Log what the server actually receives ---
+  console.log('[MFG] Input received:', JSON.stringify({ gender, silhouette, seam, size, quantity, coo }));
+  console.log('[MFG] sam_product_eff rows loaded:', samProdEffData.length);
+  if (samProdEffData.length > 0) {
+    console.log('[MFG] First CSV row sample:', JSON.stringify(samProdEffData[0]));
+  }
+
+  // --- Lookup row in sam_product_eff.csv ---
   // Columns: gender | product_shape | side_seam | size | sam | eff_pct
-  // Compare case-insensitively to handle any capitalisation differences.
   const prodRow = samProdEffData.find(row =>
     normalizeString(row.gender        ?? '').toLowerCase() === gender.toLowerCase()     &&
     normalizeString(row.product_shape ?? '').toLowerCase() === silhouette.toLowerCase() &&
@@ -24,34 +30,40 @@ export async function computeManufacturing(input: ManufacturingInput): Promise<M
     normalizeString(row.size          ?? '').toLowerCase() === size.toLowerCase()
   );
 
-  // SAM minutes — comes from the `sam` column of sam_product_eff.csv
-  const baseMinutes = toFloat(prodRow?.sam) ?? 0;
+  // --- DEBUG: Show what was found (or not) ---
+  console.log('[MFG] prodRow found:', JSON.stringify(prodRow ?? null));
 
-  // Product efficiency factor — e.g. 0.9 for Long Sleeve Shirt / Side Seam
-  // Defaults to 1.0 if the row is not found (neutral — no adjustment)
+  // SAM minutes and product efficiency factor from same row
+  const baseMinutes       = toFloat(prodRow?.sam)     ?? 0;
   const productEfficiency = toFloat(prodRow?.eff_pct) ?? 1.0;
 
-  // ── Cost rate for the selected country ───────────────────────────────────
+  console.log('[MFG] baseMinutes:', baseMinutes, '| productEfficiency:', productEfficiency);
+
+  // --- Cost rate for selected country ---
   const costRateRow = costRateData.find(row =>
     normalizeString(row.country ?? '').toLowerCase() === coo.toLowerCase()
   );
   const costRate = toFloat(costRateRow?.cost_rate) ?? 0;
 
-  // ── Base efficiency from quantity range ───────────────────────────────────
+  // --- Base efficiency from quantity range ---
   const efficiencyRow = efficiencyData.find(row =>
     normalizeString(row.quantity_range ?? '').toLowerCase() === quantity.toLowerCase()
   );
   const baseEfficiency = toFloat(efficiencyRow?.efficiency) ?? 0.738;
 
-  // ── Final efficiency = base × product factor ──────────────────────────────
-  // Example: 0.70 (3,001–10,000 pcs) × 0.90 (Long Sleeve / Side Seam) = 0.63
+  // --- Final efficiency = base x product factor ---
+  // Example: 0.70 (3,001-10,000 pcs) x 0.90 (Long Sleeve / Side Seam) = 0.63
   const efficiency = baseEfficiency * productEfficiency;
 
-  // ── Total manufacturing cost ──────────────────────────────────────────────
+  console.log('[MFG] baseEfficiency:', baseEfficiency, '| final efficiency:', efficiency);
+
+  // --- Total manufacturing cost ---
   let totalCost = 0;
   if (efficiency > 0 && baseMinutes > 0) {
     totalCost = (baseMinutes / efficiency) * costRate;
   }
+
+  console.log('[MFG] costRate:', costRate, '| totalCost:', totalCost);
 
   return {
     country:    coo,
