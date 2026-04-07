@@ -230,6 +230,18 @@ def compute_manufacturing_for_coo(
 
     total_cost = (minutes / actual_efficiency) * cost_rate if actual_efficiency else 0.0
 
+   print("DEBUG STEP 6", {
+    "gender": gender,
+    "silhouette": silhouette,
+    "seam": seam,
+    "size": size,
+    "quantity": quantity,
+    "coo": coo,
+    "product_efficiency": product_efficiency,
+    "quantity_efficiency": quantity_efficiency,
+    "actual_efficiency": actual_efficiency,
+})
+    
     return {
         "country": coo,
         "base_minutes": round(base_minutes, 3),
