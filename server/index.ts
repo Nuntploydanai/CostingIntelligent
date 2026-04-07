@@ -417,6 +417,9 @@ app.post('/api/calculate', async (req: Request, res: Response) => {
         silhouette: input.development.silhouette,
         seam: input.development.seam,
         size: input.development.size,
+        gender:           input.development.gender,           // ADD THIS
+        fabric_finishing: input.development.fabric_finishing, // ADD THIS
+        color_design:     input.development.color_design,     // ADD THIS
       });
       fabricationResults.push(result);
       totalFabricCost += result.total_cost;
