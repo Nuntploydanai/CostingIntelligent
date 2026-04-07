@@ -20,6 +20,9 @@ export interface FabricationInput {
   price_unit: string;
   price_value: string;
   material_coo: string;
+  silhouette?: string;
+  seam?:       string;
+  size?:       string;
 }
 
 export interface FabricationOutput {
