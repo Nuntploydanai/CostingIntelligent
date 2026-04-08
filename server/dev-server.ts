@@ -418,11 +418,13 @@ async function computeManufacturing(input: any) {
   const efficiency = toFloat(efficiencyRow?.efficiency) || 0.738;
 
   // ADD THESE LINES:
+  const sizeForProdEff = size.toUpperCase() === '2XL-3XL' ? '2.0' : size;  // ← ADD THIS FIRST
+
   const samProdEffRow = samProductEffData.find(row =>
   normalizeString(row.gender).toLowerCase() === gender.toLowerCase() &&
   normalizeString(row.product_shape).toLowerCase() === silhouette.toLowerCase() &&
   normalizeString(row.side_seam).toLowerCase() === seam.toLowerCase() &&
-  normalizeString(row.size).toLowerCase() === size.toLowerCase()
+  normalizeString(row.size).toLowerCase() === sizeForProdEff.toLowerCase()
   );
   
 const productEfficiency = toFloat(samProdEffRow?.eff_pct) ?? 1.0;
