@@ -583,17 +583,17 @@ function renderFabricationOutputs(res) {
 
 function updateSummary(res) {
   const formatCost = (cost) => {
-    if (cost === null || cost === undefined || cost === '') return '$0.000';
+    if (cost === null || cost === undefined || cost === '') return '$0.00';
     const num = parseFloat(cost);
-    if (isNaN(num)) return '$0.000';
+    if (isNaN(num)) return '$0.00';
     // Always show 3 decimal places
     return '$' + num.toFixed(3);
   };
 
   const formatPct = (pct) => {
-    if (pct === null || pct === undefined || pct === '') return '0.000';
+    if (pct === null || pct === undefined || pct === '') return '0.00';
     const num = parseFloat(pct);
-    if (isNaN(num)) return '0.000';
+    if (isNaN(num)) return '0.00';
     // Always show 3 decimal places
     return num.toFixed(3);
   };
@@ -755,6 +755,15 @@ function setupAutoCalc() {
     if (el) {
       el.addEventListener('change', debounceCalc);
       el.addEventListener('input', debounceCalc); // For text/number inputs
+    }
+  });
+
+  // Select all text on focus so typing replaces the value
+  const numInputs = ['supplierMarginInput', 'freightCostInput', 'gmoCostInput', 'dutyCostInput', 'additionalCostInput'];
+  numInputs.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('focus', function() { this.select(); });
     }
   });
 }
