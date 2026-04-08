@@ -652,7 +652,7 @@ function App() {
           ))}
 
           <div style={{ marginTop: 12, fontWeight: 700, color: '#0b3f77' }}>
-            Fabric Total Cost: ${(result?.outputs.fabrication.total_fabric_cost ?? 0).toFixed(3)}
+            Fabric Total Cost: ${(result?.outputs.fabrication.total_fabric_cost ?? 0).toFixed(2)}
           </div>
         </section>
 
@@ -742,7 +742,7 @@ function App() {
           ))}
 
           <div style={{ marginTop: 12, fontWeight: 700, color: '#0b3f77' }}>
-            Trim Total Cost: ${(result?.outputs.trims.total_trim_cost ?? 0).toFixed(3)}
+            Trim Total Cost: ${(result?.outputs.trims.total_trim_cost ?? 0).toFixed(2)}
           </div>
         </section>
 
@@ -812,7 +812,7 @@ function App() {
           ))}
 
           <div style={{ marginTop: 12, fontWeight: 700, color: '#0b3f77' }}>
-            Embellishment Total Cost: ${(result?.outputs.embellishments.total_embellishment_cost ?? 0).toFixed(3)}
+            Embellishment Total Cost: ${(result?.outputs.embellishments.total_embellishment_cost ?? 0).toFixed(2)}
           </div>
         </section>
 
@@ -1002,50 +1002,50 @@ function App() {
                 ].map((item, i) => (
                   <div key={i} className="summary-row">
                     <span>{item.label}</span>
-                    <span className="cost">${item.cost.toFixed(3)}</span>
-                    <span className="pct">{item.pct.toFixed(3)}%</span>
+                    <span className="cost">${item.cost.toFixed(2)}</span>
+                    <span className="pct">{item.pct.toFixed(2)}%</span>
                   </div>
                 ))}
 
                 <div className="summary-row subtotal">
                   <span>Subtotal (Items 1-10)</span>
-                  <span>${result.outputs.total_cost_summary.subtotal.toFixed(3)}</span>
+                  <span>${result.outputs.total_cost_summary.subtotal.toFixed(2)}</span>
                   <span>100.000%</span>
                 </div>
 
                 <div className="summary-row">
                   <span>11. Supplier Margin ({result.outputs.total_cost_summary.supplier_margin_percent}%)</span>
-                  <span>${result.outputs.total_cost_summary.supplier_margin_amount.toFixed(3)}</span>
-                  <span>{result.outputs.total_cost_summary.supplier_margin_amount_pct.toFixed(3)}%</span>
+                  <span>${result.outputs.total_cost_summary.supplier_margin_amount.toFixed(2)}</span>
+                  <span>{result.outputs.total_cost_summary.supplier_margin_amount_pct.toFixed(2)}%</span>
                 </div>
 
                 <div className="summary-row fob">
                   <span><strong>FOB Cost</strong></span>
-                  <span><strong>${result.outputs.total_cost_summary.fob_cost.toFixed(3)}</strong></span>
+                  <span><strong>${result.outputs.total_cost_summary.fob_cost.toFixed(2)}</strong></span>
                   <span></span>
                 </div>
 
                 <div className="summary-row">
                   <span>12. Freight Cost</span>
-                  <span>${result.outputs.total_cost_summary.freight_cost.toFixed(3)}</span>
+                  <span>${result.outputs.total_cost_summary.freight_cost.toFixed(2)}</span>
                   <span></span>
                 </div>
 
                 <div className="summary-row">
                   <span>13. GMO Cost</span>
-                  <span>${result.outputs.total_cost_summary.gmo_cost.toFixed(3)}</span>
+                  <span>${result.outputs.total_cost_summary.gmo_cost.toFixed(2)}</span>
                   <span></span>
                 </div>
 
                 <div className="summary-row">
                   <span>14. Duty Cost</span>
-                  <span>${result.outputs.total_cost_summary.duty_cost.toFixed(3)}</span>
+                  <span>${result.outputs.total_cost_summary.duty_cost.toFixed(2)}</span>
                   <span></span>
                 </div>
 
                 <div className="summary-row grand-total">
                   <span><strong>Grand Total (FLC)</strong></span>
-                  <span><strong>${result.outputs.total_cost_summary.grand_total.toFixed(3)}</strong></span>
+                  <span><strong>${result.outputs.total_cost_summary.grand_total.toFixed(2)}</strong></span>
                   <span></span>
                 </div>
               </div>
@@ -1054,19 +1054,19 @@ function App() {
               <div className="summary-stats">
                 <div className="stat-box">
                   <label>Total FOB per PIECE</label>
-                  <span>${result.outputs.total_cost_summary.total_fob_per_piece.toFixed(3)}</span>
+                  <span>${result.outputs.total_cost_summary.total_fob_per_piece.toFixed(2)}</span>
                 </div>
                 <div className="stat-box">
                   <label>Total FOB per DOZEN</label>
-                  <span>${result.outputs.total_cost_summary.total_fob_per_dozen.toFixed(3)}</span>
+                  <span>${result.outputs.total_cost_summary.total_fob_per_dozen.toFixed(2)}</span>
                 </div>
                 <div className="stat-box">
                   <label>Total FLC per PIECE</label>
-                  <span>${result.outputs.total_cost_summary.total_flc_per_piece.toFixed(3)}</span>
+                  <span>${result.outputs.total_cost_summary.total_flc_per_piece.toFixed(2)}</span>
                 </div>
                 <div className="stat-box">
                   <label>Total FLC per DOZEN</label>
-                  <span>${result.outputs.total_cost_summary.total_flc_per_dozen.toFixed(3)}</span>
+                  <span>${result.outputs.total_cost_summary.total_flc_per_dozen.toFixed(2)}</span>
                 </div>
               </div>
             </section>
@@ -1096,10 +1096,10 @@ function App() {
                           {country.country}
                         </strong>
                       </td>
-                      <td>${country.labour_cost.toFixed(3)}</td>
-                      <td>${country.subtotal.toFixed(3)}</td>
-                      <td>${country.margin_amount.toFixed(3)}</td>
-                      <td className="fob">${country.fob_cost.toFixed(3)}</td>
+                      <td>${country.labour_cost.toFixed(2)}</td>
+                      <td>${country.subtotal.toFixed(2)}</td>
+                      <td>${country.margin_amount.toFixed(2)}</td>
+                      <td className="fob">${country.fob_cost.toFixed(2)}</td>
                     </tr>
                   ))}
                 </tbody>
