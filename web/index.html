@@ -652,9 +652,9 @@ function updateSummary(res) {
 
 function updateCountryComparison(res) {
   const formatCost = (cost) => {
-    if (cost === null || cost === undefined || cost === '') return '$0.000';
+    if (cost === null || cost === undefined || cost === '') return '$0.00';
     const num = parseFloat(cost);
-    if (isNaN(num)) return '$0.000';
+    if (isNaN(num)) return '$0.00';
     return '$' + num.toFixed(3);
   };
 
