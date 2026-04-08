@@ -655,7 +655,7 @@ function updateCountryComparison(res) {
     if (cost === null || cost === undefined || cost === '') return '$0.00';
     const num = parseFloat(cost);
     if (isNaN(num)) return '$0.00';
-    return '$' + num.toFixed(3);
+    return '$' + num.toFixed(2);
   };
 
   const comparison = res?.outputs?.country_comparison;
