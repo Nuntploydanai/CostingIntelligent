@@ -386,6 +386,8 @@ async function computeManufacturing(input: any) {
   const samMinutesData = await loadCSV('sam_minutes_lookup.csv');
   const costRateData = await loadCSV('cost_rate.csv');
   const efficiencyData = await loadCSV('efficiency_by_quantity.csv');
+  const samProductEffData = await loadCSV('sam_product_eff.csv');  // ADD THIS LINE
+
 
   const gender = normalizeString(input.gender);
   const silhouette = normalizeString(input.silhouette);
@@ -415,16 +417,29 @@ async function computeManufacturing(input: any) {
   );
   const efficiency = toFloat(efficiencyRow?.efficiency) || 0.738;
 
+  // ADD THESE LINES:
+  const samProdEffRow = samProductEffData.find(row =>
+  normalizeString(row.gender).toLowerCase() === gender.toLowerCase() &&
+  normalizeString(row.product_shape).toLowerCase() === silhouette.toLowerCase() &&
+  normalizeString(row.side_seam).toLowerCase() === seam.toLowerCase() &&
+  normalizeString(row.size).toLowerCase() === size.toLowerCase()
+  );
+  
+const productEfficiency = toFloat(samProdEffRow?.eff_pct) ?? 1.0;
+const actualEfficiency = efficiency * productEfficiency;
+
+
   let totalCost = 0;
-  if (efficiency > 0 && baseMinutes > 0) {
-    totalCost = (baseMinutes / efficiency) * costRate;
-  }
+  
+  if (actualEfficiency > 0 && baseMinutes > 0) {
+  totalCost = (baseMinutes / actualEfficiency) * costRate;
+}
 
   return {
     country: coo,
     minutes: Math.round(baseMinutes * 1000) / 1000,
     cost_rate: Math.round(costRate * 1000) / 1000,
-    efficiency: Math.round(efficiency * 1000) / 1000,
+    efficiency: Math.round(actualEfficiency * 1000) / 1000,
     total_cost: Math.round(totalCost * 1000) / 1000,
   };
 }
