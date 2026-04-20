@@ -920,7 +920,7 @@ function App() {
               <input
                 type="number"
                 step="0.1"
-                value={supplierMarginPercent}
+                value={supplierMarginPercent || ''}
                 onChange={e => setSupplierMarginPercent(parseFloat(e.target.value) || 0)}
               />
             </div>
@@ -930,7 +930,7 @@ function App() {
               <input
                 type="number"
                 step="0.001"
-                value={freightCost}
+                value={freightCost || ''}
                 onChange={e => setFreightCost(parseFloat(e.target.value) || 0)}
               />
             </div>
@@ -940,7 +940,7 @@ function App() {
               <input
                 type="number"
                 step="0.001"
-                value={gmoCost}
+                value={gmoCost || ''}
                 onChange={e => setGmoCost(parseFloat(e.target.value) || 0)}
               />
             </div>
@@ -950,7 +950,7 @@ function App() {
               <input
                 type="number"
                 step="0.001"
-                value={dutyCost}
+                value={dutyCost || ''}
                 onChange={e => setDutyCost(parseFloat(e.target.value) || 0)}
               />
             </div>
@@ -960,7 +960,7 @@ function App() {
               <input
                 type="number"
                 step="0.001"
-                value={additionalCost}
+                value={additionalCost || ''}
                 onChange={e => setAdditionalCost(parseFloat(e.target.value) || 0)}
               />
             </div>
@@ -1010,7 +1010,7 @@ function App() {
                 <div className="summary-row subtotal">
                   <span>Subtotal (Items 1-10)</span>
                   <span>${result.outputs.total_cost_summary.subtotal.toFixed(2)}</span>
-                  <span>100.000%</span>
+                  <span>100.00%</span>
                 </div>
 
                 <div className="summary-row">
