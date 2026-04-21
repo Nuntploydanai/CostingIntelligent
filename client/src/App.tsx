@@ -247,9 +247,9 @@ function App() {
     // Source: Excel "Image" sheet (sheet15), row-anchored drawing map
     'men|tank top/a shirt': '/excel_media/image59.png',
     'men|t-shirt (crew neck)': '/excel_media/image64.jpeg',
-    'men|t-shirt (v neck)': '/excel_media/image63.png',
+    'men|t-shirt (v neck)': '/excel_media/image58.png',
     'men|long sleeve shirt (crew neck)': '/excel_media/image61.jpeg',
-    'men|long sleeve shirt (v neck)': '/excel_media/image58.png',
+    'men|long sleeve shirt (v neck)': '/excel_media/image63.png',
     'men|sleeveless shirt (crew neck)': '/excel_media/image60.png',
     'men|sleeveless shirt (v neck)': '/excel_media/image62.jpeg',
 
