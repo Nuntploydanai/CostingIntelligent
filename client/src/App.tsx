@@ -935,7 +935,6 @@ function App() {
               <label>Label - TOTAL</label>
               <input readOnly value={result?.outputs.packing_label.label.total?.toFixed?.(3) ?? ''} />
             </div>
-          </div>
         </section>
 
         {/* Step 6: Manufacturing */}
