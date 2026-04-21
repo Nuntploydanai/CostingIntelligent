@@ -796,7 +796,7 @@ function App() {
                   <label>DIMENSION</label>
                   <select value={row.dimension} onChange={e => setEmbellishments(embellishments.map((r, idx) => idx === i ? { ...r, dimension: e.target.value } : r))}>
                     <option value="">Select...</option>
-                    {dropdowns.print_dimension?.map(v => <option key={v} value={v}>{v}</option>)}
+                    {(dimensionsByPrintType[row.printing_embroidery] || dropdowns.print_dimension || []).map(v => <option key={v} value={v}>{v}</option>)}
                   </select>
                 </div>
 
