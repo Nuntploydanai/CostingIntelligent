@@ -270,6 +270,16 @@ function App() {
     'kids|sleeveless shirt (v neck)': '/excel_media/image73.png',
   }
 
+  const dimensionsByPrintType: Record<string, string[]> = {
+  'Rubber_Print': ['1X1 cm','2X2 cm','3X3 cm','4X4 cm','2X1 cm','3X1 cm','4X1 cm','5X1 cm','6X1 cm','7 X1 cm','8X1 cm','9X1 cm','10X1 cm'],
+  'Heat_Transfer': ['20X10 mm','30X10 mm','30X30 mm','40X20 mm','40X30 mm','40X40 mm','50X20 mm','50X30 mm','50X40 mm','50X50 mm'],
+  'Embroidery': ['27 mm x 18 mm(1162 Stitch)','35 mm x 24 mm(1745 Stitch)','43 mm x 29 mm(2404 Stitch)','55 mm x 37 mm(3195 Stitch)','60 mm x 41 mm(3343 Stitch)','27 mm x 18 mm(2271 Stitch)','35 mm x 24 mm(3004 Stitch)','35 mm x 24 mm(2284 Stitch)','29 mm x 43 mm(3053 Stitch)','41 mm x 60 mm(3994 Stitch)','36 mm x 54 mm(3659 Stitch)'],
+  'Pignment_Print': ['Fabric  base White 1-3 colours','Fabric base Solid 1-3 colours','Fabric  base  Solid AOP','Fabric base White  AOP'],
+  'Reactive_Print': ['Fabric  base White 1-3 colours','Fabric base Solid 1-3 colours','Fabric  base  Solid AOP','Fabric base White  AOP'],
+  'Digital_Print': ['AOP'],
+  'Sublimation_Print': ['AOP'],
+}
+
   const normalizePackCount = (value: string) => (value || '').replace(/^X/i, '')
 
   const fabricationHasValue = (row: any) => {
