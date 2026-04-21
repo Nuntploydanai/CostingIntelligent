@@ -829,9 +829,11 @@ function App() {
         {/* Step 5: Packing & Label */}
         <section className="card">
           <h2>Step 5: Packing and Label</h2>
-          <div className="form-grid">
+          {/* Display Packaging Row */}
+          <h3 style={{ marginTop: '1rem', marginBottom: '0.5rem', color: '#1e3a5f' }}>Display Packaging</h3>
+          <div className="form-grid" style={{ gridTemplateColumns: '1fr 1fr 1fr' }}>
             <div className="form-group">
-              <label>Display Packaging (Details)</label>
+              <label>Details</label>
               <select
                 value={packingLabel.display_packaging}
                 onChange={e => setPackingLabel({ ...packingLabel, display_packaging: e.target.value })}
@@ -840,9 +842,21 @@ function App() {
                 {dropdowns.display_packaging?.map(v => <option key={v} value={v}>{v}</option>)}
               </select>
             </div>
-
             <div className="form-group">
-              <label>Transit Package (Details)</label>
+              <label>Default Usage</label>
+              <input readOnly value={result?.outputs.packing_label.display_packaging.default_usage?.toFixed?.(2) ?? ''} />
+            </div>
+            <div className="form-group">
+              <label>Total</label>
+              <input readOnly value={result?.outputs.packing_label.display_packaging.total?.toFixed?.(2) ?? ''} />
+            </div>
+          </div>
+
+          {/* Transit Package Row */}
+          <h3 style={{ marginTop: '1rem', marginBottom: '0.5rem', color: '#1e3a5f' }}>Transit Package</h3>
+          <div className="form-grid" style={{ gridTemplateColumns: '1fr 1fr 1fr' }}>
+            <div className="form-group">
+              <label>Details</label>
               <select
                 value={packingLabel.transit_package}
                 onChange={e => setPackingLabel({ ...packingLabel, transit_package: e.target.value })}
@@ -851,6 +865,38 @@ function App() {
                 {dropdowns.transit_package?.map(v => <option key={v} value={v}>{v}</option>)}
               </select>
             </div>
+            <div className="form-group">
+              <label>Default Usage</label>
+              <input readOnly value={result?.outputs.packing_label.transit_package.default_usage?.toFixed?.(2) ?? ''} />
+            </div>
+            <div className="form-group">
+              <label>Total</label>
+              <input readOnly value={result?.outputs.packing_label.transit_package.total?.toFixed?.(2) ?? ''} />
+            </div>
+          </div>
+
+          {/* Label Row */}
+          <h3 style={{ marginTop: '1rem', marginBottom: '0.5rem', color: '#1e3a5f' }}>Label</h3>
+          <div className="form-grid" style={{ gridTemplateColumns: '1fr 1fr 1fr' }}>
+            <div className="form-group">
+              <label>Details</label>
+              <select
+                value={packingLabel.label_type}
+                onChange={e => setPackingLabel({ ...packingLabel, label_type: e.target.value })}
+              >
+                <option value="">Select...</option>
+                {dropdowns.label?.map(v => <option key={v} value={v}>{v}</option>)}
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Default Usage</label>
+              <input readOnly value={result?.outputs.packing_label.label.default_usage?.toFixed?.(2) ?? ''} />
+            </div>
+            <div className="form-group">
+              <label>Total</label>
+              <input readOnly value={result?.outputs.packing_label.label.total?.toFixed?.(2) ?? ''} />
+            </div>
+          </div>
 
             <div className="form-group">
               <label>Label (Details)</label>
