@@ -149,7 +149,7 @@ function conversionPriceYdKilo(args: {
   const O18 = M18;
   const denom = J3 * 1.3946 / 1000.0;
   const K20 = denom !== 0 ? O18 / denom : 0.0;
-  return [Math.round(O18 * 1000) / 1000, Math.round(K20 * 1000) / 1000];
+  return [O18, K20];
 }
 
 async function computeFabrication(input: any) {
@@ -242,8 +242,8 @@ async function computeFabrication(input: any) {
   return {
     fixed_fabric_width: Math.round(fixedFabricWidth * 1000) / 1000,
     default_weight_gsm: Math.round((defaultWeightDisplay || 0) * 1000) / 1000,
-    default_price_yd: typeof defaultPriceYd === 'number' ? defaultPriceYd : 0,
-    default_price_kilo: typeof defaultPriceKilo === 'number' ? defaultPriceKilo : 0,
+    default_price_yd: typeof defaultPriceYd === 'number' ? Math.round(defaultPriceYd * 1000) / 1000 : 0,
+    default_price_kilo: typeof defaultPriceKilo === 'number' ? Math.round(defaultPriceKilo * 1000) / 1000 : 0,
     default_price_lb: Math.round((defaultPriceLb || 0) * 1000) / 1000,
     total_cost: Math.round(totalCost * 1000) / 1000,
   };
