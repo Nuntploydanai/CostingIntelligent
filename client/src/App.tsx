@@ -948,19 +948,19 @@ function App() {
           ) : (
             <div className="form-grid">
               <div className="form-group">
-                <label>Minutes (W18)</label>
+                <label>Minutes</label>
                 <input readOnly value={result.outputs.manufacturing.rows?.[0]?.minutes?.toFixed?.(3) ?? ''} />
               </div>
               <div className="form-group">
-                <label>Cost Rate (W19)</label>
+                <label>Cost Rate</label>
                 <input readOnly value={result.outputs.manufacturing.rows?.[0]?.cost_rate?.toFixed?.(3) ?? ''} />
               </div>
               <div className="form-group">
-                <label>Efficiency (W20)</label>
-                <input readOnly value={result.outputs.manufacturing.rows?.[0]?.efficiency?.toFixed?.(3) ?? ''} />
+                <label>Efficiency</label>
+                <input readOnly value={result.outputs.manufacturing.rows?.[0]?.efficiency ? (result.outputs.manufacturing.rows[0].efficiency * 100).toFixed(2) + '%' : ''} />
               </div>
               <div className="form-group">
-                <label>TOTAL COST (W21)</label>
+                <label>TOTAL COST</label>
                 <input readOnly value={result.outputs.manufacturing.rows?.[0]?.total_cost?.toFixed?.(3) ?? ''} />
               </div>
             </div>
