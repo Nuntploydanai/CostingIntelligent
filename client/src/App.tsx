@@ -898,43 +898,7 @@ function App() {
             </div>
           </div>
 
-            <div className="form-group">
-              <label>Label (Details)</label>
-              <select
-                value={packingLabel.label_type}
-                onChange={e => setPackingLabel({ ...packingLabel, label_type: e.target.value })}
-              >
-                <option value="">Select...</option>
-                {dropdowns.label?.map(v => <option key={v} value={v}>{v}</option>)}
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label>Display Packaging - DEFAULT USAGE</label>
-              <input readOnly value={result?.outputs.packing_label.display_packaging.default_usage?.toFixed?.(3) ?? ''} />
-            </div>
-            <div className="form-group">
-              <label>Display Packaging - TOTAL</label>
-              <input readOnly value={result?.outputs.packing_label.display_packaging.total?.toFixed?.(3) ?? ''} />
-            </div>
-
-            <div className="form-group">
-              <label>Transit Package - DEFAULT USAGE</label>
-              <input readOnly value={result?.outputs.packing_label.transit_package.default_usage?.toFixed?.(3) ?? ''} />
-            </div>
-            <div className="form-group">
-              <label>Transit Package - TOTAL</label>
-              <input readOnly value={result?.outputs.packing_label.transit_package.total?.toFixed?.(3) ?? ''} />
-            </div>
-
-            <div className="form-group">
-              <label>Label - DEFAULT USAGE</label>
-              <input readOnly value={result?.outputs.packing_label.label.default_usage?.toFixed?.(3) ?? ''} />
-            </div>
-            <div className="form-group">
-              <label>Label - TOTAL</label>
-              <input readOnly value={result?.outputs.packing_label.label.total?.toFixed?.(3) ?? ''} />
-            </div>
+  
          
         </section>
 
