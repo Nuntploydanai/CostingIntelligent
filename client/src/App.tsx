@@ -587,7 +587,7 @@ function App() {
                     setFabrication(fabrication.filter((_, idx) => idx !== i))
                     setFabricContentsOptions(prev => prev.filter((_, idx) => idx !== i))
                     }}
-                    }
+                    
                     
                   >
                     Remove
