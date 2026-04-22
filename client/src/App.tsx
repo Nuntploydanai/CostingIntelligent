@@ -101,6 +101,7 @@ function App() {
   })
 
   const [fabrication, setFabrication] = useState([newFabricRow()])
+  const [fabricContentsOptions, setFabricContentsOptions] = useState<string[][]>([[]])
 
   const [trims, setTrims] = useState([{
     trims_type: '',
@@ -313,6 +314,19 @@ function App() {
     return asset('brand/gildan-logo.jpg')
   }
 
+  const fetchFabricContents = async (fabricType: string, rowIndex: number) => {
+  if (!fabricType) {
+    setFabricContentsOptions(prev => prev.map((opts, i) => i === rowIndex ? [] : opts))
+    return
+  }
+  try {
+    const res = await fetch(`/api/dropdown/fabric_contents_for_type?type=${encodeURIComponent(fabricType)}`)
+    const data = await res.json()
+    setFabricContentsOptions(prev => prev.map((opts, i) => i === rowIndex ? (data.values || []) : opts))
+  } catch {
+    setFabricContentsOptions(prev => prev.map((opts, i) => i === rowIndex ? [] : opts))
+  }
+}
   // Clear form function
   const clearForm = () => {
     setDevelopment({
@@ -327,6 +341,7 @@ function App() {
       fabric_finishing: ''
     })
     setFabrication([newFabricRow()])
+    setFabricContentsOptions([[]])
     setTrims([{
       trims_type: '',
       garment_part: '',
@@ -551,6 +566,7 @@ function App() {
                 onClick={() => {
                   if (fabrication.length >= 3) return
                   setFabrication([...fabrication, newFabricRow()])
+                  setFabricContentsOptions(prev => [...prev, []])   // ← add this
                 }}
                 style={{ background: fabrication.length >= 3 ? '#94a3b8' : '#0b2f59' }}
               >
@@ -567,7 +583,12 @@ function App() {
                   <button
                     className="clear-button"
                     style={{ background: '#b91c1c' }}
-                    onClick={() => setFabrication(fabrication.filter((_, idx) => idx !== i))}
+                    onClick={() => {
+                    setFabrication(fabrication.filter((_, idx) => idx !== i))
+                    setFabricContentsOptions(prev => prev.filter((_, idx) => idx !== i))
+                    }}
+                    }
+                    
                   >
                     Remove
                   </button>
