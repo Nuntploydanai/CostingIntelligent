@@ -176,7 +176,7 @@ async function computePackingLabel(input: any) {
 
   // Calculate transit package
   const transitPackageDefaultUsage = input.transit_package ? 1 : 0;
-  const transitPackageTotal = input.transit_package ? (0.9 / toFloat(input.transit_package)) : 0;
+  const transitPackageTotal = input.transit_package ? (0.9 / toFloat(input.transit_package!)) : 0;
 
   // Calculate label
   const labelDefaultUsage = input.label_type ? 1 : 0;
