@@ -400,6 +400,7 @@ app.get('/api/dropdown/fabric_contents_for_type', async (req: any, res: any) => 
     if (!fabricType) return res.json({ values: [] })
  
     const rows = await loadCSV('fabric_price_lookup.csv')
+    console.log('[debug] rows:', rows.length, 'sample:', JSON.stringify(rows.slice(0, 3)))
     const seen = new Set<string>()
     const contents: string[] = []
  
