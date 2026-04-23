@@ -627,7 +627,28 @@ app.get('/api/dropdown/fabric_contents_for_type', async (req: any, res: any) => 
     res.status(500).json({ values: [] })
   }
 })
-
+app.get('/api/dropdown/garment_parts_for_trims', async (req: any, res: any) => {
+  try {
+    const trimsType = ((req.query.type as string) || '').trim()
+    if (!trimsType) return res.json({ values: [] })
+    const rows = await loadCSV('packing_trims_usage.csv')
+    const seen = new Set<string>()
+    const parts: string[] = []
+    for (const row of rows) {
+      if (normalizeString(row.trims_type).toLowerCase() === trimsType.toLowerCase()) {
+        const part = normalizeString(row.garment_part)
+        if (part && !seen.has(part)) {
+          seen.add(part)
+          parts.push(part)
+        }
+      }
+    }
+    res.json({ values: parts })
+  } catch (err: any) {
+    console.error('[dropdown] garment_parts_for_trims error:', err.message)
+    res.status(500).json({ values: [] })
+  }
+})
 app.get('/api/dropdown/:name', async (req: Request, res: Response) => {
   try {
     const values = await loadDropdown(req.params.name);
