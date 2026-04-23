@@ -675,7 +675,7 @@ function App() {
                 </div>
 
                 <div className="form-group">
-                  <label>TOTAL COST</label>
+                  <label>Total Cost</label>
                   <input readOnly value={result?.outputs.fabrication.rows?.[i]?.total_cost?.toFixed?.(3) ?? ''} />
                 </div>
               </div>
