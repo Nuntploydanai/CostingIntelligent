@@ -226,7 +226,7 @@ async function computeFabrication(input: any) {
   const m = material_coo.toUpperCase();
   const genderMult = g === 'MEN' ? 1 : g === 'WOMEN' ? 0.85 : g === 'KIDS' ? 0.75 : 1;
   const sizeMult = s === 'S-XL' ? 1 : s === '2XL-3XL' ? 1.15 : s === 'S-3XL' ? 1.1 : s === '2XL-5XL' ? 1.15 : 1;
-  const silhouetteMult = 1.0;
+  const silhouetteMult = /v.?neck/i.test(silhouette) ? 1.03 : 1.0;
   const importFactor = m === 'DOMESTIC' ? 1 : m === 'IMPORT' ? 1.05 : 1;
 
   let totalCost = 0;
