@@ -399,16 +399,13 @@ app.get('/api/dropdown/fabric_contents_for_type', async (req: any, res: any) => 
     const fabricType = ((req.query.type as string) || '').trim()
     if (!fabricType) return res.json({ values: [] })
  
-    const rows = await loadCSV('fabric_price_lookup.csv')
-    console.log('[debug] rows:', rows.length, 'sample:', JSON.stringify(rows.slice(0, 3)))
+    const rows = await loadCSV('dropdown_fabric_price.csv')
     const seen = new Set<string>()
     const contents: string[] = []
- 
+    
     for (const row of rows) {
-      const key: string = row.key ?? ''
-      // Check if this key belongs to the selected fabric type
-      if (key.toLowerCase().startsWith(fabricType.toLowerCase())) {
-        const contentPart = key.slice(fabricType.length).trim()
+      if (normalizeString(row.fabric_type).toLowerCase() === fabricType.toLowerCase()) {
+        const contentPart = normalizeString(row.fabric_contents)
         if (contentPart && !seen.has(contentPart)) {
           seen.add(contentPart)
           contents.push(contentPart)
