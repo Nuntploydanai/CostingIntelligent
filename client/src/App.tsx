@@ -660,17 +660,17 @@ function App() {
                 </div>
 
                 <div className="form-group">
-                  <label>DEFAULT (PRICE/YD)</label>
+                  <label>Default (Price/YD)</label>
                   <input readOnly value={result?.outputs.fabrication.rows?.[i]?.default_price_yd?.toFixed?.(3) ?? ''} />
                 </div>
 
                 <div className="form-group">
-                  <label>DEFAULT (PRICE/KILO)</label>
+                  <label>Default (Price/Kilo)</label>
                   <input readOnly value={result?.outputs.fabrication.rows?.[i]?.default_price_kilo?.toFixed?.(3) ?? ''} />
                 </div>
 
                 <div className="form-group">
-                  <label>PRICE / Lbs (default)</label>
+                  <label>Price / Lbs (default)</label>
                   <input readOnly value={result?.outputs.fabrication.rows?.[i]?.default_price_lb?.toFixed?.(3) ?? ''} />
                 </div>
 
@@ -750,22 +750,22 @@ function App() {
                 </div>
 
                 <div className="form-group">
-                  <label>UNIT</label>
+                  <label>Unit</label>
                   <input readOnly value={result?.outputs.trims.rows?.[i]?.unit ?? ''} />
                 </div>
 
                 <div className="form-group">
-                  <label>DEFAULT USAGE (YD/PIECE)</label>
+                  <label>Default Usage (YD/piece)</label>
                   <input readOnly value={result?.outputs.trims.rows?.[i]?.default_usage?.toFixed?.(3) ?? ''} />
                 </div>
 
                 <div className="form-group">
-                  <label>DEFAULT PRICE/EACH</label>
+                  <label>Default Price/each</label>
                   <input readOnly value={result?.outputs.trims.rows?.[i]?.default_price_each?.toFixed?.(3) ?? ''} />
                 </div>
 
                 <div className="form-group">
-                  <label>TOTAL COST</label>
+                  <label>Total cost</label>
                   <input readOnly value={result?.outputs.trims.rows?.[i]?.total_cost?.toFixed?.(3) ?? ''} />
                 </div>
               </div>
@@ -806,7 +806,7 @@ function App() {
 
               <div className="form-grid">
                 <div className="form-group">
-                  <label>PRINTING/EMBROIDERY</label>
+                  <label>Printing/Embroidery</label>
                   <select value={row.printing_embroidery} onChange={e => setEmbellishments(embellishments.map((r, idx) => idx === i ? { ...r, printing_embroidery: e.target.value } : r))}>
                     <option value="">Select...</option>
                     {dropdowns.printing_embroidery?.map(v => <option key={v} value={v}>{v}</option>)}
@@ -814,7 +814,7 @@ function App() {
                 </div>
 
                 <div className="form-group">
-                  <label>DIMENSION</label>
+                  <label>Dimension</label>
                   <select value={row.dimension} onChange={e => setEmbellishments(embellishments.map((r, idx) => idx === i ? { ...r, dimension: e.target.value } : r))}>
                     <option value="">Select...</option>
                     {(dimensionsByPrintType[row.printing_embroidery] || dropdowns.print_dimension || []).map(v => <option key={v} value={v}>{v}</option>)}
@@ -822,7 +822,7 @@ function App() {
                 </div>
 
                 <div className="form-group">
-                  <label>USAGE / UNIT</label>
+                  <label>Usage / Unit</label>
                   <select value={row.usage_unit} onChange={e => setEmbellishments(embellishments.map((r, idx) => idx === i ? { ...r, usage_unit: e.target.value } : r))}>
                     <option value="">Select...</option>
                     {dropdowns.usage_unit?.map(v => <option key={v} value={v}>{v}</option>)}
@@ -830,12 +830,12 @@ function App() {
                 </div>
 
                 <div className="form-group">
-                  <label>DEFAULT PRICE / EACH</label>
+                  <label>Default Price / Each</label>
                   <input readOnly value={result?.outputs.embellishments.rows?.[i]?.default_price_each?.toFixed?.(3) ?? ''} />
                 </div>
 
                 <div className="form-group">
-                  <label>TOTAL</label>
+                  <label>Total</label>
                   <input readOnly value={result?.outputs.embellishments.rows?.[i]?.total_cost?.toFixed?.(3) ?? ''} />
                 </div>
               </div>
@@ -933,19 +933,19 @@ function App() {
           ) : (
             <div className="form-grid">
               <div className="form-group">
-                <label>Minutes (W18)</label>
+                <label>Minutes</label>
                 <input readOnly value={result.outputs.manufacturing.rows?.[0]?.minutes?.toFixed?.(3) ?? ''} />
               </div>
               <div className="form-group">
-                <label>Cost Rate (W19)</label>
+                <label>Cost Rate</label>
                 <input readOnly value={result.outputs.manufacturing.rows?.[0]?.cost_rate?.toFixed?.(3) ?? ''} />
               </div>
               <div className="form-group">
-                <label>Efficiency (W20)</label>
+                <label>Efficiency</label>
                 <input readOnly value={result.outputs.manufacturing.rows?.[0]?.efficiency?.toFixed?.(3) ?? ''} />
               </div>
               <div className="form-group">
-                <label>TOTAL COST (W21)</label>
+                <label>Total Cost</label>
                 <input readOnly value={result.outputs.manufacturing.rows?.[0]?.total_cost?.toFixed?.(3) ?? ''} />
               </div>
             </div>
