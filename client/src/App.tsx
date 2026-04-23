@@ -110,6 +110,7 @@ function App() {
     price_override: '',
     material_coo: ''
   }])
+  const [garmentPartsOptions, setGarmentPartsOptions] = useState<string[][]>([[]])
 
   const [embellishments, setEmbellishments] = useState([{
     printing_embroidery: '',
@@ -328,6 +329,19 @@ function App() {
   }
 }
   // Clear form function
+  const fetchGarmentParts = async (trimsType: string, rowIndex: number) => {
+  if (!trimsType) {
+    setGarmentPartsOptions(prev => prev.map((opts, i) => i === rowIndex ? [] : opts))
+    return
+  }
+  try {
+    const res = await fetch(`/api/dropdown/garment_parts_for_trims?type=${encodeURIComponent(trimsType)}`)
+    const data = await res.json()
+    setGarmentPartsOptions(prev => prev.map((opts, i) => i === rowIndex ? (data.values || []) : opts))
+  } catch {
+    setGarmentPartsOptions(prev => prev.map((opts, i) => i === rowIndex ? [] : opts))
+  }
+}
   const clearForm = () => {
     setDevelopment({
       gender: '',
@@ -349,6 +363,7 @@ function App() {
       price_override: '',
       material_coo: ''
     }])
+    setGarmentPartsOptions([[]])
     setEmbellishments([{
       printing_embroidery: '',
       dimension: '',
@@ -696,6 +711,7 @@ function App() {
               onClick={() => {
                 if (trims.length >= 3) return
                 setTrims([...trims, { trims_type: '', garment_part: '', usage_override: '', price_override: '', material_coo: '' }])
+                setGarmentPartsOptions(prev => [...prev, []])
               }}
               style={{ background: trims.length >= 3 ? '#94a3b8' : '#0b2f59' }}
             >
@@ -708,7 +724,8 @@ function App() {
               <div className="section-head-row" style={{ marginBottom: 10 }}>
                 <h3 style={{ margin: 0, color: '#0b3f77' }}>Trim Row {i + 1}</h3>
                 {trims.length > 1 && (
-                  <button className="clear-button" style={{ background: '#b91c1c' }} onClick={() => setTrims(trims.filter((_, idx) => idx !== i))}>
+                  <button className="clear-button" style={{ background: '#b91c1c' }} onClick={() => {setTrims(trims.filter((_, idx) => idx !== i))
+                  setGarmentPartsOptions(prev => prev.filter((_, idx) => idx !== i))}}
                     Remove
                   </button>
                 )}
@@ -717,7 +734,7 @@ function App() {
               <div className="form-grid">
                 <div className="form-group">
                   <label>Trims Type</label>
-                  <select value={row.trims_type} onChange={e => setTrims(trims.map((r, idx) => idx === i ? { ...r, trims_type: e.target.value } : r))}>
+                  <select value={row.trims_type} onChange={e => {const val = e.target.value;setTrims(trims.map((r, idx) => idx === i ? { ...r, trims_type: val, garment_part: '' } : r)); fetchGarmentParts(val, i)}}>
                     <option value="">Select...</option>
                     {dropdowns.trims_type?.map(v => <option key={v} value={v}>{v}</option>)}
                   </select>
@@ -725,9 +742,9 @@ function App() {
 
                 <div className="form-group">
                   <label>Garment Part</label>
-                  <select value={row.garment_part} onChange={e => setTrims(trims.map((r, idx) => idx === i ? { ...r, garment_part: e.target.value } : r))}>
-                    <option value="">Select...</option>
-                    {dropdowns.garment_part_trim?.map(v => <option key={v} value={v}>{v}</option>)}
+                  <select value={row.garment_part} disabled={!row.trims_type} onChange={e => setTrims(trims.map((r, idx) => idx === i ? { ...r, garment_part: e.target.value } : r))}>
+                    <option value="">{row.trims_type ? 'Select...' : 'Select Trims Type first'}</option>
+                      {(garmentPartsOptions[i] || []).map(v => <option key={v} value={v}>{v}</option>)}
                   </select>
                 </div>
 
