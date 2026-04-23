@@ -601,6 +601,33 @@ async function loadDropdown(name: string): Promise<string[]> {
 }
 
 // API Routes
+app.get('/api/dropdown/fabric_contents_for_type', async (req: any, res: any) => {
+  try {
+    const fabricType = ((req.query.type as string) || '').trim()
+    if (!fabricType) return res.json({ values: [] })
+
+    const rows = await loadCSV('fabric_price_lookup.csv')
+    const seen = new Set<string>()
+    const contents: string[] = []
+
+    for (const row of rows) {
+      const key: string = row.key ?? ''
+      if (key.toLowerCase().startsWith(fabricType.toLowerCase())) {
+        const contentPart = key.slice(fabricType.length).trim()
+        if (contentPart && !seen.has(contentPart)) {
+          seen.add(contentPart)
+          contents.push(contentPart)
+        }
+      }
+    }
+
+    res.json({ values: contents })
+  } catch (err: any) {
+    console.error('[dropdown] fabric_contents_for_type error:', err.message)
+    res.status(500).json({ values: [] })
+  }
+})
+
 app.get('/api/dropdown/:name', async (req: Request, res: Response) => {
   try {
     const values = await loadDropdown(req.params.name);
