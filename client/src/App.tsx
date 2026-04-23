@@ -602,7 +602,7 @@ function App() {
               <div className="form-grid">
                 <div className="form-group">
                   <label>Fabric Type</label>
-                  <select value={row.fabric_type} onChange={e => setFabrication(fabrication.map((r, idx) => idx === i ? { ...r, fabric_type: e.target.value } : r))}>
+                  <select value={row.fabric_type} onChange={e => {const val = e.target.value; setFabrication(fabrication.map((r, idx) => idx === i ? { ...r, fabric_type: val, fabric_contents: '' } : r)); fetchFabricContents(val, i)}}>
                     <option value="">Select...</option>
                     {dropdowns.fabric_type?.map(v => <option key={v} value={v}>{v}</option>)}
                   </select>
@@ -612,7 +612,7 @@ function App() {
                   <label>Fabric Contents</label>
                   <select value={row.fabric_contents} onChange={e => setFabrication(fabrication.map((r, idx) => idx === i ? { ...r, fabric_contents: e.target.value } : r))}>
                     <option value="">Select...</option>
-                    {dropdowns.fabric_contents?.map(v => <option key={v} value={v}>{v}</option>)}
+                    {fabricContentsOptions[i]?.map(v => <option key={v} value={v}>{v}</option>)}
                   </select>
                 </div>
 
