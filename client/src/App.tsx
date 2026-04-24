@@ -725,7 +725,7 @@ function App() {
                 <h3 style={{ margin: 0, color: '#0b3f77' }}>Trim Row {i + 1}</h3>
                 {trims.length > 1 && (
                   <button className="clear-button" style={{ background: '#b91c1c' }} onClick={() => {setTrims(trims.filter((_, idx) => idx !== i))
-                  setGarmentPartsOptions(prev => prev.filter((_, idx) => idx !== i))}}
+                  setGarmentPartsOptions(prev => prev.filter((_, idx) => idx !== i))}}>
                     Remove
                   </button>
                 )}
